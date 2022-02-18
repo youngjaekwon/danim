@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../css/travel-schedule.css">
+    <link rel="stylesheet" href="../air-datepicker/dist/css/datepicker.min.css">
+    <script src="../jquery-3.1.1.min.js"></script>
+    <script src="../air-datepicker/dist/js/datepicker.min.js"></script>
+    <script src="../air-datepicker/dist/js/i18n/datepicker.ko.js"></script>
+    <script src="../js/travel-schedule.js" defer></script>
+    <title>다님 : 여행을 다니다</title>
+</head>
+
+
+<body>
+    <header>
+        <div class="header_inner">
+            <div class="logo">
+                <a href="#">logo</a>
+            </div>
+            <div class="title">
+                <a href="#">title</a>
+            </div>
+            <div class="nav">
+                <ul>
+                    <li><a href="#">여행지</a></li>
+                    <li><a href="#">숙박</a></li>
+                    <li><a href="#">교통</a></li>
+                    <li><a href="#">즐길거리</a></li>
+                    <li><a href="#">shop</a></li>
+                    <li><a href="#">고객센터</a></li>
+                </ul>
+            </div>
+            <div class="login">
+                <a href="#" class="login_btn">로그인</a>
+            </div>
+        </div>
+        <div class="login-modal" id="login-modal-hide">
+            <div class="login-modal-inside">
+                <a href="#" class="modal-logo">logo</a>
+                <form action="#" class="modal-form">
+                    <input type="email" name="id" placeholder="이메일을 입력하세요" class="login-input">
+                    <input type="password" name="password" placeholder="비밀번호를 입력하세요" class="login-input">
+                    <input type="submit" value="로그인" class="login-submit">
+                </form>
+                <div class="social">
+                    <a href="#" class="google">google</a>
+                    <a href="#" class="naver">naver</a>
+                    <a href="#" class="kakao">kakao</a>
+                </div>
+                <div class="login-bottom">
+                    <ul>
+                        <li><a href="#">비밀번호 찾기</a></li>
+                        <li><a href="#">아이디 찾기</a></li>
+                        <li><a href="#">회원가입</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="traffic-modal" id="traffic-modal-hide">
+            <div class="traffic-modal-inside">
+                <ul>
+                    <li class="traffic-btn"><a href="#">KTX</a></li>
+                    <li class="traffic-btn"><a href="#">항공</a></li>
+                    <li class="traffic-btn"><a href="#">렌터카</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <section class="travel-schedule-warp">
+        
+        <div class="travel-schedule-inner">
+            <!-- 왼쪽바 -->
+            <!-- 왼쪽상단 -->
+            <div class="travel-schedule-left">
+                <div class="travel-schedule-left-top">
+                    <div class="travel-schedule-left-top-info">
+                        <div class="travel-schedule-left-top-info" id="travel-schedule-left-top-info-kor">제주도</div>
+                        <div class="travel-schedule-left-top-info" id="travel-schedule-left-top-info-eng">JEJU</div>
+                        <div class="travel-schedule-left-top-info" id="travel-schedule-left-top-try-day">1&nbsp; Day
+                        </div>
+                        <div class="travel-schedule-left-top-try">
+                            <input type="hidden" value="1" id="travelDay">
+                            <div class="double-calendar">
+                                <!-- 2개가 연결된거! -->
+                                <input id="datepicker1" type="text"> - 
+                                <input id="datepicker2" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 여행시간 상세설명 표시 -->
+                <div class="collapsible-main">
+                    <div class="collapsible-header daycollapsible-main1" tabindex="0">
+                        <i class="material-icons daycollapsible-mi">schedule</i>
+                        <div><span data-langnum="18">여행시간 상세설정</span>
+                            <span id="totalTravelTimeArea"><span data-langnum="19">(총</span>
+                                <span id="totalTravelH">12</span><span data-langnum="20">시간</span>
+                                <span id="totalTravelM">0</span><span data-langnum="21">분)</span></span>
+                        </div>
+                        <div id="openAndCloseDailyTimeSetting" title="일자별 시간 설정창 보기"
+                            class="material-icons daycollapsible-mi">expand_more
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hide-collapsible-info">
+                    <li class="collapsible-info-text">일자별 시작시간과 종료시간을 설정하세요.</li>
+                    <li class="collapsible-info-text">기본값은 오전10시 ~ 오후10시 총 12시간입니다.</li>
+                    
+                    <div class="time-input">
+                        <div class="time-input-day">1&nbsp; Day</div>
+                        <input type="time" class="timeInput">
+                        <input type="time" class="timeInput">
+                    </div>
+                </div>
+                <div class="travel-schedule-left-bottem">
+                    <div class="travel-schedule-left-bottem-choice-inner" ->
+                        <div class="travel-schedule-left-bottem-choice">선택목록</div>
+                    </div>
+                    <div class="travel-schedule-left-bottem-pickup-inner">
+                        <a href="#" class="travel-schedule-left-bottem-pickup">호텔</a>
+                        <a href="#" class="travel-schedule-left-bottem-pickup">장소</a>
+                    </div>
+                    <div class="travel-schedule-left-bottem-tiem">
+                        <span id="seletedSpotsCnt" style="color: rgb(255, 165, 0);">0</span>
+                        <span id="totalSpendingTimeArea"><span data-langnum="19">(총</span><span
+                                id="sumOfSpotStayingH">0</span><span data-langnum="20">시간</span><span
+                                id="sumOfSpotStayingM">0</span><span data-langnum="21">분)</span></span>
+                    </div>
+
+                    <button class="travel-schedule-left-bottem-put" onclick="removeAllSpotFromSelectedSpots()">
+                        <h7>장소전체삭제</h7>
+                    </button>
+
+                    <div class="travel-schedule-left-bottem-explanation-inner">
+                        <div id="hide-explanation-left-info">
+                            <li class="travel-schedule-left-bottem-explanation">가고 싶은 장소들을 검색하여 추가해주세요.</li>
+                            <li class="travel-schedule-left-bottem-explanation">설정하신 일자별 여행시간 내에서</li>
+                            <li class="travel-schedule-left-bottem-explanation">하루 평균 최대 8개의 장소까지 선택 가능합니다</li>
+                            <div class="travel-schedule-left-bottem-explanation-plusIcon-box">
+                                <a href="#" class="travel-schedule-left-bottem-explanation-plusIcon">.</a>
+                            </div>
+                        </div>
+
+                        <div class="travel-schedule-left-bottem-explanation2" id="hide-explanation-left-add">
+                            <div class="travel-schedule-left-bottem-explanation2-pick">
+                                <div class="explanation-suggestion-pickup-info2">
+                                    <img src="" alt="" class="explanation-suggestion-pickup-img2">
+                                </div>
+                                <span class="explanation-suggestion-pickup-text">동문 재래 시장</span>
+
+                                <button class="close-pickup"></button>
+                               
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+
+                
+            </div>
+            <div class="suggestion">
+                <button class="suggestion-btn" id="suggestion-btn-hotel">추천 호텔</button>
+                <button class="suggestion-btn" id="suggestion-btn-Place"> 추천 장소</button>
+            </div>
+            
+                <div class="Place-btn" id="Place-btn-hide">
+                    <button class="Placebox">인기 엑티비티</button>
+                    <button class="Placebox">인기 맛집</button>
+                    <button class="Placebox">인기 힐링</button>
+                </div>
+          
+                <div class="travel-schedule-right">
+                    
+                    <div class="travel-schedule-right-search">
+                        <div class="search-icon"></div>
+                        <input class="travel-schedule-right-search_input" type="text" placeholder="어디로 다녀볼까요?">
+                    </div>
+
+                    <div class="travel-schedule-right-top-pickup-inner">
+                        <a href="#" class="travel-schedule-right-top-pickup" id="travel-schedule-right-top-hotel">호텔</a>
+                        <a href="#" class="travel-schedule-right-top-pickup" id="travel-schedule-right-top-Place">장소</a>             
+                    </div>
+
+                    <div class="travel-schedule-right-bottem-explanation-inner">
+                        <div class="travel-schedule-right-bottem-explanation-info" id="hide-explanation-right-info">
+                            <div class="travel-schedule-right-bottem-explanation">장소를 검색하세요</div>
+                            <div>
+                                <div class="travel-schedule-right-bottem-explanation-icon"></div>
+                                <div class="travel-schedule-right-bottem-explanation-addition">장소명을 검색하세요.</div>
+                                <div class="travel-schedule-right-bottem-explanation-addition">검색어는 두 글자 이상 입력해주세요.</div>
+                            </div>
+                            
+                        </div>
+
+                        <div id="hide-explanation-right-add">
+                            <div class="travel-schedule-right-bottem-explanation-suggestion">추천 장소</div>
+                            <div class="explanation-suggestion-pickup">
+                                <div class="explanation-suggestion-pickup-info">
+                                    <img class="explanation-suggestion-pickup-img">
+                                    <div class="explanation-suggestion-pickup-num">4,318</div>
+                                </div>
+                                <span class="explanation-suggestion-pickup-text">동문 재래 시장</span>
+
+                                <button class="add-pickup"></button>
+                                <button class="material-pickup"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+
+    </section>
+
+
+    <script>
+        //두개짜리 제어 연결된거 만들어주는 함수
+        datePickerSet($("#datepicker1"), $("#datepicker2"), true); //다중은 시작하는 달력 먼저, 끝달력 2번째
+
+        /*
+            * 달력 생성기
+            * @param sDate 파라미터만 넣으면 1개짜리 달력 생성
+            * @example   datePickerSet($("#datepicker"));
+            * 
+            * 
+            * @param sDate, 
+            * @param eDate 2개 넣으면 연결달력 생성되어 서로의 날짜를 넘어가지 않음
+            * @example   datePickerSet($("#datepicker1"), $("#datepicker2"));
+            */
+        function datePickerSet(sDate, eDate, flag) {
+
+            //시작 ~ 종료 2개 짜리 달력 datepicker	
+            if (!isValidStr(sDate) && !isValidStr(eDate) && sDate.length > 0 && eDate.length > 0) {
+                var sDay = sDate.val();
+                var eDay = eDate.val();
+
+                if (flag && !isValidStr(sDay) && !isValidStr(eDay)) { //처음 입력 날짜 설정, update...			
+                    var sdp = sDate.datepicker().data("datepicker");
+                    sdp.selectDate(new Date(sDay.replace(/-/g, "/")));  //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+
+                    var edp = eDate.datepicker().data("datepicker");
+                    edp.selectDate(new Date(eDay.replace(/-/g, "/")));  //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+                }
+
+                //시작일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
+                if (!isValidStr(eDay)) {
+                    sDate.datepicker({
+                        maxDate: new Date(eDay.replace(/-/g, "/"))
+                    });
+                }
+                sDate.datepicker({
+                    language: 'ko',
+                    autoClose: true,
+                    onSelect: function () {
+                        datePickerSet(sDate, eDate);
+                    }
+                });
+
+                //종료일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
+                if (!isValidStr(sDay)) {
+                    eDate.datepicker({
+                        minDate: new Date(sDay.replace(/-/g, "/"))
+                    });
+                }
+                eDate.datepicker({
+                    language: 'ko',
+                    autoClose: true,
+                    onSelect: function () {
+                        datePickerSet(sDate, eDate);
+                    }
+                });
+
+                //한개짜리 달력 datepicker
+            } else if (!isValidStr(sDate)) {
+                var sDay = sDate.val();
+                if (flag && !isValidStr(sDay)) { //처음 입력 날짜 설정, update...			
+                    var sdp = sDate.datepicker().data("datepicker");
+                    sdp.selectDate(new Date(sDay.replace(/-/g, "/"))); //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+                }
+
+                sDate.datepicker({
+                    language: 'ko',
+                    autoClose: true
+                });
+            }
+
+
+            function isValidStr(str) {
+                if (str == null || str == undefined || str == "")
+                    return true;
+                else
+                    return false;
+            }
+        }
+    </script>
+</body>
+
+</html>
