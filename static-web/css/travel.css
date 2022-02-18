@@ -2,7 +2,7 @@
 
 body {
   margin: 0;
-
+  
 }
 
 header {
@@ -65,7 +65,6 @@ header {
   display: block;
   border-left: 1px solid rgba(184, 184, 184, 0.842);
   text-align: center;
-
   line-height: 30px;
 }
 
@@ -223,6 +222,13 @@ header {
   background-repeat: no-repeat;
 }
 
+.youtube {
+  background-image: url("../img/youtube.png");
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
 .login-bottom {
   width: 300px;
   height: auto;
@@ -330,37 +336,90 @@ header {
   display: none;
 }
 
+
 /* //////////////////////////////////////////// */
 
-section {
-  background-image: url("https://content.presspage.com/uploads/685/1920_solaceinsolo1.jpg?10000");
-  background-size: 100%;
-  background-repeat: no-repeat;
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  top: 0%;
-  z-index: 4;
-  vertical-align: baseline;
-  line-height: 100vh;
-}
-
-.inner_wrap {
+.container-warp{
   width: 100%;
   height: 100%;
-  position: relative;
 }
 
-.nav {
-  position: absolute;
+.contaiber-inner{
+  width: 1200px;
+  height: 980px;
+  margin: 0 auto;
+  text-align: center;
+}
+.locaetion-top {
+  width: 1100px;
+  height: 420px;
+  margin: 0 auto;
+}
+
+.locaetion-top > div{
+  display: inline-block;
+  height: 100%;
+  width: 250px;
+  font-size: 30px;
+  text-decoration: none;
+  color: rgb(39, 39, 39);
+}
+
+.locaetion-top > div > p {
+  margin: 17px 0;
+}
+
+.locaetion-top-img {
+  display: block;
+  width: 170px;
+  height: 300px;
+  text-indent: -200000px;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+
+
+.locaetion-top-img:hover {
+  width: 180px;
+  height: 320px;
+}
+
+#locaetion-top-seoul{
+  background: url(../img/seoul1.jpeg);
+  background-size: 100%;
+  
+}
+
+#locaetion-top-gyeonggido {
+  background: url(../img/gyeonggido.jpeg);
+  background-size: 100%;
+}
+
+#locaetion-top-gangwondo {
+  background: url(../img/gangwondo.jpeg);
+  background-size: 100%;
+
+}
+
+#locaetion-top-gyeongsangdo {
+  background: url(../img/gyeongsangdo.jpg);
+  background-size: 100%;
+}
+
+.search-inner{
+  width: 1100px;
+  height: 120px;
+  margin: 0 auto;
+  margin-top: 20px;
 }
 
 .search {
   position: absolute;
   width: 60vw;
   height: 7vh;
-  top: 50%;
   left: 20%;
+  
 }
 
 .search_input {
@@ -376,4 +435,225 @@ section {
   background-position: 1% 1vh;
   display: block;
 }
+
+
+.locaetion-bottem {
+  width: 1100px;
+  height: 420px;
+  margin: 0 auto;
+  
+}
+
+.locaetion-bottem > div{
+  display: inline-block;
+  height: 100%;
+  width: 250px;
+  font-size: 30px;
+  text-decoration: none;
+  color: rgb(39, 39, 39);
+}
+
+.locaetion-bottem > div > p {
+  margin: 17px 0;
+}
+
+.locaetion-bottem-img {
+  display: block;
+  width: 170px;
+  height: 300px;
+  text-indent: -200000px;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+.locaetion-bottem-img:hover {
+  width: 180px;
+  height: 320px;
+}
+
+#locaetion-bottem-jeollado{
+  background: url(../img/jeollado.jpeg);
+  background-size: 100%;
+  
+}
+
+#locaetion-bottem-chungcheongdo {
+  background: url(../img/chungcheong-do.jpeg);
+  background-size: 100%;
+}
+
+#locaetion-bottem-jejudo {
+  background: url(../img/jejudo.jpeg);
+  background-size: 100%;
+
+}
+
+#locaetion-bottem-gyeongsangdo {
+  background: url(../img/gyeongsangdo.jpg);
+  background-size: 100%;
+}
+
+.introduction-modal-warp {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  background-color: rgba(128, 128, 128, 0.603);
+  top: 0;
+  text-decoration: none;
+  color: #000;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.introduction-modal-inner {
+  height: 400px;
+  width: 1000px;
+  background-color: #f6f5efe8;
+}
+
+.introduction-modal-img{
+  display: inline-block;
+  width: 300px;
+  height: 400px;
+  /* background-color: #000; */
+  background: url(../img/jeju.jpeg);
+  background-size: 100%;
+  float: left;
+}
+
+.introduction-modal-text-inner{
+  display: inline-block;
+  width: 700px;
+  height: 400px;
+  border-radius: 5px;
+}
+
+.introduction-modal-text{
+  width: 600px;
+  height: 300px;
+  /* background-color: #c7c5b9e8; */
+  margin-left: 7%;
+  margin-top: 7%;
+  
+}
+
+.introduction-modal-texts1{
+  display: flex;
+  font-size: 32px;
+  padding-left: 20px;
+  font-family: 'Montserrat';
+}
+
+.introduction-modal-texts2{
+  display: flex;
+  font-size: 24px;
+  padding-left: 20px;
+  padding-top: 5px;
+}
+
+.introduction-modal-info{
+  display: flex;
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-right: 10px;
+}
+
+.introduction-modal-box{
+  width: 600px;
+  height: 40px;
+  position: relative;
+  margin-top: 70px;
+}
+
+.introduction-modal-social {
+  width: 150px;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  right: 0;
+}
+
+.introduction-modal-schedule {
+  width: 100px;
+  height: 30px;
+  float: right;
+  position: absolute;
+  left: 0;
+}
+
+.introduction-modal-schedule-text {
+  display: flex;
+  font-size: 15px;
+  padding-left: 20px;
+  padding-top: 5px;
+  text-decoration: none;
+  color: #000;
+}
+
+.modal-social-img{
+  width: 40px;
+  height: 40px;
+  text-indent: -2000px;
+}
+
+#google {
+  background-image: url("../img/google.png");
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-color: #fff;
+  border-radius: 2px;
+}
+
+#naver {
+  background-image: url("../img/naver.png");
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+
+
+#youtube {
+  background-image: url("../img/youtube.png");
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+
+
+.introduction-modal-hide {
+  /* display: none; */
+}
+
+.modal-close-btn{
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: url(../img/close.png);
+  background-size: 100%;
+  border: 0;
+  outline: 0;
+  margin-left: 660px;
+}
+
+.travel-schedule-left-top{
+  display: flex;
+  width: 270px;
+  height: 300px;
+  margin-top: 10px;
+}
+
+#travel-schedule-left-top-info-kor {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+
+
+
 
