@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고객센터</title>
+    <link rel="stylesheet" href="css/css.css">
+</head>
+
+<body>
+    <header>
+        <div class="header_inner">
+            <div class="logo">
+                <a href="#">logo</a>
+            </div>
+            <div class="maintitle">
+                <a href="#">maintitle</a>
+            </div>
+            <div class="nav">
+                <ul>
+                    <li><a href="#">여행지</a></li>
+                    <li><a href="#">숙박</a></li>
+                    <li><a href="#">교통</a></li>
+                    <li><a href="#">즐길거리</a></li>
+                    <li><a href="#">shop</a></li>
+                    <li><a href="#">고객센터</a></li>
+                </ul>
+            </div>
+            <div class="login">
+                <a href="#" class="login_btn">로그인</a>
+            </div>
+        </div>
+        <div class="login-modal" id="login-modal-hide">
+            <div class="login-modal-inside">
+                <a href="#" class="modal-logo">logo</a>
+                <form action="#" class="modal-form">
+                    <input type="email" name="id" placeholder="이메일을 입력하세요" class="login-input">
+                    <input type="password" name="password" placeholder="비밀번호를 입력하세요" class="login-input">
+                    <input type="submit" value="로그인" class="login-submit">
+                </form>
+                <div class="social">
+                    <a href="#" class="google">google</a>
+                    <a href="#" class="naver">naver</a>
+                    <a href="#" class="kakao">kakao</a>
+                </div>
+                <div class="login-bottom">
+                    <ul>
+                        <li><a href="#">비밀번호 찾기</a></li>
+                        <li><a href="#">아이디 찾기</a></li>
+                        <li><a href="#">회원가입</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="traffic-modal" id="traffic-modal-hide">
+            <div class="traffic-modal-inside">
+                <ul>
+                    <li class="traffic-btn"><a href="#">KTX</a></li>
+                    <li class="traffic-btn"><a href="#">항공</a></li>
+                    <li class="traffic-btn"><a href="#">렌터카</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div class="board_wrap">
+        <div class="board_title">
+            <strong>고객센터</strong>
+            <p>질문을 작성해주시면 빠르게 안내해드리겠습니다.</p>
+        </div>
+        <div class="board_write_wrap">
+            <div class="board_write">
+                <div class="title">
+                    <dl>
+                        <!-- 용어 설명 하는 목록-->
+                        <dt>제목</dt><!-- 용어 제목-->
+                        <dd><input type="text" placeholder="제목 입력"></dd><!-- 용어 내용-->
+                    </dl>
+                </div>
+                <div class="info">
+                    <dl>
+                        <!-- 용어 설명 하는 목록-->
+                        <dt>ID</dt><!-- 용어 제목-->
+                        <dd><input type="text" placeholder="아이디입력"></dd><!-- 용어 내용-->
+                    </dl>
+                    <dl>
+                        <!-- 용어 설명 하는 목록-->
+                        <dt>비밀번호</dt><!-- 용어 제목-->
+                        <dd><input type="password" placeholder="비밀번호 입력"></dd><!-- 용어 내용-->
+                    </dl>
+                </div>
+                <div class="upload">
+                    <form action="" method="post" enctype="multipart/form-data" name="">
+                        <input type="file" name="FileName">
+                    </form>
+                </div>
+                <div class="cont">
+                    <textarea placeholder="내용 입력"></textarea>
+                </div>
+            </div>
+            <div class="button_wrap">
+                <a href="view.html" class="on">등록</a>
+                <a href="list.html">취소</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
