@@ -2,7 +2,6 @@
 
 body {
   margin: 0;
-
 }
 
 header {
@@ -377,3 +376,8 @@ section {
   display: block;
 }
 
+.main-item {
+  width: 100vw;
+  height: 2500px;
+  background-color: #f2f2f2;
+}
