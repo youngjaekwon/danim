@@ -1,0 +1,613 @@
+header{
+    background-color: #f6f5ef;
+    height: 100px;
+    width: 100%;
+    z-index: 888;
+    font: normal 17px avenir, arial, georgia;
+    position: relative;
+}
+
+.header_inner{
+    width: 100%;
+    max-width: 1580px;
+    height: 100px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.logo{
+    width: 97.5px;
+    height: 75px;
+    position: absolute;
+    left:20px;
+    top: 15px;
+}
+
+.logo > a {
+    height: 100%;
+    width: 100%;
+    background-image: url(../img/logo.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    text-indent: -2000px;
+    display: block;
+}
+.maintitle {
+    width: 166.7px;
+    height: 86px;
+    position: absolute;
+    left: 130px;
+    top: 5px;
+  }
+
+  .maintitle > a{
+    height: 100%;
+    width: 100%;
+    background-image: url(../img/title.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    text-indent: -2000px;
+    display: block;
+  }
+  .logo {
+    width: 97.5px;
+    height: 75px;
+    position: absolute;
+    left: 20px;
+    top: 15px;
+  }
+  
+  .maintitle {
+    width: 166.7px;
+    height: 86px;
+    position: absolute;
+    left: 130px;
+    top: 5px;
+  }
+  
+  .nav {
+    position: absolute;
+    top: 35px;
+    left: 330px;
+    width: 350px;
+  }
+  
+  .nav > ul {
+    list-style: none;
+    display: flex;
+    /* justify-content: space-between; */
+  }
+  
+  .nav > ul > li {
+    text-align: center;
+  }
+  
+  .nav > ul > li > a {
+    text-decoration: none;
+    color: rgb(39, 39, 39);
+    font: normal 21px Avenir, Arial, georgia;
+    /* font-size: 18px; */
+    width: 100px;
+    height: 30px;
+    display: block;
+    border-left: 1px solid rgba(184, 184, 184, 0.842);
+    text-align: center;
+  
+    line-height: 30px;
+  }
+  
+  .nav > ul > li:first-child > a {
+    border-left: 0px;
+  }
+  
+  .nav > ul > li > a:hover {
+    background-color: rgba(184, 184, 184, 0.315);
+    background-size: 100%;
+  }
+  .login {
+    width: 70px;
+    height: 35px;
+    position: absolute;
+    right: 30px;
+    top: 45px;
+    border: 2px solid #000;
+    border-radius: 3px;
+    vertical-align: baseline;
+    line-height: 35px;
+    text-align: center;
+  }
+  
+  .login_btn {
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+    color: #000;
+    font-size: 15px;
+  }
+  
+  .login_btn:hover {
+    background-color: rgba(184, 184, 184, 0.315);
+  }
+
+  .login-modal {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(128, 128, 128, 0.603);
+    z-index: 999;
+    position: absolute;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .login-modal-inside {
+    height: 550px;
+    width: 500px;
+    background-color: #f6f5efe8;
+    border-radius: 5px;
+  }
+  
+  .modal-logo {
+    height: 130px;
+    width: 200px;
+    background-image: url(../img/title.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    text-indent: -2000px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 30px;
+  }
+  .modal-form {
+    display: block;
+    height: 200px;
+    width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .login-input {
+    width: 400px;
+    height: 35px;
+    text-align: center;
+    margin: 10px 0;
+  }
+  
+  .login-submit {
+    width: 80px;
+    height: 40px;
+    margin: 20px 0;
+    background-color: #f6f5efe8;
+    border: 0.5px solid black;
+    border-radius: 2px;
+  }
+  .login-submit:hover {
+    background-color: #e7e6e1;
+  }
+  
+  .social {
+    width: 150px;
+    height: 50px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .social > a {
+    width: 40px;
+    height: 40px;
+    text-indent: -2000px;
+    display: inline-block;
+  }
+  
+  .google {
+    background-image: url("../img/google.png");
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-color: #fff;
+    border-radius: 2px;
+  }
+  .naver {
+    background-image: url("../img/naver.png");
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  
+  .kakao {
+    background-image: url("../img/kakao.png");
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  .login-bottom {
+    width: 300px;
+    height: auto;
+    margin: 10px auto;
+    margin-top: 60px;
+  }
+  
+  .login-bottom > ul {
+    list-style: none;
+    display: flex;
+    /* justify-content: space-between; */
+    padding: 0;
+  }
+  
+  .login-bottom > ul > li {
+    text-align: center;
+  }
+  
+  .login-bottom > ul > li > a {
+    text-decoration: none;
+    color: rgb(39, 39, 39);
+    font: normal 14px Avenir, Arial, georgia;
+    /* font-size: 18px; */
+    width: 100px;
+    height: 30px;
+    display: block;
+    border-left: 1px solid rgba(184, 184, 184, 0.842);
+    text-align: center;
+  
+    line-height: 30px;
+  }
+  
+  .login-bottom > ul > li:first-child > a {
+    border-left: 0px;
+  }
+  
+  .login-bottom > ul > li > a:hover {
+    background-color: rgba(184, 184, 184, 0.315);
+    background-size: 100%;
+  }
+  
+  .traffic-modal {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    background-color: rgba(128, 128, 128, 0.603);
+    top: 0;
+    text-decoration: none;
+    color: #000;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .traffic-modal-inside {
+    height: 200px;
+    width: 600px;
+    background-color: #f6f5efe8;
+    border-radius: 5px;
+    margin-bottom: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .traffic-modal-inside > ul {
+    width: 450px;
+    margin: 0 auto;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .traffic-btn {
+    display: inline-block;
+    width: 120px;
+    height: 100px;
+    text-align: center;
+  }
+  
+  .traffic-btn > a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 100px;
+    text-decoration: none;
+    color: rgb(39, 39, 39);
+    background-color: #fffcec;
+    font: Avenir, Arial, georgia;
+    font-size: 25px;
+    border-radius: 5px;
+  }
+  
+  .traffic-btn > a:hover {
+    background-color: #e2e0d1;
+  }
+  
+  #login-modal-hide {
+    display: none;
+  }
+  
+  #traffic-modal-hide {
+    display: none;
+  }
+/* *{
+    margin: 0;
+    padding: 0;
+} */
+
+/* html{
+    font-size: 10px;
+} */
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+ul, li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.board_wrap{
+    width: 1000px;
+    margin: 100px auto
+}
+
+.board_title{
+    margin-bottom: 30px;
+}
+
+.board_title strong{
+    font-size:3rem; /*rem = 최상위 태그(html) 크기에 곱하기 3 */
+}
+
+.board_title p{
+    margin-top: 5px;
+    font-size: 1.4rem;
+}
+.button_wrap{
+    margin: 30px;
+    text-align: center;
+    font-size: 0;
+}
+
+.button_wrap a {
+    display: inline-block;
+    margin-left: 10px;
+    min-width: 80px; /*최소 가로길이*/ 
+    padding: 10px; /*상하좌우*/
+    border:1px solid #000;
+    font-size: 1.4rem;
+}
+.button_wrap a:first-child {
+    margin-left: 0;
+}
+
+.button_wrap a.on{
+    background-color: #000;
+    color: #fff;
+}
+.board_list{
+    width:100%;
+    border-top: 2px solid #000;
+}
+
+.board_list > div {
+    border-bottom: 1px solid #ddd;
+    font-size: 0; /*<- 0으로 해주는 이유는 인라인 블록이 띄어쓰는 특징이 있어서 인라인 블록의 부모의 폰트 사이즈를 0으로해준다*/
+}
+.board_list > div.top{
+    border-bottom: 1px solid #999;
+}
+
+.board_list > div:last-child {
+    border-bottom: 1px solid #000;
+    
+}
+
+.board_list >div >div { /*> div > div -> 각각의 한줄한줄 칸*/
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 1.4rem; /*<- 부모 폰트 사이즈가 0이기때문에 여기에 1.4rem 들어감*/
+}
+
+.board_list >div.top >div{
+font-weight: 600;
+}
+
+.board_list .num{
+    width: 10%;
+}
+.board_list .title{
+    width: 60%;
+    text-align: left;
+}
+
+.board_list .top .title{
+    text-align: center;
+}
+
+
+.board_list .writer{
+    width: 10%;
+}
+.board_list .date{
+    width: 10%;
+}
+.board_list .count{
+    width: 10%;
+}
+
+.board_page {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0;   
+}
+.board_page a {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    box-sizing: border-box; /*32px 안에서 패딩 상단이 올라가라~*/
+    vertical-align: middle;
+    line-height: 100%;
+    border: 1px solid #ddd;
+    border-left: 0; /* 각 블락별로 회색줄이 겹쳐서 차이가나서 왼쪽 줄은 없앰*/
+}
+.board_page a.bt{
+    
+    font-size: 1.2rem;
+    letter-spacing: -1px;
+}
+
+.board_page a.num {
+    
+    font-size: 1.4rem;
+}
+
+.board_page a.num.on {
+    border-color: #000;
+    background: #000;
+    color: #fff
+}
+
+.board_page a:first-child{
+    border-left: 1px solid #ddd;
+}
+
+.board_view{
+    width: 100%;
+    border-top: 2px solid #000;
+}
+.board_view .title{
+    padding: 20px 15px;
+    border-bottom: 1px dashed #ddd;
+    font-size: 2rem;
+}
+.board_view .info{
+    padding: 15px;
+    border-bottom: 1px solid #999;
+    font-size: 0; /*이미 저장되있는 띄어쓰기를 없애고 내가 설정한 값으로 하기위해 0으로*/
+}
+
+.board_view .info dl{
+    position: relative;
+    display: inline-block;
+    padding: 0 20px;
+}
+
+.board_view .info dl:first-child{
+    padding-left: 0;
+}
+
+.board_view .info dl::before {
+    content: ""; /*내용이 빈칸이여도 말머리 앞머리? 속성을 써놓는다 안쓰면 안생김*/
+    position: absolute; /*개별적인 자기 위치를 가지기위해 릴레이티브 된 요소에 맞춰 간다*/
+    top: 1px;
+    left: 0;
+    display: block; /*자신만의 영역을 가지기 위해 블락*/
+    width:1px;
+    height: 13px;
+    background: #ddd;
+}
+
+.board_view .info dl:first-child::before{
+    display: none;
+}
+
+.board_view .info dl dt,
+.board_view .info dl dd {
+    display: inline-block;
+    font-size: 1.4rem;
+}
+.board_view .info dl dt{
+
+}
+.board_view .info dl dd{
+    margin-left: 10px;
+    color: #777;
+}
+
+.board_view .cont {
+    padding: 15px;
+    border: 1px solid #000;
+    line-height: 160%;
+    font-size: 1.4rem;
+}
+/*////////////////////////////////////////////////////////////글등록////////////////////////////////////////////////////////////////////*/
+.board_write {
+  border-top: 2px solid #000;
+}
+.board_write .title
+.board_write .info {
+  padding: 15px;
+}
+.board_write .info {
+  border-top: 1px dashed #ddd;
+  border-bottom: 1px solid #000;
+  font-size: 0;
+}
+.board_write .cont{
+  border: 1px solid #000;
+}
+
+.upload {
+  padding: 5px;
+}
+
+.board_write .cont textarea {
+  display: block;
+  width: 100%;
+  height: 300px;
+  padding: 15px;
+  box-sizing: border-box;
+  border: 0;
+  resize: vertical;
+}
+
+.board_write .title dl {
+  font-size: 0;
+}
+
+.board_write .info dl {
+  display: inline-block;
+  width: 50%;
+  vertical-align: middle;
+  
+}
+
+.board_write .title dt,
+.board_write .title dd,
+.board_write .info dt,
+.board_write .info dd {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 1.4rem;
+}
+
+.board_write .title dt,
+.board_write .info dt {
+  width: 100px;
+}
+
+.board_write .title dd {
+  margin-left: 0;
+  width: calc(100% - 100px);
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.board_write .title input[type="text"],
+.board_write .info input[type="text"],
+.board_write .info input[type="password"]{
+ padding: 10px;
+ box-sizing: border-box;
+}
+
+.board_write .title input[type="text"]{
+width:80%;
+}
+
+/* ////////////..... /////////////////////////////////////////////////교통//////////////////////////////////////////////////////////////////////////////// */

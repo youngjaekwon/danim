@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="../css/hotel-hotels.css" />
+    <!-- fontawesome v5 cdn -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+    />
+
+    <title>다님 : 여행을 다니다</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="header_inner">
+        <div class="logo">
+          <a href="#">logo</a>
+        </div>
+        <div class="title">
+          <a href="#">title</a>
+        </div>
+        <div class="nav">
+          <ul>
+            <li><a href="#">여행지</a></li>
+            <li><a href="#">숙박</a></li>
+            <li><a href="#">교통</a></li>
+            <li><a href="#">즐길거리</a></li>
+            <li><a href="#">shop</a></li>
+            <li><a href="#">고객센터</a></li>
+          </ul>
+        </div>
+        <div class="login">
+          <a href="#" class="login_btn">로그인</a>
+        </div>
+      </div>
+      <div class="login-modal" id="login-modal-hide">
+        <div class="login-modal-inside">
+          <a href="#" class="modal-logo">logo</a>
+          <form action="#" class="modal-form">
+            <input
+              type="email"
+              name="id"
+              placeholder="이메일을 입력하세요"
+              class="login-input"
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="비밀번호를 입력하세요"
+              class="login-input"
+            />
+            <input type="submit" value="로그인" class="login-submit" />
+          </form>
+          <div class="social">
+            <a href="#" class="google">google</a>
+            <a href="#" class="naver">naver</a>
+            <a href="#" class="kakao">kakao</a>
+          </div>
+          <div class="login-bottom">
+            <ul>
+              <li><a href="#">비밀번호 찾기</a></li>
+              <li><a href="#">아이디 찾기</a></li>
+              <li><a href="#">회원가입</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="traffic-modal" id="traffic-modal-hide">
+        <div class="traffic-modal-inside">
+          <ul>
+            <li class="traffic-btn"><a href="#">KTX</a></li>
+            <li class="traffic-btn"><a href="#">항공</a></li>
+            <li class="traffic-btn"><a href="#">렌터카</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <section class="item1">
+      <div class="item1-top">
+        <div class="item1-top-left">
+          <a href="#">대한민국</a>
+          <span> > </span>
+          <a href="#">서울</a>
+          <span> > </span>
+          <a href="#">서울 호텔</a>
+        </div>
+        <div class="item1-top-right">
+          <span>베스트 서울 호텔</span>
+        </div>
+      </div>
+      <div class="item1-bottom">
+        <div class="item1-bottom-left">
+          <div class="map">
+            <a href="#" class="map-link">지도 api 들어가는 곳</a>
+            <a href="#" class="view-map">
+              <span class="fas fa-map-marker-alt"></span>
+              지도 보기</a
+            >
+          </div>
+        </div>
+        <div class="item1-bottom-right">
+          <div class="hotels-title">
+            <h1>서울 호텔 및 최고의 숙소</h1>
+          </div>
+          <div class="book-info">
+            <a href="#" class="check-in">
+              <div class="check-in-front">
+                <span><i class="far fa-calendar-check"></i></span>
+                <div>
+                  <p>체크인</p>
+                  <span>--. --. --. (일)</span>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="check-out">
+              <div class="check-out-front">
+                <span><i class="far fa-calendar-check"></i></span>
+                <div>
+                  <p>체크아웃</p>
+                  <span>--. --. --. (일)</span>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="number">
+              <div class="number-front">
+                <span><i class="fas fa-user-friends"></i></span>
+                <div>
+                  <p>인원수</p>
+                  <span>객실 1개, 성인 2명, 아동 0명</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="main-item">
+      <div class="main-item-inner">
+        <div class="main-left">
+          <div class="main-left-inner">
+            <div class="price">
+              <p>가격</p>
+              <div class="price-select">
+                <p>₩0 - ₩362,180</p>
+                <input class="slider_range" type="range" value="500" min="0" max="1000"></input>
+              </div>
+            </div>
+            <div class="popular">
+              <p>인기</p>
+              <div class="popular-select">
+                <div class="five-stars">
+                  <input type="checkbox" name="five-stars" value="five-stars">
+                  <span>5성급</span>
+                  <span>38</span>
+                </div>
+                <div class="four-user-rating">
+                  <input type="checkbox" name="four-user-rating" value="four-user-rating">
+                  <span class="ur">●●●●○</span>
+                  <span>이상</span>
+                  <span>1103</span>
+                </div>
+                <div class="four-stars">
+                  <input type="checkbox" name="four-stars" value="four-stars">
+                  <span>4성급</span>
+                  <span>104</span>
+                </div>
+                <div class="include-breakfast">
+                  <input type="checkbox" name="include-breakfast" value="include-breakfast">
+                  <span>조식 포함</span>
+                  <span>450</span>
+                </div>
+              </div>
+            </div>
+            <div class="hotel-type">
+              <p>시설 타입</p>
+              <div class="select-hotel-type">
+                <div class="select-hotel">
+                  <input type="checkbox" name="hotel-type" value="hotel">
+                  <span>호텔</span>
+                  <span>613</span>
+                </div>
+                <div class="select-pension">
+                  <input type="checkbox" name="hotel-type" value="pension">
+                  <span>펜션</span>
+                  <span>92</span>
+                </div>
+                <div class="select-guest-house">
+                  <input type="checkbox" name="hotel-type" value="guest-house">
+                  <span>게스트 하우스</span>
+                  <span>579</span>
+                </div>
+                <div class="select-etc">
+                  <input type="checkbox" name="hotel-type" value="etc">
+                  <span>기타 숙박 시설</span>
+                  <span>175</span>
+                </div>
+              </div>
+            </div>
+            <div class="hotel-option">
+              <p>부대시설</p>
+              <div class="select-hotel-option">
+                <div>
+                  <input type="checkbox" name="hotel-option" value="free-wifi">
+                  <span>무료 와이파이</span>
+                  <span>1606</span>
+                </div>
+                <div>
+                  <input type="checkbox" name="hotel-option" value="include-breakfast">
+                  <span>조식 포함</span>
+                  <span>450</span>
+                </div>
+                <div>
+                  <input type="checkbox" name="hotel-option" value="pool">
+                  <span>수영장</span>
+                  <span>62</span>
+                </div>
+                <div>
+                  <input type="checkbox" name="hotel-option" value="free-parking">
+                  <span>무료 주차</span>
+                  <span>548</span>
+                </div>
+                <a href="#" class="all-hotel-option">모두 보기</a>
+              </div>
+            </div>
+            <div class="hotel-location">
+              <p>특정지역</p>
+              <div class="select-hotel-location">
+                <div>
+                  <input type="checkbox" name="hotel-location" value="value1">
+                  <span>중구</span>
+                  <span>362</span>
+                </div>
+                <div>
+                  <input type="checkbox" name="hotel-location" value="value2">
+                  <span>종로구</span>
+                  <span>348</span>
+                </div>
+                <div>
+                  <input type="checkbox" name="hotel-location" value="value3">
+                  <span>마포구</span>
+                  <span>409</span>
+                </div>
+                <div>
+                  <input type="checkbox" name="hotel-location" value="free-parking">
+                  <span>무료 주차</span>
+                  <span>548</span>
+                </div>
+                <a href="#" class="all-hotel-location">모두 보기</a>
+              </div>
+            </div>
+            <div class="user-rating">
+              <p>여행자 평가</p>
+              <div class="select-user-rating">
+                <div>
+                  <input type="checkbox" name="user-rating" value="5">
+                  <span class="ur">●●●●●</span>
+                  <span>264</span>
+                </div>
+                <div>
+                  <input type="checkbox" name="user-rating" value="4">
+                  <span class="ur">●●●●○</span>
+                  <span>이상</span>
+                  <span>1103</span>
+                </div>
+                <div>
+                  <input type="checkbox" name="user-rating" value="3">
+                  <span class="ur">●●●○○</span>
+                  <span>이상</span>
+                  <span>1574</span>
+                </div>
+                <div>
+                  <input type="checkbox" name="user-rating" value="2">
+                  <span class="ur">●●○○○</span>
+                  <span>이상</span>
+                  <span>1650</span>
+                </div>
+              </div>
+            </div>
+            <div class="hotel-class" id="last-item">
+              <p>호텔 등급</p>
+              <div class="select-hotel-class">
+                <div>
+                  <input type="checkbox" name="hotel-class" value="5">
+                  <span>5성급</span>
+                  <span>38</span>
+                </div>
+                <div>
+                  <input type="checkbox" name="hotel-class" value="4">
+                  <span>4성급</span>
+                  <span>104</span>
+                </div>
+                <div>
+                  <input type="checkbox" name="hotel-class" value="3">
+                  <span>3성급</span>
+                  <span>363</span>
+                </div>
+                <div>
+                  <input type="checkbox" name="hotel-class" value="2">
+                  <span>2성급</span>
+                  <span>1019</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="main-right">
+          <div class="main-right-top">
+            <div id="hotel-count" class="">
+              서울의 시설 <span>3,384곳</span>
+            </div>
+            <div id="hotel-count-selected" class="hide">
+              지정하신 조건을 만족하는 <span>3,384곳의 시설 중 252곳</span>
+              입니다. <a href="#">필터 모두 해제</a>
+            </div>
+            <div class="sort">
+              <div>
+                정렬순서 : 
+                <select name="sort" id="sort">
+                  <option value="cpf">가성비 최고</option>
+                  <option value="cost">요금 (낮은순)</option>
+                  <option value="user-rating">여행자 평가</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div id="options" class="hide">
+              <a href="#">
+                5성급 <span>X</span>
+              </a>
+              <a href="#">
+                5성급 <span>X</span>
+              </a>
+          </div>
+          <div class="main-list">
+            <div class="hotel-item">
+              <a href="#" class="hotel-img"></a>
+              <div class="hotel-item-left">
+                <a href="#" class="hotel-title">밀레니엄 힐튼 서울</a>
+                <a href="#" class="hotels-com"></a>
+                <a href="#" class="price-block">₩195,414</a>
+                <a href="#" class="view-price">특가보기</a>
+              </div>
+              <div class="hotel-item-right">
+                <a href="#">
+                  <span class="hotel-item-ur">●●●●○</span>2,539건의 리뷰
+                </a>
+                <div>서울에서 필터와 일치하는 가성비 최고 호텔 중 1위</div>
+                <div>
+                  <div><i class="fas fa-wifi"></i> 무료 와이파이</div>
+                  <div><i class="fas fa-swimmer"></i> 수영장</div>
+                </div>
+              </div>
+            </div>
+            <div class="hotel-item">
+              <a href="#" class="hotel-img"></a>
+              <div class="hotel-item-left">
+                <a href="#" class="hotel-title">밀레니엄 힐튼 서울</a>
+                <a href="#" class="hotels-com"></a>
+                <a href="#" class="price-block">₩195,414</a>
+                <a href="#" class="view-price">특가보기</a>
+              </div>
+              <div class="hotel-item-right">
+                <a href="#">
+                  <span class="hotel-item-ur">●●●●○</span>2,539건의 리뷰
+                </a>
+                <div>서울에서 필터와 일치하는 가성비 최고 호텔 중 1위</div>
+                <div>
+                  <div><i class="fas fa-wifi"></i> 무료 와이파이</div>
+                  <div><i class="fas fa-swimmer"></i> 수영장</div>
+                </div>
+              </div>
+            </div>
+            <div class="hotel-item">
+              <a href="#" class="hotel-img"></a>
+              <div class="hotel-item-left">
+                <a href="#" class="hotel-title">밀레니엄 힐튼 서울</a>
+                <a href="#" class="hotels-com"></a>
+                <a href="#" class="price-block">₩195,414</a>
+                <a href="#" class="view-price">특가보기</a>
+              </div>
+              <div class="hotel-item-right">
+                <a href="#">
+                  <span class="hotel-item-ur">●●●●○</span>2,539건의 리뷰
+                </a>
+                <div>서울에서 필터와 일치하는 가성비 최고 호텔 중 1위</div>
+                <div>
+                  <div><i class="fas fa-wifi"></i> 무료 와이파이</div>
+                  <div><i class="fas fa-swimmer"></i> 수영장</div>
+                </div>
+              </div>
+            </div>
+            <div class="hotel-item">
+              <a href="#" class="hotel-img"></a>
+              <div class="hotel-item-left">
+                <a href="#" class="hotel-title">밀레니엄 힐튼 서울</a>
+                <a href="#" class="hotels-com"></a>
+                <a href="#" class="price-block">₩195,414</a>
+                <a href="#" class="view-price">특가보기</a>
+              </div>
+              <div class="hotel-item-right">
+                <a href="#">
+                  <span class="hotel-item-ur">●●●●○</span>2,539건의 리뷰
+                </a>
+                <div>서울에서 필터와 일치하는 가성비 최고 호텔 중 1위</div>
+                <div>
+                  <div><i class="fas fa-wifi"></i> 무료 와이파이</div>
+                  <div><i class="fas fa-swimmer"></i> 수영장</div>
+                </div>
+              </div>
+            </div>
+            <div class="hotel-item">
+              <a href="#" class="hotel-img"></a>
+              <div class="hotel-item-left">
+                <a href="#" class="hotel-title">밀레니엄 힐튼 서울</a>
+                <a href="#" class="hotels-com"></a>
+                <a href="#" class="price-block">₩195,414</a>
+                <a href="#" class="view-price">특가보기</a>
+              </div>
+              <div class="hotel-item-right">
+                <a href="#">
+                  <span class="hotel-item-ur">●●●●○</span>2,539건의 리뷰
+                </a>
+                <div>서울에서 필터와 일치하는 가성비 최고 호텔 중 1위</div>
+                <div>
+                  <div><i class="fas fa-wifi"></i> 무료 와이파이</div>
+                  <div><i class="fas fa-swimmer"></i> 수영장</div>
+                </div>
+              </div>
+            </div>
+            <div class="hotel-item">
+              <a href="#" class="hotel-img"></a>
+              <div class="hotel-item-left">
+                <a href="#" class="hotel-title">밀레니엄 힐튼 서울</a>
+                <a href="#" class="hotels-com"></a>
+                <a href="#" class="price-block">₩195,414</a>
+                <a href="#" class="view-price">특가보기</a>
+              </div>
+              <div class="hotel-item-right">
+                <a href="#">
+                  <span class="hotel-item-ur">●●●●○</span>2,539건의 리뷰
+                </a>
+                <div>서울에서 필터와 일치하는 가성비 최고 호텔 중 1위</div>
+                <div>
+                  <div><i class="fas fa-wifi"></i> 무료 와이파이</div>
+                  <div><i class="fas fa-swimmer"></i> 수영장</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="page-num">
+            <a href="#" class="prev">이전</a>
+            <div class="pageNumbers">
+              <a href="#">1</a>
+              <a href="#">2</a>
+              <a href="#">3</a>
+              <a href="#">4</a>
+              <a href="#">5</a>
+              <a href="#">6</a>
+              <a href="#">...</a>
+            </div>
+            <a href="#" class="next">다음</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
