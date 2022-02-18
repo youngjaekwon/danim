@@ -331,53 +331,52 @@ header {
 
 /* //////////////////////////////////////////// */
 
-section {
-  background-image: url("https://content.presspage.com/uploads/685/1920_solaceinsolo1.jpg?10000");
-  background-size: 100%;
-  background-repeat: no-repeat;
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  top: 0%;
-  z-index: 4;
-  vertical-align: baseline;
-  line-height: 100vh;
-}
-
-.inner_wrap {
+.main {
   width: 100%;
+  /* max-width: 1580px; */
   height: 100%;
-  position: relative;
 }
 
-.nav {
-  position: absolute;
-}
-
-.search {
-  position: absolute;
-  width: 60vw;
-  height: 7vh;
-  top: 50%;
-  left: 20%;
-}
-
-.search_input {
-  width: 100%;
+.main-inner {
+  width: 1580px;
   height: 100%;
-  text-align: center;
-  background-color: rgba(204, 204, 204, 0.767);
-  border: 2px solid rgb(119, 119, 119);
-  font-size: 30px;
-  background-image: url(../img/search-solid.svg);
-  background-repeat: no-repeat;
-  background-size: 4.7%;
-  background-position: 1% 1vh;
+  font-family: Arial, Tahoma, Bitstream Vera Sans, sans-serif;
+  margin: 0 auto;
+  padding-top: 20px;
+  display: flex;
+}
+
+.main-left {
+  width: 550px;
+  height: 100%;
+  background-color: cadetblue;
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+.main-left > span {
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.main-right {
+  width: 1010px;
+  height: 100%;
+  background-color: darksalmon;
+  padding-top: 20px;
+}
+
+.basket-title {
+  font-size: 20px;
+  display: flex;
+}
+
+.title-unit {
   display: block;
+  width: 570px;
 }
 
-.main-item {
-  width: 100vw;
-  height: 2500px;
-  background-color: #f2f2f2;
+.title-quantity {
+  display: block;
+  width: 205px;
 }

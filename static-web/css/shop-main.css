@@ -331,53 +331,224 @@ header {
 
 /* //////////////////////////////////////////// */
 
-section {
-  background-image: url("https://content.presspage.com/uploads/685/1920_solaceinsolo1.jpg?10000");
-  background-size: 100%;
-  background-repeat: no-repeat;
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  top: 0%;
-  z-index: 4;
-  vertical-align: baseline;
-  line-height: 100vh;
-}
-
-.inner_wrap {
+.main {
   width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.nav {
-  position: absolute;
-}
-
-.search {
-  position: absolute;
-  width: 60vw;
-  height: 7vh;
-  top: 50%;
-  left: 20%;
-}
-
-.search_input {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  background-color: rgba(204, 204, 204, 0.767);
-  border: 2px solid rgb(119, 119, 119);
-  font-size: 30px;
-  background-image: url(../img/search-solid.svg);
-  background-repeat: no-repeat;
-  background-size: 4.7%;
-  background-position: 1% 1vh;
-  display: block;
-}
-
-.main-item {
-  width: 100vw;
-  height: 2500px;
+  /* max-width: 1580px; */
+  height: 1700px;
   background-color: #f2f2f2;
+}
+
+.main-inner {
+  width: 1580px;
+  height: 100%;
+  background-color: #fff;
+  font-family: Arial, Tahoma, Bitstream Vera Sans, sans-serif;
+  margin: 0 auto;
+}
+
+.main-title {
+  height: 200px;
+  width: 100%;
+  line-height: 200px;
+  text-align: center;
+}
+
+.main-title > a {
+  text-decoration: none;
+  color: black;
+}
+
+.main-title h2 {
+  font-size: 50px;
+  margin: 0;
+  color: skyblue;
+}
+
+.main-category {
+  width: 1000px;
+  height: 100px;
+  border-bottom: 2px solid #999;
+  margin: 0 auto;
+}
+
+.main-category ul {
+  width: 800px;
+  height: 40px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 100px;
+  line-height: 40px;
+}
+
+.main-category li {
+  display: block;
+  font-size: 22px;
+  width: 200px;
+  text-align: center;
+}
+
+.main-category a {
+  text-decoration: none;
+  color: #000;
+  margin-left: 5px;
+}
+
+.main-category a:hover {
+  text-decoration: underline;
+}
+
+.main-hot-best {
+  height: 600px;
+  width: 1000px;
+  margin: 0 auto;
+  /* background-color: thistle; */
+  margin-bottom: 50px;
+}
+
+.main-hot-best-title {
+  width: 1000px;
+  height: 200px;
+  font-size: 50px;
+  line-height: 200px;
+  text-align: center;
+  color: skyblue;
+}
+
+.hot-best-slider {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.hot-best-slider-rail {
+  width: 700px;
+  height: 330px;
+  overflow: hidden;
+}
+
+.hot-best-slider-inner {
+  width: 1920px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.hot-best-prv,
+.hot-best-next {
+  height: 330px;
+  width: 100px;
+  text-align: center;
+  line-height: 330px;
+}
+
+.hot-best-prv-btn,
+.hot-best-next-btn {
+  font-size: 40px;
+  color: #000;
+}
+
+.hot-best-item {
+  width: 220px;
+  height: 330px;
+  /* background-color: burlywood; */
+  display: block;
+  text-decoration: none;
+  color: #000;
+  font-size: 17px;
+}
+
+.hot-best-item > div:first-child {
+  width: 220px;
+  height: 220px;
+  margin-bottom: 10px;
+}
+
+.hot-item-img1 {
+  background-image: url("http://vaska.kr/web/product/big/202112/043875113f91101962ab335fa79460b2.jpeg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.hot-item-img2 {
+  background-image: url("http://vaska.kr/web/product/big/202109/eb38db1ae1a460e14fdb5c5b44534917.jpeg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.main-sale {
+  height: 600px;
+  width: 1000px;
+  margin: 0 auto;
+  /* background-color: thistle; */
+}
+
+.main-sale-title {
+  width: 1000px;
+  height: 200px;
+  font-size: 50px;
+  line-height: 200px;
+  text-align: center;
+  color: skyblue;
+}
+
+.sale-slider {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.sale-slider-rail {
+  width: 700px;
+  height: 330px;
+  overflow: hidden;
+}
+
+.sale-slider-inner {
+  width: 1920px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sale-prv,
+.sale-next {
+  height: 330px;
+  width: 100px;
+  text-align: center;
+  line-height: 330px;
+}
+
+.sale-prv-btn,
+.sale-next-btn {
+  font-size: 40px;
+  color: #000;
+}
+
+.sale-item {
+  width: 220px;
+  height: 330px;
+  /* background-color: burlywood; */
+  display: block;
+  text-decoration: none;
+  color: #000;
+  font-size: 17px;
+}
+
+.sale-item > div:first-child {
+  width: 220px;
+  height: 220px;
+  margin-bottom: 10px;
+}
+
+.sale-item-img1 {
+  background-image: url("http://vaska.kr/web/product/big/202112/043875113f91101962ab335fa79460b2.jpeg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.sale-item-img2 {
+  background-image: url("http://vaska.kr/web/product/big/202109/eb38db1ae1a460e14fdb5c5b44534917.jpeg");
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
