@@ -80,7 +80,7 @@
       <div class="innerSignout" id="signoutModal" style="display: none">
         <div class="innerSignout">
           <p class="innerSignout">회원 탈퇴 하시겠습니까?</p>
-          <form action="#" name="signout" onsubmit="return isValidSignout('signout')">
+          <form action="/doSignout" name="signout" method="post" onsubmit="return isValidSignout('signout')">
             <label for="signout-password" class="innerSignout">Password</label>
             <input type="password" name="signout-password" id="signout-password" class="innerSignout" />
             <input type="submit" id="signout-submit" value="탈퇴" class="innerSignout">

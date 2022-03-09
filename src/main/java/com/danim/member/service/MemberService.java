@@ -91,4 +91,9 @@ public class MemberService {
             return member.getEmail(); // 같으면 회원번호 반환
         } else return null; // 같지 않으면 null 반환
     }
+
+    // 회원 탈퇴
+    public boolean doSignout(String memnum){
+        return (memberDao.delete(memnum) > 0);
+    }
 }

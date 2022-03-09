@@ -70,8 +70,7 @@ public class MemberController {
     public String isDuplicatedEmail(@RequestParam Map<String, String> param){
         // 이메일: email1@email2
         String email = param.get("email1") + "@" + param.get("email2");
-        if (memberService.isDuplicatedEmail(email)) return "true"; // 이메일 중복됨
-        else return "false"; // 이메일 중복안됨
+        return (memberService.isDuplicatedEmail(email)) ? "true" : "false"; // 이메일 중복여부 반환
     }
 
     // 로그인
@@ -132,8 +131,7 @@ public class MemberController {
         String email = param.get("email"); // 입력된 email값
         String mobile = param.get("mobile"); // 입력된 mobile값
         String memnum;
-        if ((memnum = memberService.doFindPwd(email, mobile)) != null) return memnum; // 비밀번호 찾기 성공, 회원번호 반환
-        else return "failed"; // 비밀번호 찾기 실패
+        return ((memnum = memberService.doFindPwd(email, mobile)) != null) ?  memnum : "failed"; // 비밀번호 찾기 성공시 회원번호 반환
     }
 
     // 비밀 번호 변경
@@ -162,6 +160,42 @@ public class MemberController {
         String email;
         if ((email = memberService.doFindEmail(name, mobile)) != null) return email; // 아이디 찾기 성공, 아이디 반환
         else return "failed"; // 아이디 찾기 실패
+    }
+
+    // 로그아웃
+    @RequestMapping(value = "/doLogout", method = RequestMethod.GET)
+    public String doLogout(HttpSession session) {
+        session.removeAttribute("user");
+        return "redirect:/"; // 메인 페이지로 이동
+    }
+
+    // 회원탈퇴
+    @RequestMapping(value = "/doSignout", method = RequestMethod.POST)
+    public String doSignout(HttpServletRequest httpServletRequest, HttpSession session, RedirectAttributes redirectAttributes) {
+        // 로그인된 회원번호
+        String memnum = (String) session.getAttribute("user");
+        // 로그인된 유저
+        Member member = memberService.selectMember(memnum);
+        // 입력된 비밀번호
+        String pwd = httpServletRequest.getParameter("signout-password");
+        // 회원탈퇴 결과
+        boolean result = false;
+
+        // 입력된 비밀번호 확인
+        if (member.getPwd() != null && member.getPwd().equals(pwd)){
+            // 회원탈퇴 성공시 세션 제거, 성공여부 추가
+            if (memberService.doSignout(memnum)){
+                result = true;
+                session.removeAttribute("user");
+                redirectAttributes.addFlashAttribute("signout", "passed");
+            } else {
+                redirectAttributes.addFlashAttribute("signout", "failed");
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("signout", "pwdMismatch");
+        }
+
+        return result? "redirect:/" : "redirect:" + httpServletRequest.getHeader("Referer"); // 성공: 메인 페이지로 이동/실패: 이전 페이지로 이동
     }
 }
 
