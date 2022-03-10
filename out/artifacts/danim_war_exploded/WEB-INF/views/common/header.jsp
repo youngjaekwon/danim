@@ -42,6 +42,11 @@
         <div class="header-search" style="display: none">
             <input class="header-search-input" type="text">
         </div>
+        <script>
+            // index 페이지 이외에서 검색창 활성화
+            const thisURI = '<%=request.getRequestURI()%>'
+            if (thisURI != '/WEB-INF/views/index.jsp') $('.header-search').eq(0).prop("style", "");
+        </script>
         <!-- 로그인 전 -->
         <div class="before-login" id="beforeLogin">
             <a href="javascript:openLoginModal()" class="login_btn">로그인</a>
@@ -57,7 +62,7 @@
                 <a href="/mypage" class="mypage-btn">마이페이지</a>
             </div>
             <div class="logout">
-                <a href="#" class="logout-btn">로그아웃</a>
+                <a href="/doLogout" class="logout-btn">로그아웃</a>
             </div>
         </div>
     </div>
@@ -184,22 +189,13 @@
             <a href="#" class="change-pwd-close"><i class="far fa-times-circle"></i></a>
         </div>
     </div>
-<%--    <!-- 교통 모달 -->--%>
-<%--    <div class="traffic-modal" style="display: none">--%>
-<%--        <div class="traffic-modal-inside">--%>
-<%--            <ul>--%>
-<%--                <li class="traffic-btn"><a href="#">KTX</a></li>--%>
-<%--                <li class="traffic-btn"><a href="#">항공</a></li>--%>
-<%--                <li class="traffic-btn"><a href="#">렌터카</a></li>--%>
-<%--            </ul>--%>
-<%--        </div>--%>
-<%--    </div>--%>
 </header>
 <script>
     let loginCheck = '${loginCheck}'; // 로그인 여부
     let signup = '${signup}'; // 회원가입 결과
     let user = '${user}'; // 로그인된 회원번호
     let doChangePwd = '${doChangePwd}'; // 비밀번호 변경 결과
+    let signout = '${signout}'; // 회원 탈퇴 결과
     // 로그인 실패시
     if (loginCheck == 'failed') alert("로그인 실패");
     else if (loginCheck == 'false'){
@@ -230,6 +226,14 @@
         alert("비밀번호를 성공적으로 변경했습니다.")
     } else if (doChangePwd == 'failed') {
         alert("비밀번호 변경에 실패했습니다.")
+    }
+
+    if (signout == 'passed'){
+        alert("회원탈퇴에 성공했습니다.")
+    } else if (signout == 'failed'){
+        alert("회원탈퇴에 실패했습니다.")
+    } else if (signout == 'pwdMismatch'){
+        alert("비밀번호가 맞지 않습니다.")
     }
 
 

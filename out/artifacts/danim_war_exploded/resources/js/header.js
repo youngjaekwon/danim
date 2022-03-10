@@ -237,8 +237,6 @@ function doFindEmail() {
     const findEmailMobile = $('[name=idForm] [name=id-mobile1]').val()
         + '-' + $('[name=idForm] [name=id-mobile2]').val()
         + '-' + $('[name=idForm] [name=id-mobile3]').val();
-    console.log(findEmailName);
-    console.log(findEmailMobile);
     $.ajax({
         url: "doFindEmail",
         type: "POST",
