@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
     <title>다님 : 여행을 다니다</title>
-    <script src="/resources/js/member-mypage.js" defer></script>
+    <script src="/resources/js/shop-item.js" defer></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 
@@ -53,8 +53,8 @@
             </div>
             <div class="quantity">
                 <input type="text" name="quantity" id="quantity" value="1">
-                <button class="quantity-up" onclick="">UP</button>
-                <button class="quantity-down">DOWN</button>
+                <button class="quantity-up" onclick="quantityUp()">UP</button>
+                <button class="quantity-down" onclick="quantityDown()">DOWN</button>
             </div>
             <div class="submits">
                 <a href="#" class="buy-now">Buy Now</a>
@@ -64,7 +64,7 @@
         </div>
         <div class="item-img-slider">
             <div class="img-slider-box">
-                <div class="img-slider-track">
+                <div class="img-slider-track" id="imgSliderTrack">
                     <img src="http://vaska.kr/web/product/extra/big/202112/09b7202ef745ae1b1ed8c360b556b287.jpeg" />
                     <img src="http://vaska.kr/web/product/small/202112/3011b0c5e3fb7fc36b87660390572ce9.jpeg" />
                     <img src="http://vaska.kr/web/product/extra/big/202112/edd52daec6c8728bda63d6d32417f8e2.jpeg" />
@@ -74,10 +74,10 @@
                 </div>
             </div>
             <div class="slide-btn">
-                <a href="#" class="slide-prv-btn">
+                <a href="javascript:prv()" class="slide-prv-btn">
                     <i class="fas fa-angle-double-left"></i>
                 </a>
-                <a href="#" class="slide-next-btn">
+                <a href="javascript:next()" class="slide-next-btn">
                     <i class="fas fa-angle-double-right"></i>
                 </a>
             </div>

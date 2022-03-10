@@ -153,10 +153,13 @@ body {
 .img-slider-box {
   height: 710px;
   width: 1050px;
+  position: relative;
   overflow: hidden;
 }
 
 .img-slider-track {
+  position: absolute;
+  left: 0px;
   width: 4260px;
   height: 710px;
 }

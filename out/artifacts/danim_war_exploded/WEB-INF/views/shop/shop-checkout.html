@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="../css/shop-checkout.css" />
+  <!-- fontawesome v5 cdn -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+
+  <title>다님 : 여행을 다니다</title>
+</head>
+
+<body>
+  <header>
+    <div class="header_inner">
+      <div class="logo">
+        <a href="#">logo</a>
+      </div>
+      <div class="title">
+        <a href="#">title</a>
+      </div>
+      <div class="nav">
+        <ul>
+          <li><a href="#">여행지</a></li>
+          <li><a href="#">숙박</a></li>
+          <li><a href="#">교통</a></li>
+          <li><a href="#">즐길거리</a></li>
+          <li><a href="#">shop</a></li>
+          <li><a href="#">고객센터</a></li>
+        </ul>
+      </div>
+      <div class="login">
+        <a href="#" class="login_btn">로그인</a>
+      </div>
+    </div>
+    <div class="login-modal" id="login-modal-hide">
+      <div class="login-modal-inside">
+        <a href="#" class="modal-logo">logo</a>
+        <form action="#" class="modal-form">
+          <input type="email" name="id" placeholder="이메일을 입력하세요" class="login-input" />
+          <input type="password" name="password" placeholder="비밀번호를 입력하세요" class="login-input" />
+          <input type="submit" value="로그인" class="login-submit" />
+        </form>
+        <div class="social">
+          <a href="#" class="google">google</a>
+          <a href="#" class="naver">naver</a>
+          <a href="#" class="kakao">kakao</a>
+        </div>
+        <div class="login-bottom">
+          <ul>
+            <li><a href="#">비밀번호 찾기</a></li>
+            <li><a href="#">아이디 찾기</a></li>
+            <li><a href="#">회원가입</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="traffic-modal" id="traffic-modal-hide">
+      <div class="traffic-modal-inside">
+        <ul>
+          <li class="traffic-btn"><a href="#">KTX</a></li>
+          <li class="traffic-btn"><a href="#">항공</a></li>
+          <li class="traffic-btn"><a href="#">렌터카</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  <section class="main">
+    <div class="main-inner">
+      <div class="main-left">
+        <span>Your Basket</span>
+        <div class="basket-title">
+          <span class="title-unit">Unit</span>
+          <span class="title-quantity">Quantity</span>
+          <span class="title-price">Price</span>
+        </div>
+        <div class="basket-items">
+          <div class="item">
+            <div class="item-info">
+              <a href="#" class="item-img"></a>
+              <a href="#">TEKET Winner’s Mug Cup "White"</a>
+            </div>
+            <div class="item-quantity">
+              <a href="#" class="quantity-down">
+                <i class="fas fa-angle-double-left"></i>
+              </a>
+              <input type="text" name="quantity" id="quantity" value="1">
+              <a href="#" class="quantity-op">
+                <i class="fas fa-angle-double-right"></i>
+              </a>
+            </div>
+            <div class="item-price">22,000</div>
+            <a href="#"><i class="far fa-times-circle"></i></a>
+          </div>
+          <div class="item">
+            <div class="item-info">
+              <a href="#" class="item-img"></a>
+              <a href="#">TEKET Winner’s Mug Cup "White"</a>
+            </div>
+            <div class="item-quantity">
+              <a href="#" class="quantity-down">
+                <i class="fas fa-angle-double-left"></i>
+              </a>
+              <input type="text" name="quantity" id="quantity" value="1">
+              <a href="#" class="quantity-op">
+                <i class="fas fa-angle-double-right"></i>
+              </a>
+            </div>
+            <div class="item-price">22,000</div>
+            <a href="#"><i class="far fa-times-circle"></i></a>
+          </div>
+          <div class="item">
+            <div class="item-info">
+              <a href="#" class="item-img"></a>
+              <a href="#">TEKET Winner’s Mug Cup "White"</a>
+            </div>
+            <div class="item-quantity">
+              <a href="#" class="quantity-down">
+                <i class="fas fa-angle-double-left"></i>
+              </a>
+              <input type="text" name="quantity" id="quantity" value="1">
+              <a href="#" class="quantity-op">
+                <i class="fas fa-angle-double-right"></i>
+              </a>
+            </div>
+            <div class="item-price">22,000</div>
+            <a href="#"><i class="far fa-times-circle"></i></a>
+          </div>
+          <div class="item">
+            <div class="item-info">
+              <a href="#" class="item-img"></a>
+              <a href="#">TEKET Winner’s Mug Cup "White"</a>
+            </div>
+            <div class="item-quantity">
+              <a href="#" class="quantity-down">
+                <i class="fas fa-angle-double-left"></i>
+              </a>
+              <input type="text" name="quantity" id="quantity" value="1">
+              <a href="#" class="quantity-op">
+                <i class="fas fa-angle-double-right"></i>
+              </a>
+            </div>
+            <div class="item-price">22,000</div>
+            <a href="#"><i class="far fa-times-circle"></i></a>
+          </div>
+          <div class="item">
+            <div class="item-info">
+              <a href="#" class="item-img"></a>
+              <a href="#">TEKET Winner’s Mug Cup "White"</a>
+            </div>
+            <div class="item-quantity">
+              <a href="#" class="quantity-down">
+                <i class="fas fa-angle-double-left"></i>
+              </a>
+              <input type="text" name="quantity" id="quantity" value="1">
+              <a href="#" class="quantity-op">
+                <i class="fas fa-angle-double-right"></i>
+              </a>
+            </div>
+            <div class="item-price">22,000</div>
+            <a href="#"><i class="far fa-times-circle"></i></a>
+          </div>
+          <div class="item">
+            <div class="item-info">
+              <a href="#" class="item-img"></a>
+              <a href="#">TEKET Winner’s Mug Cup "White"</a>
+            </div>
+            <div class="item-quantity">
+              <a href="#" class="quantity-down">
+                <i class="fas fa-angle-double-left"></i>
+              </a>
+              <input type="text" name="quantity" id="quantity" value="1">
+              <a href="#" class="quantity-op">
+                <i class="fas fa-angle-double-right"></i>
+              </a>
+            </div>
+            <div class="item-price">22,000</div>
+            <a href="#"><i class="far fa-times-circle"></i></a>
+          </div>
+          <div class="item">
+            <div class="item-info">
+              <a href="#" class="item-img"></a>
+              <a href="#">TEKET Winner’s Mug Cup "White"</a>
+            </div>
+            <div class="item-quantity">
+              <a href="#" class="quantity-down">
+                <i class="fas fa-angle-double-left"></i>
+              </a>
+              <input type="text" name="quantity" id="quantity" value="1">
+              <a href="#" class="quantity-op">
+                <i class="fas fa-angle-double-right"></i>
+              </a>
+            </div>
+            <div class="item-price">22,000</div>
+            <a href="#"><i class="far fa-times-circle"></i></a>
+          </div>
+        </div>
+        <div class="summary">
+          <div class="subtotal">Subtotal <span>154,000</span></div>
+          <div class="shipping">Shipping <span>0</span></div>
+          <div class="total">Total <span>154,000</span></div>
+        </div>
+      </div>
+      <div class="main-right">
+        <span>Check out</span>
+        <form action="" method="post">
+          <div class="customer-info">
+            <p>Customer</p>
+            <label for="customer-name">Name</label>
+            <input type="text" name="customer-name" id="customer-name" />
+            <label for="customer-zipcode">Zipcode</label>
+            <input type="text" name="customer-zipcode" id="customer-zipcode" readonly>
+            <button>SEARCH</button>
+            <label for="customer-address2">Address</label>
+            <input type="text" name="customer-address1" id="customer-address1" readonly>
+            <input type="text" name="customer-address2" id="customer-address2">
+            <label for="mobile2">Mobile</label>
+            <select name="customer-mobile1" id="mobile1">
+              <option value="010">010</option>
+              <option value="011">011</option>
+              <option value="016">016</option>
+              <option value="017">017</option>
+              <option value="018">018</option>
+              <option value="019">019</option>
+            </select>
+            <span>-</span>
+            <input type="text" name="customer-mobile2" id="mobile2">
+            <span>-</span>
+            <input type="text" name="customer-mobile3" id="mobile3">
+            <label for="email1">Email</label>
+            <input type="text" name="customer-email1" id="email1">
+            <span>@</span>
+            <input type="text" name="customer-email2" id="email2">
+            <select name="customer-email-select" id="email-select">
+              <option value="naver.com">naver.com</option>
+              <option value="gmail.com">gmail.com</option>
+              <option value="hanmail.net">hanmail.net</option>
+              <option value="nate.com">nate.com</option>
+              <option value="hotmail">hotmail.com</option>
+              <option value="live.com">live.com</option>
+              <option value="none">직접입력</option>
+            </select>
+          </div>
+          <div class="customer-info">
+            <p>Shipping</p>
+            <button>> Same with Customer</button>
+            <label for="customer-name">Name</label>
+            <input type="text" name="shipping-name" id="customer-name" />
+            <label for="customer-zipcode">Zipcode</label>
+            <input type="text" name="shipping-zipcode" id="customer-zipcode" readonly>
+            <button>SEARCH</button>
+            <label for="customer-address2">Address</label>
+            <input type="text" name="shipping-address1" id="customer-address1" readonly>
+            <input type="text" name="shipping-address2" id="customer-address2">
+            <label for="mobile2">Mobile</label>
+            <select name="shipping-mobile1" id="mobile1">
+              <option value="010">010</option>
+              <option value="011">011</option>
+              <option value="016">016</option>
+              <option value="017">017</option>
+              <option value="018">018</option>
+              <option value="019">019</option>
+            </select>
+            <span>-</span>
+            <input type="text" name="shipping-mobile2" id="mobile2">
+            <span>-</span>
+            <input type="text" name="shipping-mobile3" id="mobile3">
+            <label for="msg">Message</label>
+            <textarea name="msg" id="msg" cols="70" rows="8" placeholder="요청사항을 입력해 주세요."></textarea>
+          </div>
+          <div class="payment">
+            <p>Payment</p>
+            <div class="payment-inner">
+              <div class="total-cost">
+                <span>Total Cost</span>
+                <span>154,000</span>
+                <input type="hidden" name="total-cost" value="154000">
+              </div>
+              <div class="payment-type">
+                <span>Type</span>
+                <input type="radio" name="payment-type" id="card" value="card" checked><label for="card">카드 결제</label>
+                <input type="radio" name="payment-type" id="naver-pay" value="naver-pay"><label for="naver-pay">네이버
+                  페이</label>
+                <input type="radio" name="payment-type" id="escrow" value="escrow"><label for="escrow">에스크로(무통장
+                  입금)</label>
+              </div>
+            </div>
+            <input type="submit" id="checkout-submit" value="Checkout Now">
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+</body>
+
+</html>

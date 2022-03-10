@@ -42,6 +42,11 @@
         <div class="header-search" style="display: none">
             <input class="header-search-input" type="text">
         </div>
+        <script>
+            // index 페이지 이외에서 검색창 활성화
+            const thisURI = '<%=request.getRequestURI()%>'
+            if (thisURI != '/WEB-INF/views/index.jsp') $('.header-search').eq(0).prop("style", "");
+        </script>
         <!-- 로그인 전 -->
         <div class="before-login" id="beforeLogin">
             <a href="javascript:openLoginModal()" class="login_btn">로그인</a>
