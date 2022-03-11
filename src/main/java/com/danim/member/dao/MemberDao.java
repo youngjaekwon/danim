@@ -15,8 +15,13 @@ import java.util.List;
 @Repository
 public class MemberDao implements IMemberDao{
 
+
+    private final JdbcTemplate jdbcTemplate;
+
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    public MemberDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     // 회원가입
     @Override
