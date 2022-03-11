@@ -28,3 +28,11 @@ function next(){
     let lastChild = track.children().first(); // 슬라이더의 첫번째 이미지
     track.append(lastChild); // 첫번째 이미지를 맨 뒤로 추가
 }
+
+// 바로 구매
+function buyNow(itemnum, quantity){
+    document.buyNow.action = 'checkout';
+    document.buyNow.itemnum.value = itemnum;
+    document.buyNow.quantity.value = quantity;
+    document.buyNow.submit();
+}

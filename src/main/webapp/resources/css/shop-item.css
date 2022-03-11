@@ -160,11 +160,11 @@ body {
 .img-slider-track {
   position: absolute;
   left: 0px;
-  width: 4260px;
   height: 710px;
 }
 
 .img-slider-track > img {
+  float: left;
   width: 710px;
   height: 710px;
   margin: 0;
