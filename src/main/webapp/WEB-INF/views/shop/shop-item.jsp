@@ -93,14 +93,12 @@
     <!-- 자바스크립트 함수에서 사용을 하기 위해 선언된 폼
 	화면에는 보이지 않는 hidden 타입으로 전부 선언함 -->
     <!-- 바로 구매 -->
-    <form name="buyNow" method="get">
-        <input type="hidden" name="itemnum">
-        <input type="hidden" name="quantity">
+    <form name="buyNow" method="post">
+        <input type="hidden" name="items">
     </form>
     <!-- 장바구니 추가 -->
     <form name="addToBasket" method="post">
-        <input type="hidden" name="itemnum">
-        <input type="hidden" name="quantity">
+        <input type="hidden" name="items">
     </form>
 </section>
 </body>

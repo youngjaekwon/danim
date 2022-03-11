@@ -19,10 +19,12 @@ import java.util.Map;
 public class MemberController {
 
     private final MemberService memberService;
+    private final MemberParser memberParser;
 
     @Autowired
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService, MemberParser memberParser) {
         this.memberService = memberService;
+        this.memberParser = memberParser;
     }
 
     // 회원가입 페이지
@@ -38,7 +40,7 @@ public class MemberController {
         // 로그인된 상태일 경우 회원정보 수정 페이지로 이동
         if (user != null){
             Member member = memberService.selectMember(user); // DB에서 로그인된 유저 정보 검색
-            MemberDTO dto = MemberParser.parseMemberEntitytoDTO(member); // Entity to DTO parsing
+            MemberDTO dto = memberParser.parseMember(member); // Entity to DTO parsing
             session.setAttribute("userInfo", dto); // 유저 정보 세션에 전달
             return "member/member-mypage";
         } else {

@@ -22,7 +22,12 @@
   <div class="inner_wrap">
     <div class="img_slide"></div>
     <div class="search">
-      <input class="search_input" type="text" placeholder="회원들이 촬영한 사진과 카메라, 여행 관련 상품들을 검색해 보세요.">
+      <input class="search_input" id="searchInput" type="text" placeholder="회원들이 촬영한 사진과 카메라, 여행 관련 상품들을 검색해 보세요.">
+      <script>
+        const searchInput = $('#searchInput');
+        searchInput.focus(() => {searchInput.prop("placeholder", '');});
+        searchInput.blur(()=>{searchInput.prop("placeholder", '회원들이 촬영한 사진과 카메라, 여행 관련 상품들을 검색해 보세요.')})
+      </script>
     </div>
   </div>
 </section>

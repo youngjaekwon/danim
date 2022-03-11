@@ -2,10 +2,12 @@ package com.danim.member.parser;
 
 import com.danim.member.beans.Member;
 import com.danim.member.dto.MemberDTO;
+import org.springframework.stereotype.Service;
 
 // 멤버관련 파서
+@Service
 public class MemberParser {
-    public static Member parseMemberDTOtoEntity(MemberDTO dto){
+    public Member parseMember(MemberDTO dto){
         // 파싱 정보를 저장할 멤버객체 생성
         Member member = new Member();
 
@@ -30,7 +32,7 @@ public class MemberParser {
         return member;
     }
 
-    public static MemberDTO parseMemberEntitytoDTO(Member member){
+    public MemberDTO parseMember(Member member){
         // 파싱 정보를 저장할 멤버DTO객체 생성
         MemberDTO memberDTO = new MemberDTO();
 

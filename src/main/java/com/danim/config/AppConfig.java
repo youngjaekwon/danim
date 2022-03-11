@@ -2,6 +2,7 @@ package com.danim.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.json.simple.parser.JSONParser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -34,5 +35,10 @@ public class AppConfig {
     @Bean(name = "jdbcTemplate")
     public JdbcTemplate jdbcTemplate(){
         return new JdbcTemplate(dataSourceCP());
+    }
+
+    @Bean(name = "jsonPaeser")
+    public JSONParser jsonParser(){
+        return new JSONParser();
     }
 }
