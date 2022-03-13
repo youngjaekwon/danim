@@ -22,6 +22,9 @@
 <body>
 <%@include file ="../common/header.jsp" %>
 <section class="main">
+  <script>
+    if ('${loginCheck}' == 'true') window.location.reload();
+  </script>
   <div class="main-inner">
     <div class="main-left">
       <span>Basket</span>

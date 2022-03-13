@@ -52,7 +52,7 @@ public class ItemsService {
     public List<ItemsDTO> getItemListFromJSONString(String JSONStringItemList){
         JSONArray jsonItemList = new JSONArray();
         try {
-            if (JSONStringItemList != null)
+            if (JSONStringItemList != null && !JSONStringItemList.isEmpty())
                 jsonItemList = (JSONArray) jsonParser.parse(JSONStringItemList); // 전달받은 JSONString으로 된 item list JSONArray로 변환
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,7 +62,12 @@ public class ItemsService {
         for (Object jsonItem : jsonItemList) {
             Items item = itemsDao.select((String)((JSONObject) jsonItem).get("itemnum"));
             ItemsDTO itemsDTO = itemsParser.parseItems(item);
-            itemsDTO.setQuantity((String)((JSONObject) jsonItem).get("quantity"));
+            try {
+                itemsDTO.setQuantity((String) ((JSONObject) jsonItem).get("quantity"));
+            } catch (Exception e) {
+                itemsDTO.setQuantity((Long) ((JSONObject) jsonItem).get("quantity") + "");
+            }
+
             itemList.add(itemsDTO);
         }
         if (itemList.isEmpty()) return null; // 리스트가 비었을경우 null 반환
@@ -79,15 +84,15 @@ public class ItemsService {
                 jsonArrayBasketList = (JSONArray) jsonParser.parse(jsonStringBasketList); // JSONString to JSONArray
             JSONObject jsonObjectAddItem = (JSONObject) jsonParser.parse(addItem); // JSONString to JSONObject
             String itemNum = (String) jsonObjectAddItem.get("itemnum"); // 추가 요청된 아이템 제품 번호
-            int itemQuantity = (int) jsonObjectAddItem.get("quantity"); // 추가 요청된 아이템 수량
+            int itemQuantity = Integer.parseInt((String) jsonObjectAddItem.get("quantity")); // 추가 요청된 아이템 수량
             int isDuplicated = 0; // 중복 여부
 
             // 기존 리스트 돌며 중복 확인
             for (Object item : jsonArrayBasketList) {
                 // 중복 확인된 경우
                 if (((JSONObject) item).get("itemnum").equals(itemNum)){
-                    int currentQuantity = (int) ((JSONObject) item).get("quantity"); // 기존 수량
-                    ((JSONObject)item).replace("quantity", currentQuantity + itemQuantity); // 기존 수량 + 추가 수량으로 갱신
+                    int currentQuantity = Integer.parseInt((String) ((JSONObject) item).get("quantity")); // 기존 수량
+                    ((JSONObject)item).replace("quantity", currentQuantity + itemQuantity + ""); // 기존 수량 + 추가 수량으로 갱신
                     isDuplicated += 1; // 중복 true
                 }
             }
@@ -112,15 +117,15 @@ public class ItemsService {
             // 요청된 리스트 돌며 아이템들 추가
             for (Object jsonObjectAddItem : jsonArrayBasketListFromCookie) {
                 String itemNum = (String) ((JSONObject)jsonObjectAddItem).get("itemnum"); // 추가 요청된 아이템 제품 번호
-                int itemQuantity = (int) ((JSONObject)jsonObjectAddItem).get("quantity"); // 추가 요청된 아이템 수량
+                int itemQuantity = Integer.parseInt((String) ((JSONObject)jsonObjectAddItem).get("quantity")); // 추가 요청된 아이템 수량
                 int isDuplicated = 0; // 중복 여부
 
                 // 기존 리스트 돌며 중복 확인
                 for (Object item : jsonArrayBasketList) {
                     // 중복 확인된 경우
                     if (((JSONObject) item).get("itemnum").equals(itemNum)){
-                        int currentQuantity = (int) ((JSONObject) item).get("quantity"); // 기존 수량
-                        ((JSONObject)item).replace("quantity", currentQuantity + itemQuantity); // 기존 수량 + 추가 수량으로 갱신
+                        int currentQuantity = ((Long) ((JSONObject) item).get("quantity")).intValue(); // 기존 수량
+                        ((JSONObject)item).replace("quantity", currentQuantity + itemQuantity + ""); // 기존 수량 + 추가 수량으로 갱신
                         isDuplicated += 1; // 중복 true
                     }
                 }
@@ -144,15 +149,15 @@ public class ItemsService {
             }
             JSONObject jsonObjectAddItem = (JSONObject) jsonParser.parse(addItem); // 추가할 아이템 JSONString to JSONObject
             String itemNum = (String) jsonObjectAddItem.get("itemnum"); // 추가 요청된 아이템 제품 번호
-            int itemQuantity = (int) jsonObjectAddItem.get("quantity"); // 추가 요청된 아이템 수량
+            int itemQuantity = Integer.parseInt((String) jsonObjectAddItem.get("quantity")); // 추가 요청된 아이템 수량
             int isDuplicated = 0; // 중복 여부
 
             // 기존 리스트 돌며 중복 확인
             for (Object item : jsonArrayBasketList) {
                 // 중복 확인된 경우
                 if (((JSONObject) item).get("itemnum").equals(itemNum)){
-                    int currentQuantity = (int) ((JSONObject) item).get("quantity"); // 기존 수량
-                    ((JSONObject)item).replace("quantity", currentQuantity + itemQuantity); // 기존 수량 + 추가 수량으로 갱신
+                    int currentQuantity = Integer.parseInt((String) ((JSONObject) item).get("quantity")); // 기존 수량
+                    ((JSONObject)item).replace("quantity", currentQuantity + itemQuantity + ""); // 기존 수량 + 추가 수량으로 갱신
                     isDuplicated += 1; // 중복 true
                 }
             }

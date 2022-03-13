@@ -26,6 +26,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -148,7 +150,12 @@ public class ShopController {
         String jsonStringBasketListFromCookie = "";
         Cookie[] cookies = httpServletRequest.getCookies();
         for (Cookie cookie:cookies){
-            if (cookie.getName().equals("basketList")) jsonStringBasketListFromCookie = cookie.getValue();
+            try {
+                if (cookie.getName().equals("basketList")) jsonStringBasketListFromCookie = URLDecoder.decode(cookie.getValue(), "UTF-8");
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
         }
         //////////////////////////////////
 
@@ -159,7 +166,14 @@ public class ShopController {
             if (!jsonStringBasketListFromCookie.isEmpty()) { // 쿠키에 장바구니가 저장된 경우
                 if (itemsService.addBasketList(member, jsonStringBasketListFromCookie)) { // 멤버 장바구니 업데이트
                     jsonStringBasketList = member.getBasket(); // 저장된 장바구니 리스트 다시 가져옴
-                    httpServletResponse.addCookie(new Cookie("basketList", jsonStringBasketList)); // 쿠키 업데이트
+                    try {
+                        Cookie cookie = new Cookie("basketList", null); // 삭제할 쿠키에 대한 값을 null로 지정
+                        cookie.setMaxAge(0); // 유효시간을 0으로 설정해서 바로 만료시킨다.
+                        httpServletResponse.addCookie(cookie); // 응답에 추가해서 없어지도록 함
+//                        httpServletResponse.addCookie(new Cookie("basketList", URLEncoder.encode(jsonStringBasketList, "UTF-8"))); // 쿠키 업데이트
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             List<ItemsDTO> itemList = itemsService.getItemListFromJSONString(jsonStringBasketList); // JSONString to ArrayList
@@ -201,7 +215,7 @@ public class ShopController {
     // 장바구니에 물품 추가
     @RequestMapping(value = "/addtoBasket", method = RequestMethod.POST)
     @ResponseBody
-    public String addtoBasket(@RequestParam Map<String, String> param, HttpSession session, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+    public String addtoBasket(HttpSession session, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
         String memnum = (String)session.getAttribute("user"); // 로그인된 회원번호
         String addItem = httpServletRequest.getParameter("item"); // 추가 요청된 아이템과 수량
         if (addItem == null) return "failed"; // 추가할 아이템이 없으면 failed 리턴
@@ -210,17 +224,21 @@ public class ShopController {
         if (memnum != null){
             return itemsService.addBasketList(memnum, addItem) ? "passed" : "failed"; // 추가 요청된 아이템 장바구니에 추가 후 결과 리턴
         } else {
-            // 비로그인의 경우
-            String basketListNotLogin = ""; // 리턴할 장바구니 리스트 생성
-            // 쿠키에서 장바구니 리스트 불러옴 ////////
-            Cookie[] cookies = httpServletRequest.getCookies();
-            for (Cookie cookie:cookies){
-                if (cookie.getName().equals("basketList")) basketListNotLogin = cookie.getValue();
+            try {
+                // 비로그인의 경우
+                String basketListNotLogin = ""; // 리턴할 장바구니 리스트 생성
+                // 쿠키에서 장바구니 리스트 불러옴 ////////
+                Cookie[] cookies = httpServletRequest.getCookies();
+                for (Cookie cookie:cookies){
+                    if (cookie.getName().equals("basketList")) basketListNotLogin = URLDecoder.decode(cookie.getValue(), "UTF-8");
+                }
+                ///////////////////////////////////
+                // 비로그인 장바구니에 추가
+                basketListNotLogin = itemsService.addBasketListNotLogin(basketListNotLogin, addItem);
+                httpServletResponse.addCookie(new Cookie("basketList", URLEncoder.encode(basketListNotLogin, "UTF-8"))); // 쿠키에 추가
+            } catch (Exception e){
+                e.printStackTrace();
             }
-            ///////////////////////////////////
-            // 비로그인 장바구니에 추가
-            basketListNotLogin = itemsService.addBasketListNotLogin(basketListNotLogin, addItem);
-            httpServletResponse.addCookie(new Cookie("basketList", basketListNotLogin)); // 쿠키에 추가
             return "passed";
         }
     }

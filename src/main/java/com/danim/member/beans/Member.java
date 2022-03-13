@@ -113,6 +113,8 @@ public class Member {
                 ", zipcode='" + zipcode + '\'' +
                 ", addr='" + addr + '\'' +
                 ", mobile='" + mobile + '\'' +
+                ", basket='" + basket + '\'' +
+                ", wishlist='" + wishlist + '\'' +
                 ", isAdmin=" + isAdmin +
                 '}';
     }
