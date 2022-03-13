@@ -54,7 +54,7 @@
         <!-- 로그인 후 -->
         <div class="after-login" id="afterLogin" style="display: none">
             <a href="javascript:openUserModal()" class="header-user"><i class="fas fa-user"></i></a>
-            <a href="#" class="header-basket"><i class="fas fa-shopping-cart"></i></a>
+            <a href="/shop/basket" class="header-basket"><i class="fas fa-shopping-cart"></i></a>
         </div>
         <!-- 유저버튼 누를시 -->
         <div class="user-modal" style="display: none">
@@ -191,30 +191,25 @@
     </div>
 </header>
 <script>
-    let loginCheck = '${loginCheck}'; // 로그인 여부
-    let signup = '${signup}'; // 회원가입 결과
-    let user = '${user}'; // 로그인된 회원번호
-    let doChangePwd = '${doChangePwd}'; // 비밀번호 변경 결과
-    let signout = '${signout}'; // 회원 탈퇴 결과
     // 로그인 실패시
-    if (loginCheck == 'failed') alert("로그인 실패");
-    else if (loginCheck == 'false'){
+    if ('${loginCheck}' == 'failed') alert("로그인 실패");
+    else if ('${loginCheck}' == 'false'){
         alert("로그인 후 이용바랍니다.");
         document.getElementsByClassName("login_btn")[0].click();
     }
     // 로그인 성공시 (회원 가입 시도한 상태가 아닐때)
-    else if (signup == '' && loginCheck != '') {
+    else if ('${signup}' == '' && '${loginCheck}' != '') {
         alert("로그인 성공");
     }
     // 회원가입 성공시
-    if (signup == 'passed') {
+    if ('${signup}' == 'passed') {
         alert("성공적으로 가입했습니다.");
     }
     // 회원가입 실패시
-    else if (signup == 'failed') alert("회원가입에 실패했습니다.");
+    else if ('${signup}' == 'failed') alert("회원가입에 실패했습니다.");
 
     // 로그인시 회원정보, 장바구니 접근 버튼 활성화
-    if (user == ''){
+    if ('${user}' == ''){
         $('#beforeLogin').css("display", "");
         $('#afterLogin').css("display", "none");
     } else {
@@ -222,20 +217,26 @@
         $('#afterLogin').css("display", "");
     }
 
-    if (doChangePwd == 'passed'){
-        alert("비밀번호를 성공적으로 변경했습니다.")
-    } else if (doChangePwd == 'failed') {
-        alert("비밀번호 변경에 실패했습니다.")
+    // 비밀 번호 변경 성공시
+    if ('${doChangePwd}' == 'passed'){
+        alert("비밀번호를 성공적으로 변경했습니다.");
+    } else if ('${doChangePwd}' == 'failed') {
+        alert("비밀번호 변경에 실패했습니다.");
     }
 
-    if (signout == 'passed'){
-        alert("회원탈퇴에 성공했습니다.")
-    } else if (signout == 'failed'){
-        alert("회원탈퇴에 실패했습니다.")
-    } else if (signout == 'pwdMismatch'){
-        alert("비밀번호가 맞지 않습니다.")
+    // 회원 탈퇴 성공시
+    if ('${signout}' == 'passed'){
+        alert("회원탈퇴에 성공했습니다.");
+    } else if ('${signout}' == 'failed'){
+        alert("회원탈퇴에 실패했습니다.");
+    } else if ('${signout}' == 'pwdMismatch'){
+        alert("비밀번호가 맞지 않습니다.");
     }
 
+    // 잘못된 경로로 접근한 경우
+    if ('${invalidAccess}' == 'true'){
+        alert("잘못된 접근");
+    }
 
 </script>
 <%

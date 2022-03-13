@@ -2,11 +2,22 @@ package com.danim.shop.parser;
 
 import com.danim.shop.beans.Items;
 import com.danim.shop.beans.ItemsDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.DecimalFormat;
 
 // item 관련 파서
 @Service
 public class ItemsParser {
+
+    private final DecimalFormat formatter;
+
+    @Autowired
+    public ItemsParser(DecimalFormat formatter) {
+        this.formatter = formatter;
+    }
+
     public Items parseItems(ItemsDTO itemsDTO){
         // 파싱 정보를 저장할 아이템객체 생성
         Items item = new Items();
@@ -51,8 +62,12 @@ public class ItemsParser {
         itemsDTO.setInfo(item.getInfo());
         // 가격
         itemsDTO.setPrice(Integer.parseInt(item.getPrice()));
+        // 포맷으로 변경된 가격
+        itemsDTO.setFormattedPrice(formatter.format(itemsDTO.getPrice()));
         // 사진
         itemsDTO.setPic(item.getPic());
+        // 썸네일
+        itemsDTO.setThumbnail(itemsDTO.getPic().split("\\$")[0]);
         // 재고
         itemsDTO.setStock(item.getStock());
         ///////////////////////////////////////////////////////////////

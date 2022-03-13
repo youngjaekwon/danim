@@ -117,6 +117,31 @@ public class ItemsDao implements IItemsDao{
         return items.get(0);
     }
 
+    // 제품 검색(attribute를 이용한 전체 리스트 검색)
+    @Override
+    public List<Items> searchAllByAtt(String attribute, String keyword) {
+        List<Items> items = null;
+        String SQL = "SELECT * FROM ITEMS WHERE " + attribute + " LIKE ? ORDER BY TO_NUMBER(ITEMNUM)";
+        items = jdbcTemplate.query(SQL, new RowMapper<Items>() {
+            @Override
+            public Items mapRow(ResultSet resultSet, int i) throws SQLException {
+                Items item = new Items();
+                item.setItemnum(resultSet.getString("ITEMNUM"));
+                item.setCategory(resultSet.getString("CATEGORY"));
+                item.setMfr(resultSet.getString("MFR"));
+                item.setName(resultSet.getString("NAME"));
+                item.setInfo(resultSet.getString("INFO"));
+                item.setPrice(resultSet.getString("PRICE"));
+                item.setPic(resultSet.getString("PIC"));
+                item.setStock(resultSet.getString("STOCK"));
+                return item;
+            }
+        }, "%" + keyword + "%");
+
+        if (items.isEmpty()) return null; // 조회된게 없는경우 null 반환
+        return items;
+    }
+
     // 업데이트
     @Override
     public int update(String itemnum, String attribute, String revisedData) {

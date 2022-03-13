@@ -36,32 +36,28 @@
       <div class="basket-items">
         <%
           List<ItemsDTO> itemList = (List<ItemsDTO>) request.getAttribute("itemList");
-          DecimalFormat formatter = new DecimalFormat("#,###,###");
-          int totalPrice = 0;
           for(ItemsDTO item : itemList){
             String itemnum = item.getItemnum();
-            String thumbnail = item.getPic().split("\\$")[0];
-            totalPrice += item.getPrice();
         %>
         <div class="item">
           <div class="item-info">
             <a href="/shop/item?item=<%=itemnum%>" class="item-img" id="img<%=itemnum%>"></a>
-            <script>$('#img<%=itemnum%>').css("background-image", "url('<%=thumbnail%>')")</script>
+            <script>$('#img<%=itemnum%>').css("background-image", "url('<%=item.getThumbnail()%>')")</script>
             <a href="/shop/item?item=<%=itemnum%>"><%=item.getMfr()%> <%=item.getName()%></a>
           </div>
           <div class="item-quantity">
             <input type="text" name="quantity" id="quantity" value="<%=item.getQuantity()%>">
           </div>
-          <div class="item-price"><%=formatter.format(item.getPrice())%></div>
+          <div class="item-price"><%=item.getFormattedPrice()%></div>
         </div>
         <%
           }
         %>
       </div>
       <div class="summary">
-        <div class="subtotal">Subtotal <span><%=formatter.format(totalPrice)%></span></div>
+        <div class="subtotal">Subtotal <span>${formattedTotalCost}</span></div>
         <div class="shipping">Shipping <span>0</span></div>
-        <div class="total">Total <span><%=formatter.format(totalPrice)%></span></div>
+        <div class="total">Total <span>${formattedTotalCost}</span></div>
       </div>
     </div>
     <div class="main-right">
@@ -127,8 +123,8 @@
           <div class="payment-inner">
             <div class="total-cost">
               <span>Total Cost</span>
-              <span><%=formatter.format(totalPrice)%></span>
-              <input type="hidden" name="totalCost" value="<%=formatter.format(totalPrice)%>">
+              <span>${formattedTotalCost}</span>
+              <input type="hidden" name="totalCost" value="${totalCost}">
             </div>
             <div class="payment-type">
               <span>Type</span>

@@ -8,9 +8,27 @@ public class ItemsDTO {
     private String name; // 제품명
     private String info; // 제품정보
     private int price; // 가격
+    private String formattedPrice; // #,###,### 포맷으로 변경된 가격
     private String pic; // 사진
+    private String thumbnail; // 썸네일
     private String stock; // 재고수량
     private String quantity; // 주문수량
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public String getFormattedPrice() {
+        return formattedPrice;
+    }
+
+    public void setFormattedPrice(String formattedPrice) {
+        this.formattedPrice = formattedPrice;
+    }
 
     public String getQuantity() {
         return quantity;
@@ -92,8 +110,10 @@ public class ItemsDTO {
                 ", mfr='" + mfr + '\'' +
                 ", name='" + name + '\'' +
                 ", info='" + info + '\'' +
-                ", price='" + price + '\'' +
+                ", price=" + price +
+                ", formattedPrice='" + formattedPrice + '\'' +
                 ", pic='" + pic + '\'' +
+                ", thumbnail='" + thumbnail + '\'' +
                 ", stock='" + stock + '\'' +
                 ", quantity='" + quantity + '\'' +
                 '}';

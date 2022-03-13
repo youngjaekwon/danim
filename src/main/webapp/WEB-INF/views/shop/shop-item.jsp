@@ -1,4 +1,4 @@
-<%@ page import="com.danim.shop.beans.Items" %>
+<%@ page import="com.danim.shop.beans.ItemsDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--<c:set var="path" value="${pageContext.request.contextPath}"/>--%>
@@ -41,7 +41,7 @@
             </div>
             <div class="item-title">${itemVO.name}</div>
             <div class="item-price">
-                ${itemVO.price}
+                ${itemVO.formattedPrice}
             </div>
             <div class="item-detail">
                 ${itemVO.info}
@@ -63,7 +63,7 @@
         <div class="item-img-slider">
             <div class="img-slider-box">
                 <%
-                    Items item = (Items)request.getAttribute("itemVO"); // item 객체
+                    ItemsDTO item = (ItemsDTO)request.getAttribute("itemVO"); // item 객체
                     String[] pics = item.getPic().split("\\$"); // 사진 String들, $로 나뉘어 있음
                     int trackWidth = 710 * pics.length; // 슬라이더 트랙의 width 지정 (전체 사진 * 710px)
                 %>
