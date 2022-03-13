@@ -13,15 +13,17 @@ import javax.servlet.http.HttpSession;
 @Service
 public class MemberService {
     private final MemberDao memberDao;
+    private final MemberParser memberParser;
 
     @Autowired
-    public MemberService(MemberDao memberDao) {
+    public MemberService(MemberDao memberDao, MemberParser memberParser) {
         this.memberDao = memberDao;
+        this.memberParser = memberParser;
     }
 
     // 회원 가입 메소드
     public boolean signup(MemberDTO dto, HttpSession session){
-        Member member = MemberParser.parseMemberDTOtoEntity(dto); // MemberDTO를 Member 객체로 변환
+        Member member = memberParser.parseMember(dto); // MemberDTO를 Member 객체로 변환
 
         // 관리자 여부: 0(일반회원) 고정
         member.setIsAdmin(0);

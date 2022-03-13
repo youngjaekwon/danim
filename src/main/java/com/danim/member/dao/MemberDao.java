@@ -26,7 +26,7 @@ public class MemberDao implements IMemberDao{
     // 회원가입
     @Override
     public int insert(Member member) {
-        String SQL = "INSERT INTO MEMBER VALUES (MEMBER_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO MEMBER VALUES (MEMBER_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, null, null, ?)";
         // 회원가입 성공: 1반환, 실패: 0 반환
         return jdbcTemplate.update(SQL, new PreparedStatementSetter() {
             @Override
@@ -60,6 +60,8 @@ public class MemberDao implements IMemberDao{
                 member.setZipcode(resultSet.getString("ZIPCODE"));
                 member.setAddr(resultSet.getString("ADDR"));
                 member.setMobile(resultSet.getString("MOBILE"));
+                member.setBasket(resultSet.getString("BASKET"));
+                member.setWishlist(resultSet.getString("WISHLIST"));
                 member.setIsAdmin(resultSet.getInt("ISADMIN"));
                 return member;
             }
@@ -86,6 +88,8 @@ public class MemberDao implements IMemberDao{
                 member.setZipcode(resultSet.getString("ZIPCODE"));
                 member.setAddr(resultSet.getString("ADDR"));
                 member.setMobile(resultSet.getString("MOBILE"));
+                member.setBasket(resultSet.getString("BASKET"));
+                member.setWishlist(resultSet.getString("WISHLIST"));
                 member.setIsAdmin(resultSet.getInt("ISADMIN"));
                 return member;
             }
@@ -137,6 +141,8 @@ public class MemberDao implements IMemberDao{
                 member.setZipcode(resultSet.getString("ZIPCODE"));
                 member.setAddr(resultSet.getString("ADDR"));
                 member.setMobile(resultSet.getString("MOBILE"));
+                member.setBasket(resultSet.getString("BASKET"));
+                member.setWishlist(resultSet.getString("WISHLIST"));
                 member.setIsAdmin(resultSet.getInt("ISADMIN"));
                 return member;
             }

@@ -10,7 +10,25 @@ public class Member {
     private String zipcode; // 우편번호
     private String addr; // 주소
     private String mobile; // 전화번호
+    private String basket; // 장바구니
+    private String wishlist; // 위시리스트
     private int isAdmin; // 관리자 여부 0: false, 1: true
+
+    public String getBasket() {
+        return basket;
+    }
+
+    public void setBasket(String basket) {
+        this.basket = basket;
+    }
+
+    public String getWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(String wishlist) {
+        this.wishlist = wishlist;
+    }
 
     public String getMemnum() {
         return memnum;

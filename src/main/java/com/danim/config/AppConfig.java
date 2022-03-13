@@ -2,17 +2,19 @@ package com.danim.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.json.simple.parser.JSONParser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
+import java.text.DecimalFormat;
 
 @Configuration
 @ComponentScan(basePackages = {"com.danim.member"})
 public class AppConfig {
-    /////////////////////////////////// DBCP /////////////////////////////////////////////////
+    // DBCP
     @Bean(name = "dataSourceCP")
     public DataSource dataSourceCP() {
         com.zaxxer.hikari.HikariConfig config = new HikariConfig();
@@ -35,4 +37,15 @@ public class AppConfig {
     public JdbcTemplate jdbcTemplate(){
         return new JdbcTemplate(dataSourceCP());
     }
+
+    @Bean(name = "jsonPaeser")
+    public JSONParser jsonParser(){
+        return new JSONParser();
+    }
+
+    @Bean(name = "formatter")
+    public DecimalFormat formatter(){
+        return new DecimalFormat("#,###,###");
+    }
+
 }

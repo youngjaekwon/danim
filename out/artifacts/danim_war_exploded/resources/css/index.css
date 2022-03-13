@@ -45,6 +45,14 @@ section {
   display: block;
 }
 
+.search_input:focus{
+  background-color: white;
+  background-image: url(/resources/img/search-solid.svg);
+  background-repeat: no-repeat;
+  background-size: 4.7%;
+  background-position: 1% 1vh;
+}
+
 .main-item {
   width: 100vw;
   height: 2500px;

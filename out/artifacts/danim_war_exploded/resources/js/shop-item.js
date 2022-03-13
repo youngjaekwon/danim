@@ -28,3 +28,12 @@ function next(){
     let lastChild = track.children().first(); // 슬라이더의 첫번째 이미지
     track.append(lastChild); // 첫번째 이미지를 맨 뒤로 추가
 }
+
+// 바로 구매
+function buyNow(itemnum, quantity){
+    document.buyNow.action = '/shop/checkout'; // URI 패턴
+    let itemList = [{"itemnum":itemnum, "quantity":quantity}]; // 제품번호, 수량 리스트로 생성
+    let jsonItemList = JSON.stringify(itemList); // JSON String으로 변환
+    document.buyNow.items.value = jsonItemList; // JSON String 전달
+    document.buyNow.submit();
+}
