@@ -107,13 +107,15 @@ public class ShopController {
     }
 
     // 체크아웃 페이지
-    @RequestMapping(value = "/checkout", method = RequestMethod.POST)
+    @RequestMapping(value = "/checkout", method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView checkout(HttpServletRequest httpServletRequest, HttpSession session) {
         ModelAndView mav = new ModelAndView("shop/shop-checkout"); // view
         String memnum = (String)session.getAttribute("user"); // 로그인된 회원번호
+        Member member = null; // 로그인된 유저 객체 담을 변수
+
         // 로그인이 되어있는 경우
         if (memnum != null) {
-            Member member = memberService.selectMember(memnum); // 로그인된 유저정보
+            member = memberService.selectMember(memnum); // 로그인된 유저정보
             MemberDTO memberDTO = memberParser.parseMember(member); // member to memberDTO
             mav.addObject("userInfo", memberDTO); // Model에 추가
         } else {
@@ -124,10 +126,15 @@ public class ShopController {
             // 이전 페이지가 있으면 이전페이지로 이동, 없으면 index 페이지로 이동
             return mav;
         }
-        String jsonStringItemList = httpServletRequest.getParameter("items"); // 구매 제품 리스트 JSONString
 
-        List<ItemsDTO> itemList = new ArrayList<>(); // 구매 제품 리스트
-        itemList = itemsService.getItemListFromJSONString(jsonStringItemList); // JSONString to ArrayList
+        //  로그인된 유저의 장바구니 리스트 가져옴 JSONString
+        String jsonStringItemList = member.getBasket();
+
+        // 단일 아이템 체크아웃의 경우
+        String singleItemCheckOut = httpServletRequest.getParameter("items");
+        if (singleItemCheckOut != null) jsonStringItemList = singleItemCheckOut; // 구매 제품 리스트 변경
+
+        List<ItemsDTO> itemList = itemsService.getItemListFromJSONString(jsonStringItemList); // 구매 제품 리스트 JSONString to ArrayList
         if (!itemList.isEmpty()) {
             mav.addObject("itemList", itemList); // Model에 리스트 추가
             int totalCost = 0; // 구매 제품 리스트 총금액
@@ -220,12 +227,12 @@ public class ShopController {
         String addItem = httpServletRequest.getParameter("item"); // 추가 요청된 아이템과 수량
         if (addItem == null) return "failed"; // 추가할 아이템이 없으면 failed 리턴
 
-        // 로그인된 경우
+        /////////////////////////////////////// 로그인된 경우 ///////////////////////////////////////
         if (memnum != null){
             return itemsService.addBasketList(memnum, addItem) ? "passed" : "failed"; // 추가 요청된 아이템 장바구니에 추가 후 결과 리턴
         } else {
+            /////////////////////////////////////// 비로그인의 경우 ///////////////////////////////////////
             try {
-                // 비로그인의 경우
                 String basketListNotLogin = ""; // 리턴할 장바구니 리스트 생성
                 // 쿠키에서 장바구니 리스트 불러옴 ////////
                 Cookie[] cookies = httpServletRequest.getCookies();
@@ -235,6 +242,38 @@ public class ShopController {
                 ///////////////////////////////////
                 // 비로그인 장바구니에 추가
                 basketListNotLogin = itemsService.addBasketListNotLogin(basketListNotLogin, addItem);
+                httpServletResponse.addCookie(new Cookie("basketList", URLEncoder.encode(basketListNotLogin, "UTF-8"))); // 쿠키에 추가
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            return "passed";
+        }
+    }
+
+    // 장바구니에서 물품 삭제
+    @RequestMapping(value = "/deleteItemfromBasket", method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteItemfromBasket(HttpSession session, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+        String memnum = (String)session.getAttribute("user"); // 로그인된 회원번호
+        String itemnum = httpServletRequest.getParameter("itemnum"); // 삭제 요청된 상품번호
+        if (itemnum == null) return "failed"; // 상품 번호가 없으면 false 리턴
+
+        /////////////////////////////////////// 로그인된 경우 ///////////////////////////////////////
+        if (memnum != null){
+            return itemsService.deleteItemfromBasket(memnum, itemnum) ? "passed" : "failed"; // 추가 요청된 아이템 장바구니에 추가 후 결과 리턴
+        } else {
+            /////////////////////////////////////// 비로그인의 경우 ///////////////////////////////////////
+            try {
+                String basketListNotLogin = ""; // 리턴할 장바구니 리스트 생성
+                // 쿠키에서 장바구니 리스트 불러옴 ////////
+                Cookie[] cookies = httpServletRequest.getCookies();
+                for (Cookie cookie:cookies){
+                    if (cookie.getName().equals("basketList")) basketListNotLogin = URLDecoder.decode(cookie.getValue(), "UTF-8");
+                }
+                ///////////////////////////////////
+                // 비로그인 장바구니에서 삭제
+                basketListNotLogin = itemsService.deleteItemfromBasketNotLogin(basketListNotLogin, itemnum);
+
                 httpServletResponse.addCookie(new Cookie("basketList", URLEncoder.encode(basketListNotLogin, "UTF-8"))); // 쿠키에 추가
             } catch (Exception e){
                 e.printStackTrace();

@@ -38,7 +38,7 @@ public class ItemsParser {
         // 사진
         item.setPic(itemsDTO.getPic());
         // 재고
-        item.setStock(itemsDTO.getStock());
+        item.setStock(itemsDTO.getStock() + "");
         ///////////////////////////////////////////////////////////////
 
 
@@ -69,7 +69,8 @@ public class ItemsParser {
         // 썸네일
         itemsDTO.setThumbnail(itemsDTO.getPic().split("\\$")[0]);
         // 재고
-        itemsDTO.setStock(item.getStock());
+        if (item.getStock() != null)
+            itemsDTO.setStock(Integer.parseInt(item.getStock()));
         ///////////////////////////////////////////////////////////////
 
 
