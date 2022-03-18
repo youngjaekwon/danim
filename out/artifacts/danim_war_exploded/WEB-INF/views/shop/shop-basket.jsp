@@ -17,11 +17,15 @@
 
   <title>다님 : 여행을 다니다</title>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script src="/resources/js/shop-basket.js" defer></script>
 </head>
 
 <body>
 <%@include file ="../common/header.jsp" %>
 <section class="main">
+  <script>
+    if ('${loginCheck}' == 'true') window.location.reload();
+  </script>
   <div class="main-inner">
     <div class="main-left">
       <span>Basket</span>
@@ -55,16 +59,16 @@
             <a href="/shop/item?item=<%=itemnum%>"><%=item.getMfr()%> <%=item.getName()%></a>
           </div>
           <div class="item-quantity">
-            <a href="#" class="quantity-down">
+            <a href="javascript:quantityDown('<%=itemnum%>')" class="quantity-down">
               <i class="fas fa-angle-double-left"></i>
             </a>
-            <input type="text" name="quantity" class="quantity" value="<%=item.getQuantity()%>">
-            <a href="#" class="quantity-op">
+            <input type="text" name="quantity" class="quantity" id="quantity<%=itemnum%>" value="<%=item.getQuantity()%>" readonly>
+            <a href="javascript:quantityUp('<%=itemnum%>')" class="quantity-op">
               <i class="fas fa-angle-double-right"></i>
             </a>
           </div>
           <div class="item-price"><%=item.getFormattedPrice()%></div>
-          <a href="#"><i class="far fa-times-circle"></i></a>
+          <a href="javascript:deleteItem('<%=itemnum%>')"><i class="far fa-times-circle"></i></a>
         </div>
         <%
             }
@@ -86,7 +90,7 @@
           } else $('.total > span').text('0');
         </script>
         <div id="checkout">
-          <a href="#">Proceed to Checkout</a> <a href="#">Continue Shopping</a>
+          <a href="/shop/checkout">Proceed to Checkout</a> <a href="#">Continue Shopping</a>
         </div>
       </div>
     </div>

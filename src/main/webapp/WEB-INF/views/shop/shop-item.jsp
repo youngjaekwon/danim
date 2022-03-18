@@ -56,7 +56,7 @@
             </div>
             <div class="submits">
                 <a href="javascript:buyNow('${itemVO.itemnum}', $('input[name = quantity]').val())" class="buy-now">Buy Now</a>
-                <a href="#" class="add-to-basket">Add to Basket</a>
+                <a href="javascript:addtoBasket('${itemVO.itemnum}', $('input[name = quantity]').val())" class="add-to-basket">Add to Basket</a>
                 <a href="#" class="wish-list">Wish List</a>
             </div>
         </div>
@@ -87,6 +87,13 @@
                 <a href="javascript:next()" class="slide-next-btn">
                     <i class="fas fa-angle-double-right"></i>
                 </a>
+            </div>
+        </div>
+        <div id="addBasketModal" class="addBasketModal" style="display: none">
+            <div class="addBasketModal">장바구니 등록이 완료되었습니다.</div>
+            <div class="addBasketModal">
+                <a href="javascript:closeAddBasketModal()" class="addBasketModal">계속 쇼핑</a>
+                <a href="/shop/basket" class="addBasketModal">장바구니로 이동</a>
             </div>
         </div>
     </div>

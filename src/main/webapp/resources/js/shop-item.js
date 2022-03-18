@@ -37,3 +37,42 @@ function buyNow(itemnum, quantity){
     document.buyNow.items.value = jsonItemList; // JSON String 전달
     document.buyNow.submit();
 }
+
+// 장바구니 추가
+
+// addBasketModal
+const addBasketModal = $('#addBasketModal');
+
+function addtoBasket(itemnum, quantity) {
+    let item = {"itemnum":itemnum, "quantity":quantity}; // 제품번호, 수량 리스트로 생성
+    let jsonItem = JSON.stringify(item); // JSON String으로 변환
+    $.ajax({
+        url: "/shop/addtoBasket",
+        type: "POST",
+        data: {"item" : jsonItem}, // 제품번호, 제품수량 값을 map 형태로 전달
+        success: function(data){
+            if (data == 'passed'){ // 정상적으로 추가되었을 경우
+                addBasketModal.toggle(); // 모달 열기
+                document.addEventListener("click", closeAddBasketModalbyClick); // 장바구니 추가 모달 이외의 부분 클릭시 모달 닫는 함수 추가
+            } else { // 추가에 실패했을 경우
+                alert("요청이 잘못되었습니다.")
+            }
+        }
+    });
+}
+
+// 장바구니 추가 모달 닫는 함수
+function closeAddBasketModal() {
+    addBasketModal.toggle();
+    document.removeEventListener("click", closeAddBasketModalbyClick);
+}
+
+// 장바구니 추가 모달 이외의 부분 클릭시 모달 닫는 함수
+const closeAddBasketModalbyClick = (event) => {
+    // 타겟 확인
+    const target = event.target;
+    // 타겟이 모달 내에 있는지 확인
+    if (target.classList.value == 'addBasketModal') return;
+    // 이외의 부분일 경우 닫는 함수 호출
+    closeAddBasketModal()
+}

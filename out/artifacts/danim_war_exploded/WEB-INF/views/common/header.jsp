@@ -127,7 +127,7 @@
     <div class="change-pwd-modal" style="display: none">
         <div class="password-modal-inside">
             <p>비밀번호 변경</p>
-            <form action="doChangePwd" class="modal-form" name="changePwdModal" onsubmit="return isValidChangePwdForm()">
+            <form action="doChangePwd" class="modal-form" name="changePwdModal" onsubmit="return isValidChangePwdForm()" method="post">
                 <input type="text" name="change-pwd-memnum" hidden>
                 <input type="text" name="change-pwd-id" class="login-input" disabled>
                 <input type="password" id="changePwd" name="change-pwd-pwd" placeholder="새 비밀번호를 입력하세요" class="login-input">

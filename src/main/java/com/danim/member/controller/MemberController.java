@@ -1,6 +1,5 @@
 package com.danim.member.controller;
 import com.danim.member.beans.Member;
-import com.danim.member.dao.MemberDao;
 import com.danim.member.dto.MemberDTO;
 import com.danim.member.parser.MemberParser;
 import com.danim.member.service.MemberService;
@@ -12,7 +11,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 @Controller

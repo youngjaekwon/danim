@@ -11,8 +11,8 @@ public class ItemsDTO {
     private String formattedPrice; // #,###,### 포맷으로 변경된 가격
     private String pic; // 사진
     private String thumbnail; // 썸네일
-    private String stock; // 재고수량
-    private String quantity; // 주문수량
+    private int stock; // 재고수량
+    private int quantity; // 주문수량
 
     public String getThumbnail() {
         return thumbnail;
@@ -30,11 +30,19 @@ public class ItemsDTO {
         this.formattedPrice = formattedPrice;
     }
 
-    public String getQuantity() {
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -92,14 +100,6 @@ public class ItemsDTO {
 
     public void setPic(String pic) {
         this.pic = pic;
-    }
-
-    public String getStock() {
-        return stock;
-    }
-
-    public void setStock(String stock) {
-        this.stock = stock;
     }
 
     @Override
