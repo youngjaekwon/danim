@@ -21,7 +21,6 @@ function quantityDown(itemnum){
 // 장바구니 품목 수량 증가 함수
 function quantityUp(itemnum){
     const quantity = $('#quantity' + itemnum); // 기존에 입력된 수량
-    if (quantity.val() == 1) return;
     let item = {"itemnum":itemnum, "quantity": 1}; // 제품번호, 수량 리스트로 생성
     let jsonItem = JSON.stringify(item); // JSON String으로 변환
     $.ajax({

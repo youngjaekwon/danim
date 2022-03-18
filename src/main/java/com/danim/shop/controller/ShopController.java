@@ -8,10 +8,6 @@ import com.danim.shop.beans.Items;
 import com.danim.shop.beans.ItemsDTO;
 import com.danim.shop.parser.ItemsParser;
 import com.danim.shop.service.ItemsService;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +27,6 @@ import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/shop")
