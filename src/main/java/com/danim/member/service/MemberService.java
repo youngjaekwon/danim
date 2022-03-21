@@ -79,7 +79,7 @@ public class MemberService {
         // email로 DB 조회
         Member member = memberDao.search("EMAIL", email);
         // 조회된 멤버의 전화번호가 입력된 값과 같은지 확인
-        if (member.getMobile() != null && member.getMobile().equals(mobile)){
+        if (member != null && member.getMobile().equals(mobile)){
             return member.getMemnum(); // 같으면 회원번호 반환
         } else return null; // 같지 않으면 null 반환
     }
@@ -97,5 +97,10 @@ public class MemberService {
     // 회원 탈퇴
     public boolean doSignout(String memnum){
         return (memberDao.delete(memnum) > 0);
+    }
+
+    // 장바구니 비우는 메소드
+    public boolean clearBasket(String memnum) {
+        return memberDao.update(memnum, "BASKET", null) > 0;
     }
 }

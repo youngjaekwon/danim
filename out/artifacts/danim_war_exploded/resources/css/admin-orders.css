@@ -131,6 +131,12 @@ body {
   border-bottom: 1px solid black;
 }
 
+.emptyList {
+  height: 35px;
+  line-height: 35px;
+  padding-left: 10px;
+}
+
 .order {
   border-bottom: 1px solid black;
   padding: 10px;

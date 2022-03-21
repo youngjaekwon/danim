@@ -238,6 +238,13 @@
         alert("잘못된 접근");
     }
 
+    // 주문 성공/실패
+    const isCheckedOut = '${checkOut}'; // 체크아웃 성공여부
+    if (isCheckedOut == 'passed') {
+        alert("주문처리에 성공했습니다.");
+    } else if (isCheckedOut == 'failed') {
+        alert("주문처리에 실패했습니다.");
+    }
 </script>
 <%
     session.removeAttribute("loginCheck"); // 로그인 확인 attribute 제거

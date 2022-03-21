@@ -277,4 +277,3 @@ function openLoginWithIdResult(){
     document.loginForm.id.value = document.idResultForm.idResult.value;
 }
 
-

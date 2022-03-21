@@ -1,3 +1,7 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.danim.orders.beans.Orders" %>
+<%@ page import="com.danim.orders.beans.OrdersVO" %>
+<%@ page import="com.danim.shop.beans.ItemsDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--<c:set var="path" value="${pageContext.request.contextPath}"/>--%>
@@ -37,33 +41,34 @@
       <div class="orders_header">
         <div class="orders_header_top">
           <div class="orders_filter">
-            <form action="#" method="post" name="filter">
+            <form action="/admin/orders" method="GET" name="filter">
               <label for="state">주문 상태 :</label>
               <select name="state" id="state">
-                <option value="" selected>전체</option>
-                <option value="">진행중인 주문</option>
-                <option value="">종료된 주문</option>
-                <option value="">결제 확인</option>
-                <option value="">상품 준비중</option>
-                <option value="">배송중</option>
-                <option value="">배송 완료</option>
-                <option value="">취소</option>
+                <option value="%%" selected>전체</option>
+                <option value="10_">진행중인 주문</option>
+                <option value="20_">종료된 주문</option>
+                <option value="101">결제 확인</option>
+                <option value="102">상품 준비중</option>
+                <option value="103">배송중</option>
+                <option value="201">배송 완료</option>
+                <option value="202">취소</option>
               </select>
               <label for="qna">1:1문의 상태 :</label>
-              <select name="qna" id="qan">
-                <option value="" selected>전체</option>
-                <option value="">미답변</option>
-                <option value="">문의 완료</option>
+              <select name="qna" id="qna">
+                <option value="%%" selected>전체</option>
+                <option value="01">미답변</option>
+                <option value="02">답변 완료</option>
               </select>
               <label for="sort">정렬 방법 :</label>
               <select name="sort" id="sort">
-                <option value="num_asc">주문번호 오름차순</option>
-                <option value="num_desc" selected>주문번호 내림차순</option>
-                <option value="price_asc">합계금액 오름차순</option>
-                <option value="price_desc">합계금액 내림차순</option>
-                <option value="date_asc">주문일 오름차순</option>
-                <option value="date_desc">주문일 내림차순</option>
+                <option value="ORDERNUM">주문번호 오름차순</option>
+                <option value="ORDERNUM DESC" selected>주문번호 내림차순</option>
+                <option value="PRICE">합계금액 오름차순</option>
+                <option value="PRICE DESC">합계금액 내림차순</option>
+                <option value="ORDERDATE">주문일 오름차순</option>
+                <option value="ORDERDATE DESC">주문일 내림차순</option>
               </select>
+              <input type="hidden" name="page"/>
             </form>
           </div>
           <div class="orders_search">
@@ -85,62 +90,82 @@
         </div>
       </div>
       <div class="orders_list">
+        <%
+          List<OrdersVO> itemList = (List<OrdersVO>) request.getAttribute("itemList");
+          if (itemList.isEmpty()){
+        %>
+          <div class="emptyList">주문리스트가 비었습니다.</div>
+        <%
+          } else {
+              for(int i = 0; i < itemList.size(); i++){
+                OrdersVO order = itemList.get(i);
+                String orderNum = order.getOrderNum();
+        %>
         <div class="order">
-          <div class="order_num"><a href="#">3</a></div>
-          <div class="order_member"><a href="#">김돌돌</a></div>
+          <div class="order_num"><a href="#"><%=orderNum%></a></div>
+          <div class="order_member"><a href="#"><%=order.getName()%></a></div>
           <div class="order_title">
-            <a href="javascript:toggleOrderModal()"><span>스메나 SMENA 35</span> 외 3</a>
+            <a href="javascript:toggleOrderModal(<%=orderNum%>)"><span><%=order.getTitleItem()%></span> <%if(order.getOthers() > 0) {%>외 <%=order.getOthers()%><%}%></a>
           </div>
-          <div class="order_price">1,220,000</div>
-          <div class="order_date">2022.02.22</div>
-          <div class="order_payment">카드결제</div>
-          <div class="order_state"><a href="#">배송중</a></div>
-          <div class="order_qna"><a href="#">미답변</a></div>
-        </div>
-        <div class="order">
-          <div class="order_num"><a href="#">2</a></div>
-          <div class="order_member"><a href="#">김갑돌</a></div>
-          <div class="order_title">
-            <a href="#"><span>긴 이름 긴 이름 긴 이름 긴 이름</span> 외 3</a>
+          <div class="order_price"><%=order.getPrice()%></div>
+          <div class="order_date"><%=order.getShortDate()%></div>
+          <div class="order_payment"><%=order.getPayment()%></div>
+          <div class="order_state"><a href="#"><%=order.getState()%></a></div>
+          <div class="order_qna">
+            <%if (order.getQna().equals("00")) { %>
+            <span><%="-"%></span>
+            <%} else {%>
+            <a href="#">
+              <%=order.getQna()%>
+            </a>
+            <%}%>
           </div>
-          <div class="order_price">1,220,000</div>
-          <div class="order_date">2022.02.22</div>
-          <div class="order_payment">네이버 페이</div>
-          <div class="order_state"><a href="#">발송 대기</a></div>
-          <div class="order_qna"><a href="#">-</a></div>
         </div>
-        <div class="order">
-          <div class="order_num"><a href="#">1</a></div>
-          <div class="order_member"><a href="#">김갑생</a></div>
-          <div class="order_title">
-            <a href="#"><span>스메나 SMENA 35</span> 외 3</a>
-          </div>
-          <div class="order_price">1,220,000</div>
-          <div class="order_date">2022.02.22</div>
-          <div class="order_payment">에스크로</div>
-          <div class="order_state"><a href="#">배송 완료</a></div>
-          <div class="order_qna"><a href="#">답변 완료</a></div>
-        </div>
+        <%
+              }
+          }
+        %>
       </div>
       <div class="paging">
+        <%
+          int pageStart = (int) request.getAttribute("pageStart"); // 페이지 목록중 시작
+          int pageEnd = (int) request.getAttribute("pageEnd"); // // 페이지 목록중 끝
+          if (pageEnd != 0){
+        %>
         <div class="page-prv">
-          <a href="#" class="page-prv-btn">
+          <a href="javascript:paging('${prevPage}')" class="page-prv-btn">
             <i class="fas fa-angle-double-left"></i>
           </a>
         </div>
         <div class="pages">
-          <a href="">1</a>
-          <a href="">2</a>
-          <a href="">3</a>
-          <a href="">4</a>
-          <a href="">5</a>
-          <a href="">6</a>
+          <%
+              for (int i = pageStart; i <= pageEnd; i++){
+          %>
+          <a href="javascript:paging('<%=i%>')"><%=i%></a>
+          <%
+              }
+          %>
         </div>
         <div class="page-next">
-          <a href="#" class="page-next-btn">
+          <a href="javascript:paging('${nextPage}')" class="page-next-btn">
             <i class="fas fa-angle-double-right"></i>
           </a>
         </div>
+        <%} else {%>
+        <div class="page-prv">
+          <a href="" class="page-prv-btn">
+            <i class="fas fa-angle-double-left"></i>
+          </a>
+        </div>
+        <div class="pages">
+          <a>1</a>
+        </div>
+        <div class="page-next">
+          <a href="" class="page-next-btn">
+            <i class="fas fa-angle-double-right"></i>
+          </a>
+        </div>
+        <%}%>
       </div>
     </div>
   </div>
@@ -311,6 +336,12 @@
     </div>
   </div>
 </section>
+<script>
+  // filter 기본 체크
+  $('[name=filter] [name=state]').val('${state}').prop("selected", true);
+  $('[name=filter] [name=qna]').val('${qna}').prop("selected", true);
+  $('[name=filter] [name=sort]').val('${sorting}').prop("selected", true);
+</script>
 </body>
 
 </html>

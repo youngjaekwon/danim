@@ -62,7 +62,7 @@
     </div>
     <div class="main-right">
       <span>Check out</span>
-      <form action="" method="post">
+      <form action="/order/doRegOrder" method="post">
         <div class="customer-info">
           <p>Customer</p>
           <label for="customerInfoName">Name</label>
@@ -95,15 +95,15 @@
           <p>Shipping</p>
           <button type="button" onclick="sameWithCustomer()">> Same with Customer</button>
           <label for="shippingName">Name</label>
-          <input type="text" name="shipping_name" class="checkOutName" id="shippingName"/>
+          <input type="text" name="shippingName" class="checkOutName" id="shippingName"/>
           <label for="shippingZipcode">Zipcode</label>
-          <input type="text" name="shipping_zipcode" class="checkOutZipcode" id="shippingZipcode" readonly>
+          <input type="text" name="shippingZipcode" class="checkOutZipcode" id="shippingZipcode" readonly>
           <button type="button" id="searchAddr">SEARCH</button>
           <label for="shippingAddrDetail">Address</label>
-          <input type="text" name="shipping_addr" class="checkOutAddr" id="shippingAddr" readonly>
-          <input type="text" name="shipping_addrDetail" class="checkOutAddrDetail" id="shippingAddrDetail">
+          <input type="text" name="shippingAddr" class="checkOutAddr" id="shippingAddr" readonly>
+          <input type="text" name="shippingAddrDetail" class="checkOutAddrDetail" id="shippingAddrDetail">
           <label for="shippingMobile2">Mobile</label>
-          <select name="shipping_mobile1" class="checkOutMobile1" id="shippingMobile1">
+          <select name="shippingMobile1" class="checkOutMobile1" id="shippingMobile1">
             <option value="010">010</option>
             <option value="011">011</option>
             <option value="016">016</option>
@@ -112,11 +112,11 @@
             <option value="019">019</option>
           </select>
           <span>-</span>
-          <input type="text" name="shipping_mobile2" class="checkOutMobile2" id="shippingMobile2" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+          <input type="text" name="shippingMobile2" class="checkOutMobile2" id="shippingMobile2" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
           <span>-</span>
-          <input type="text" name="shipping_mobile3" class="checkOutMobile3" id="shippingMobile3" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+          <input type="text" name="shippingMobile3" class="checkOutMobile3" id="shippingMobile3" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
           <label for="msg">Message</label>
-          <textarea name="msg" id="msg" cols="65" rows="8" placeholder="요청사항을 입력해 주세요."></textarea>
+          <textarea name="request" id="msg" cols="65" rows="8" placeholder="요청사항을 입력해 주세요."></textarea>
         </div>
         <div class="payment">
           <p>Payment</p>
@@ -128,13 +128,14 @@
             </div>
             <div class="payment-type">
               <span>Type</span>
-              <input type="radio" name="payment-type" id="card" value="card" checked><label for="card">카드 결제</label>
-              <input type="radio" name="payment-type" id="naver-pay" value="naver-pay"><label for="naver-pay">네이버
+              <input type="radio" name="payment" id="card" value="card" checked><label for="card">카드 결제</label>
+              <input type="radio" name="payment" id="naver-pay" value="naver-pay"><label for="naver-pay">네이버
               페이</label>
-              <input type="radio" name="payment-type" id="escrow" value="escrow"><label for="escrow">에스크로(무통장
+              <input type="radio" name="payment" id="escrow" value="escrow"><label for="escrow">에스크로(무통장
               입금)</label>
             </div>
           </div>
+          <input type="hidden" name="itemlist" value='${jsonStringItemList}'>
           <input type="submit" id="checkout-submit" value="Checkout Now">
         </div>
       </form>
