@@ -1,4 +1,4 @@
-// 회원정보
+// 회원정보 복사
 function sameWithCustomer(){
     $('#shippingName').val($('#customerInfoName').val());
     $('#shippingZipcode').val($('#customerInfoZipcode').val());

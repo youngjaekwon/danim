@@ -1,5 +1,6 @@
 package com.danim.shop.controller;
 
+import com.danim.common.paging.PageMaker;
 import com.danim.member.beans.Member;
 import com.danim.member.dto.MemberDTO;
 import com.danim.member.parser.MemberParser;
@@ -52,7 +53,11 @@ public class ShopController {
     public ModelAndView list(HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
         ModelAndView mav = new ModelAndView("/shop/shop-list"); // view 추가
         String category = httpServletRequest.getParameter("category"); // 요청된 카테고리
-        List<ItemsDTO> totalList = itemsService.getList(category); // 카테고리로 리스트 검색
+        String requestPage = httpServletRequest.getParameter("page"); // 요청된 페이지
+
+        // 카테고리로 리스트 검색
+        List<ItemsDTO> totalList = itemsService.getList(category);
+
         // 리스트 검색이 안될경우
         if (totalList == null) {
             redirectAttributes.addFlashAttribute("invalidAccess", "true"); // 잘못된 접근 요소 추가
@@ -60,32 +65,11 @@ public class ShopController {
             return mav; // return
         }
 
-        ////////////// 페이지 구성 요소 ///////////////
-        int totalRecords = totalList.size(); // 전체 아이템 수
-        int numPerPage = 18; // 한 페이지당 출력할 아이템 수
-        int pagePerBlock = 6; // 하단 페이지 네비게이션 한 블럭 당 출력할 페이지 수
-        int nowPage = 1; // 현재 페이지
-        String requestPage = httpServletRequest.getParameter("page"); // 요청된 페이지
-        if (requestPage != null) nowPage = Integer.parseInt(requestPage); // 요청된 페이지가 null이 아닐경우 현재페이지 갱신
-        int totalPage = (int)Math.ceil((double)totalRecords / numPerPage); // 전체 페이지 (전체 아이템 수 / 페이지당 아이템 수)
-        int totalBlock = (int)Math.ceil((double)totalPage / pagePerBlock); // 전체 블럭 (전체 페이지 수 / 블럭당 페이지 수)
-        int nowBlock = (int)Math.ceil((double)nowPage / pagePerBlock); // 현재 블럭 (현재 페이지 / 블럭당 페이지 수)
-        int pageStart = pagePerBlock * (nowBlock - 1) + 1; // 블럭에 표시될 페이지중 첫 페이지
-        int pageEnd   = pageStart + pagePerBlock - 1; // 블럭에 표시될 페이지중 마지막 페이지
-        if(pageEnd >= totalPage) pageEnd = totalPage; // 계산된 마지막 페이지가 전체 페이지 수 보다 클 경우, 마지막 페이지 = 전체 페이지 수
-        int prevPage = 1; // 이전 블럭으로 이동 (1번 블럭일 경우 1페이지로 이동)
-        if (nowBlock > 1) prevPage = pageStart - 1; // 2번 블럭 이상일 경우, 이전 블럭 마지막 페이지로 이동
-        int nextPage = totalPage; // 다음 블럭으로 이동 (마지막 블럭일 경우 마지막 페이지로 이동)
-        if (totalBlock > nowBlock) nextPage = pageEnd + 1; // 마지막 블럭이 아닐경우, 다음 블럭 첫 페이지로 이동
-        int start = (nowPage * numPerPage) - numPerPage + 1; // 현재 페이지에 표시될 첫번째 아이템 번호
-        int end = start + numPerPage - 1; // 현재 페이지에 표시될 마지막 아이템 번호
-        if (end > totalRecords) end = totalRecords; // 계산된 마지막 아이템 번호가 전체 아이템 수 보다 클 경우, 마지막 아이템 번호 = 전체 아이템 수
-        List<ItemsDTO> itemList = totalList.subList(start - 1, end); // 반환할 리스트 (첫 번째 아이템 인덱스 ~ 마지막 아이템 인덱스)
-        mav.addObject("itemList", itemList); // 페이지에 표실될 아이템 리스트
-        mav.addObject("prevPage", prevPage); // 이전 블럭으로 이동
-        mav.addObject("nextPage", nextPage); // 다음 블럭으로 이동
-        mav.addObject("pageStart", pageStart); // 블럭에 표시될 첫 번째 페이지
-        mav.addObject("pageEnd", pageEnd); // 블럭에 표시될 마지막 페이지
+        int numPerPage = 18; // 한 페이지당 출력할 아이템 수: 제품 리스트의 경우 18개
+        int pagePerBlock = 6; // 하단 페이지 네비게이션 한 블럭 당 출력할 페이지 수: 제품 리스트의 경우 6개
+
+        // 검색된 리스트, 요청된 페이지를 이용하여 페이지 생성
+        PageMaker.makePage(mav, totalList, requestPage, numPerPage, pagePerBlock);
 
         return mav;
     }
@@ -103,7 +87,7 @@ public class ShopController {
 
     // 체크아웃 페이지
     @RequestMapping(value = "/checkout", method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView checkout(HttpServletRequest httpServletRequest, HttpSession session) {
+    public ModelAndView checkout(HttpServletRequest request, HttpSession session) {
         ModelAndView mav = new ModelAndView("shop/shop-checkout"); // view
         String memnum = (String)session.getAttribute("user"); // 로그인된 회원번호
         Member member = null; // 로그인된 유저 객체 담을 변수
@@ -116,7 +100,7 @@ public class ShopController {
         } else {
             // 로그인이 되어있지 않을 경우
             session.setAttribute("loginCheck", "false"); // 비 로그인 상태 추가
-            String currentPage = httpServletRequest.getHeader("Referer"); // 이전 페이지 확인
+            String currentPage = request.getHeader("Referer"); // 이전 페이지 확인
             mav.setViewName (currentPage != null ? ("redirect:" + currentPage) : "redirect:/");
             // 이전 페이지가 있으면 이전페이지로 이동, 없으면 index 페이지로 이동
             return mav;
@@ -126,17 +110,19 @@ public class ShopController {
         String jsonStringItemList = member.getBasket();
 
         // 단일 아이템 체크아웃의 경우
-        String singleItemCheckOut = httpServletRequest.getParameter("items");
+        String singleItemCheckOut = request.getParameter("items");
         if (singleItemCheckOut != null) jsonStringItemList = singleItemCheckOut; // 구매 제품 리스트 변경
 
         List<ItemsDTO> itemList = itemsService.getItemListFromJSONString(jsonStringItemList); // 구매 제품 리스트 JSONString to ArrayList
         if (!itemList.isEmpty()) {
             mav.addObject("itemList", itemList); // Model에 리스트 추가
+            mav.addObject("jsonStringItemList", jsonStringItemList); // Model에 Json String 형태의 리스트 추가
             int totalCost = 0; // 구매 제품 리스트 총금액
             // 총 금액 산출
             for (ItemsDTO item : itemList){
                 totalCost += item.getPrice();
             }
+            mav.addObject("totalCost", totalCost); // 총 금액 전달
             mav.addObject("formattedTotalCost", formatter.format(totalCost)); // #,###,### 포멧으로 변경된 총 금액 전달
         }
         return mav;
