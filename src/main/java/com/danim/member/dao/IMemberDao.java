@@ -11,4 +11,5 @@ public interface IMemberDao {
     public int update(String memnum, String attribute, String revisedData);
     public int delete(String memnum);
     public List<Member> selectAll();
+    public List<Member> searchAllByFilters(String state, String sorting, String keyword);
 }

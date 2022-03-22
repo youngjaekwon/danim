@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -208,12 +209,26 @@ public class MemberController {
 
     // 주문 내역 페이지
     @RequestMapping(value = "/orderList", method = RequestMethod.GET)
-    public ModelAndView orderList(HttpSession session){
-        ModelAndView mav = new ModelAndView("member/member-orderlist");
-        String memnum = (String) session.getAttribute("user");
-        List<OrdersVO> totalList = ordersService.getList(memnum);
-        PageMaker.makePage(mav, totalList, null, 10, 6);
+    public ModelAndView orderList(HttpSession session, HttpServletRequest request){
+        ModelAndView mav = new ModelAndView("member/member-orderlist"); // view 추가
 
+        // paging 요소
+        String memnum = (String) session.getAttribute("user"); // 로그인된 회원번호
+        String requestPage = request.getParameter("page"); // 요청된 페이지
+
+        // 회원번호로 리스트 검색
+        List<OrdersVO> totalList = ordersService.getList(memnum);
+
+        // 리스트 검색이 안될경우
+        if (totalList == null) {
+            totalList = new ArrayList<>();
+        }
+
+        int numPerPage = 10; // 한 페이지당 출력할 아이템 수: 주문리스트의 경우 10개
+        int pagePerBlock = 6; // 하단 페이지 네비게이션 한 블럭 당 출력할 페이지 수: 주문 리스트의 경우 6개
+
+        // 검색된 리스트, 요청된 페이지를 이용하여 페이지 생성
+        PageMaker.makePage(mav, totalList, requestPage, numPerPage, pagePerBlock);
 
         return mav;
     }

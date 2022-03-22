@@ -63,9 +63,9 @@
         <div class="order">
           <a href="" class="item-img" id="img<%=orderNum%>"></a>
           <script>$('#img<%=orderNum%>').css("background-image", "url('<%=order.getThumbnail()%>')")</script>
-          <div class="order_num"><a href="javascript:toggleOrderModal(<%=orderNum%>)"><%=orderNum%></a></div>
+          <div class="order_num"><a href="javascript:toggleOrderModal('<%=orderNum%>')"><%=orderNum%></a></div>
           <div class="order_title">
-            <a href="javascript:toggleOrderModal(<%=orderNum%>)"><span><%=order.getTitleItem()%></span> <%if(order.getOthers() > 0) {%>외 <%=order.getOthers()%><%}%></a>
+            <a href="javascript:toggleOrderModal('<%=orderNum%>')"><span><%=order.getTitleItem()%></span> <%if(order.getOthers() > 0) {%>외 <%=order.getOthers()%><%}%></a>
           </div>
           <div class="order_price"><%=order.getPrice()%></div>
           <div class="order_date"><%=order.getShortDate()%></div>
@@ -134,7 +134,7 @@
         <div>주문 정보</div>
         <div class="order_modal_header_right">
           <button type="button">1:1문의</button>
-          <a href="javascript:toggleOrderModal(<%=orderNum%>)"><i class="far fa-times-circle"></i></a>
+          <a href="javascript:toggleOrderModal('<%=orderNum%>')"><i class="far fa-times-circle"></i></a>
         </div>
       </div>
       <div class="order_modal_body">

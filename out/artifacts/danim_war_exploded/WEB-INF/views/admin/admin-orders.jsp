@@ -29,9 +29,9 @@
     <div class="main-left">
       <div class="main-nav">
         <ul>
-          <li><a href="#">주문 관리</a></li>
+          <li><a href="/admin/orders">주문 관리</a></li>
           <li><a href="#">상품 관리</a></li>
-          <li><a href="#">회원 관리</a></li>
+          <li><a href="/admin/members">회원 관리</a></li>
           <li><a href="#">1:1 문의</a></li>
         </ul>
       </div>
@@ -90,7 +90,7 @@
           <div class="orders_header_normal">주문 날짜</div>
           <div class="orders_header_normal">결제수단</div>
           <div class="orders_header_normal">주문 상태</div>
-          <div class="orders_header_normal">QnA</div>
+          <div class="orders_header_normal">1:1 문의</div>
         </div>
       </div>
       <div class="orders_list">
@@ -106,10 +106,10 @@
                 String orderNum = order.getOrderNum();
         %>
         <div class="order">
-          <div class="order_num"><a href="#"><%=orderNum%></a></div>
-          <div class="order_member"><a href="#"><%=order.getName()%></a></div>
+          <div class="order_num"><a href="javascript:toggleOrderModal('<%=orderNum%>')"><%=orderNum%></a></div>
+          <div class="order_member"><a href="javascript:toggleOrderModal('<%=orderNum%>')"><%=order.getName()%></a></div>
           <div class="order_title">
-            <a href="javascript:toggleOrderModal(<%=orderNum%>)"><span><%=order.getTitleItem()%></span> <%if(order.getOthers() > 0) {%>외 <%=order.getOthers()%><%}%></a>
+            <a href="javascript:toggleOrderModal('<%=orderNum%>')"><span><%=order.getTitleItem()%></span> <%if(order.getOthers() > 0) {%>외 <%=order.getOthers()%><%}%></a>
           </div>
           <div class="order_price"><%=order.getPrice()%></div>
           <div class="order_date"><%=order.getShortDate()%></div>
@@ -184,7 +184,7 @@
         <div>주문 정보</div>
         <div class="order_modal_header_right">
           <button type="button">인쇄하기</button>
-          <a href="javascript:toggleOrderModal(<%=orderNum%>)"><i class="far fa-times-circle"></i></a>
+          <a href="javascript:toggleOrderModal('<%=orderNum%>')"><i class="far fa-times-circle"></i></a>
         </div>
       </div>
       <div class="order_modal_body">

@@ -66,7 +66,7 @@ public class OrdersParser {
 
         ////////////////////////// 주문 VO 객체에 등록될 정보 ////////////////////////////
         // 주문 번호
-        ordersVO.setOrderNum(order.getOrdernum() + "");
+        ordersVO.setOrderNum(order.getOrdernum());
 
         // 주문자 이름
         ordersVO.setName(order.getName());

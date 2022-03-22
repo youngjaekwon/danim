@@ -25,7 +25,7 @@ public class OrdersService {
         return ordersDao.insert(oder) > 0;
     }
 
-    // 주문 리스트
+    // 주문 리스트 (관리자)
     public List<OrdersVO> getList(String state, String qna, String sorting, String keyword){
         // keyword 에 SQL 와일드카드 추가
         if (keyword != null) keyword = "%" + keyword + "%";
@@ -39,6 +39,7 @@ public class OrdersService {
         return ordersVOList; // Orders List 반환
     }
 
+    // 주문 리스트 (회원)
     public List<OrdersVO> getList(String memnum){
         // 회원번호를 이용해 DB에서 리스트 검색
         List<Orders> ordersList = ordersDao.selectAllByAtt("MEMNUM", memnum);
