@@ -226,4 +226,34 @@ public class OrdersDao implements IOrdersDao{
         if (orders.isEmpty()) return null; // 조회된게 없는경우 null 반환
         return orders;
     }
+
+    @Override
+    public List<Orders> selectAllByAtt(String attribute, String keyword) {
+        List<Orders> orders = null;
+        String SQL = "SELECT * FROM ORDERS WHERE " + attribute + " LIKE ? ORDER BY ORDERNUM DESC";
+        orders = jdbcTemplate.query(SQL, new RowMapper<Orders>() {
+            @Override
+            public Orders mapRow(ResultSet resultSet, int i) throws SQLException {
+                Orders order = new Orders();
+                order.setOrdernum(resultSet.getInt("ORDERNUM"));
+                order.setMemnum(resultSet.getString("MEMNUM"));
+                order.setOrderdate(resultSet.getTimestamp("ORDERDATE"));
+                order.setName(resultSet.getString("NAME"));
+                order.setZipcode(resultSet.getString("ZIPCODE"));
+                order.setAddr(resultSet.getString("ADDR"));
+                order.setMobile(resultSet.getString("MOBILE"));
+                order.setState(resultSet.getString("STATE"));
+                order.setWaybillnum(resultSet.getString("WAYBILLNUM"));
+                order.setPrice(resultSet.getString("PRICE"));
+                order.setPayment(resultSet.getString("PAYMENT"));
+                order.setRequest(resultSet.getString("REQUEST"));
+                order.setItemlist(resultSet.getString("ITEMSLIST"));
+                order.setQna(resultSet.getString("QNA"));
+                return order;
+            }
+        }, "%" + keyword + "%");
+
+        if (orders.isEmpty()) return null; // 조회된게 없는경우 null 반환
+        return orders;
+    }
 }

@@ -54,4 +54,9 @@ public class AppConfig {
         return new SimpleDateFormat("yyyy-MM-dd");
     }
 
+    @Bean(name = "simpleDateFormatIncludeTime")
+    public SimpleDateFormat simpleDateFormatIncludeTime(){
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    }
+
 }

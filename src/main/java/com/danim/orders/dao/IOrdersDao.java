@@ -14,4 +14,5 @@ public interface IOrdersDao {
     public int delete(int ordernum);
     public List<Orders> selectAll();
     public List<Orders> searchAllByFilters(String state, String qna, String sorting, String keyword);
+    public List<Orders> selectAllByAtt(String attribute, String keyword);
 }

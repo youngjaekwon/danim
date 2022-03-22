@@ -9,6 +9,7 @@ public class OrdersVO {
     private String name; // 주문자 이름
     private String titleItem; // 대표 상품명
     private int others; // 대표 상품 외 상품 갯수 (ex. 스메나 SMENA 35 외 3개)
+    private String thumbnail; // 썸네일 (대표상품의 대표이미지)
     private String price; // 포멧 처리된 가격
     private String shortDate; // 주문 일자 (yyyy-HH-dd 형식)
     private String payment; // 결제 방법
@@ -21,6 +22,14 @@ public class OrdersVO {
     private String waybillNum; // 운송장 번호
     private String request; // 요청 사항
     private List<ItemsDTO> itemsList; // 상품 리스트
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
 
     public String getOrderNum() {
         return orderNum;

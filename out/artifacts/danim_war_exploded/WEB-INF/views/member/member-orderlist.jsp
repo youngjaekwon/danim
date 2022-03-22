@@ -13,12 +13,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="/resources/css/admin-orders.css">
+  <link rel="stylesheet" href="/resources/css/member-orderlist.css">
   <!-- fontawesome v5 cdn -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
   <title>다님 : 여행을 다니다</title>
-  <script src="/resources/js/admin-orders.js" defer></script>
+  <script src="/resources/js/member-orderlist.js" defer></script>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 
@@ -29,62 +29,17 @@
     <div class="main-left">
       <div class="main-nav">
         <ul>
-          <li><a href="#">주문 관리</a></li>
-          <li><a href="#">상품 관리</a></li>
-          <li><a href="#">회원 관리</a></li>
+          <li><a href="/mypage">회원정보 수정</a></li>
+          <li><a href="/orderList">주문내역</a></li>
           <li><a href="#">1:1 문의</a></li>
         </ul>
       </div>
     </div>
     <div class="main-right">
-      <p>주문 관리</p>
+      <p>주문 내역</p>
       <div class="orders_header">
-        <div class="orders_header_top">
-          <div class="orders_filter">
-            <form action="/admin/orders" method="GET" name="filter">
-              <label for="state">주문 상태 :</label>
-              <select name="state" id="state">
-                <option value="%%" selected>전체</option>
-                <option value="10_">진행중인 주문</option>
-                <option value="20_">종료된 주문</option>
-                <option value="101">결제 확인</option>
-                <option value="102">상품 준비중</option>
-                <option value="103">배송중</option>
-                <option value="201">배송 완료</option>
-                <option value="202">취소</option>
-              </select>
-              <label for="qna">1:1문의 상태 :</label>
-              <select name="qna" id="qna">
-                <option value="%%" selected>전체</option>
-                <option value="01">미답변</option>
-                <option value="02">답변 완료</option>
-              </select>
-              <label for="sort">정렬 방법 :</label>
-              <select name="sort" id="sort">
-                <option value="ORDERNUM">주문번호 오름차순</option>
-                <option value="ORDERNUM DESC" selected>주문번호 내림차순</option>
-                <option value="PRICE">합계금액 오름차순</option>
-                <option value="PRICE DESC">합계금액 내림차순</option>
-                <option value="ORDERDATE">주문일 오름차순</option>
-                <option value="ORDERDATE DESC">주문일 내림차순</option>
-              </select>
-              <input type="hidden" name="keyword" value="${keyword}"/>
-              <input type="hidden" name="page"/>
-            </form>
-          </div>
-          <div class="orders_search">
-            <form action="/admin/orders" name="orders_search">
-              <input type="text" name="keyword" placeholder="주문번호 / 고객명 / 주소">
-              <input type="submit" value="검색">
-            </form>
-            <form action="/admin/orders" name="reset">
-              <input type="submit" value="초기화">
-            </form>
-          </div>
-        </div>
         <div class="orders_title">
           <div class="orders_header_num">주문번호</div>
-          <div class="orders_header_normal">고객명</div>
           <div class="orders_header_title">상품명</div>
           <div class="orders_header_normal">합계 금액</div>
           <div class="orders_header_normal">주문 날짜</div>
@@ -106,8 +61,9 @@
                 String orderNum = order.getOrderNum();
         %>
         <div class="order">
-          <div class="order_num"><a href="#"><%=orderNum%></a></div>
-          <div class="order_member"><a href="#"><%=order.getName()%></a></div>
+          <a href="" class="item-img" id="img<%=orderNum%>"></a>
+          <script>$('#img<%=orderNum%>').css("background-image", "url('<%=order.getThumbnail()%>')")</script>
+          <div class="order_num"><a href="javascript:toggleOrderModal(<%=orderNum%>)"><%=orderNum%></a></div>
           <div class="order_title">
             <a href="javascript:toggleOrderModal(<%=orderNum%>)"><span><%=order.getTitleItem()%></span> <%if(order.getOthers() > 0) {%>외 <%=order.getOthers()%><%}%></a>
           </div>
@@ -116,13 +72,7 @@
           <div class="order_payment"><%=order.getPayment()%></div>
           <div class="order_state"><a href="#"><%=order.getState()%></a></div>
           <div class="order_qna">
-            <%if (order.getQna().equals("00")) { %>
-            <span><%="-"%></span>
-            <%} else {%>
-            <a href="#">
-              <%=order.getQna()%>
-            </a>
-            <%}%>
+            <a href="#">문의하기</a>
           </div>
         </div>
         <%
@@ -137,7 +87,7 @@
           if (pageEnd != 0){
         %>
         <div class="page-prv">
-          <a href="javascript:paging('${prevPage}')" class="page-prv-btn">
+          <a href="/orderList?page=${prevPage}" class="page-prv-btn">
             <i class="fas fa-angle-double-left"></i>
           </a>
         </div>
@@ -145,13 +95,13 @@
           <%
               for (int i = pageStart; i <= pageEnd; i++){
           %>
-          <a href="javascript:paging('<%=i%>')"><%=i%></a>
+          <a href="/orderList?page=<%=i%>"><%=i%></a>
           <%
               }
           %>
         </div>
         <div class="page-next">
-          <a href="javascript:paging('${nextPage}')" class="page-next-btn">
+          <a href="/orderList?page=${nextPage}" class="page-next-btn">
             <i class="fas fa-angle-double-right"></i>
           </a>
         </div>
@@ -183,7 +133,7 @@
       <div class="order_modal_header">
         <div>주문 정보</div>
         <div class="order_modal_header_right">
-          <button type="button">인쇄하기</button>
+          <button type="button">1:1문의</button>
           <a href="javascript:toggleOrderModal(<%=orderNum%>)"><i class="far fa-times-circle"></i></a>
         </div>
       </div>
@@ -207,7 +157,6 @@
             <div class="order_info_table_line1_delivery">
               <div>
                 배송주소
-                <button>변경</button>
               </div>
               <div>
                 <%=order.getZipcode()%> <%=order.getAddr()%>
@@ -217,13 +166,12 @@
           <div class="order_info_table_line2">
             <div>
               <div>주문자</div>
-              <div><a href="#"><%=order.getName()%></a></div>
+              <div><%=order.getName()%></div>
             </div>
             <div>
               <div>연락처</div>
               <div>
                 <%=order.getMobile()%>
-                <button>변경</button>
               </div>
             </div>
           </div>
@@ -231,20 +179,13 @@
             <div>
               <div>주문상태</div>
               <div>
-                <select name="state" id="order_state">
-                  <option value="" selected>결제 확인</option>
-                  <option value="">상품 준비중</option>
-                  <option value="">배송중</option>
-                  <option value="">배송 완료</option>
-                  <option value="">취소</option>
-                </select>
+                <%=order.getState()%>
               </div>
             </div>
             <div>
               <div>운송장번호</div>
               <div>
                 <a href="#"><%=order.getWaybillNum()%></a>
-                <button>변경</button>
               </div>
             </div>
           </div>
@@ -256,7 +197,6 @@
               <div>주문 금액</div>
               <div>
                 <%=order.getPrice()%>
-                <button>변경</button>
               </div>
             </div>
             <div>
@@ -291,7 +231,7 @@
           <div class="order_item">
             <div class="order_item_num"><%=item.getItemnum()%></div>
             <div class="order_item_category"><%=item.getCategory()%></div>
-            <div class="order_item_name"><a href=""><%=item.getMfr() + " " + item.getName()%></a></div>
+            <div class="order_item_name"><a href="/shop/item?item=<%=item.getItemnum()%>"><%=item.getMfr() + " " + item.getName()%></a></div>
             <div class="order_item_quantity"><%=item.getQuantity()%></div>
             <div class="order_item_price"><%=item.getFormattedPrice()%></div>
             <div class="order_item_stock"><%=item.getStock()%></div>

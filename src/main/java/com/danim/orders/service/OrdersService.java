@@ -38,4 +38,14 @@ public class OrdersService {
 
         return ordersVOList; // Orders List 반환
     }
+
+    public List<OrdersVO> getList(String memnum){
+        // 회원번호를 이용해 DB에서 리스트 검색
+        List<Orders> ordersList = ordersDao.selectAllByAtt("MEMNUM", memnum);
+
+        // 반환할 Orders VO List 생성 및 기존 Entity List 변환하여 저장
+        List<OrdersVO> ordersVOList = ordersParser.ordersListEntitytoVO(ordersList);
+
+        return ordersVOList; // Orders List 반환
+    }
 }
