@@ -26,7 +26,7 @@ public class MemberDao implements IMemberDao{
     // 회원가입
     @Override
     public int insert(Member member) {
-        String SQL = "INSERT INTO MEMBER VALUES (MEMBER_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, null, null, ?)";
+        String SQL = "INSERT INTO MEMBER VALUES (LPAD(MEMBER_SEQ.NEXTVAL, 6, 0), ?, ?, ?, ?, ?, ?, ?, null, null, ?)";
         // 회원가입 성공: 1반환, 실패: 0 반환
         return jdbcTemplate.update(SQL, new PreparedStatementSetter() {
             @Override
@@ -147,6 +147,35 @@ public class MemberDao implements IMemberDao{
                 return member;
             }
         });
+
+        if (members.isEmpty()) return null; // 조회된게 없는경우 null 반환
+        return members;
+    }
+
+    // 검색어 및 속성을 통한 조회
+    @Override
+    public List<Member> searchAllByFilters(String state, String sorting, String keyword) {
+        List<Member> members = null;
+        String SQL = "SELECT * FROM MEMBER WHERE (MEMNUM LIKE ? OR EMAIL LIKE ? OR NAME LIKE ? OR NICKNAME LIKE ? OR MOBILE LIKE ? OR ADDR LIKE ?) AND " +
+                "(ISADMIN LIKE ?) ORDER BY " + sorting;
+        members = jdbcTemplate.query(SQL, new RowMapper<Member>() {
+            @Override
+            public Member mapRow(ResultSet resultSet, int i) throws SQLException {
+                Member member = new Member();
+                member.setMemnum(resultSet.getString("MEMNUM"));
+                member.setEmail(resultSet.getString("EMAIL"));
+                member.setPwd(resultSet.getString("PWD"));
+                member.setName(resultSet.getString("NAME"));
+                member.setNickname(resultSet.getString("NICKNAME"));
+                member.setZipcode(resultSet.getString("ZIPCODE"));
+                member.setAddr(resultSet.getString("ADDR"));
+                member.setMobile(resultSet.getString("MOBILE"));
+                member.setBasket(resultSet.getString("BASKET"));
+                member.setWishlist(resultSet.getString("WISHLIST"));
+                member.setIsAdmin(resultSet.getInt("ISADMIN"));
+                return member;
+            }
+        }, keyword, keyword, keyword, keyword, keyword, keyword, state);
 
         if (members.isEmpty()) return null; // 조회된게 없는경우 null 반환
         return members;

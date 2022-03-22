@@ -3,7 +3,7 @@ package com.danim.orders.beans;
 import java.util.Date;
 
 public class Orders {
-    private int ordernum; // 주문번호
+    private String ordernum; // 주문번호
     private String memnum; // 주문한 유저
     private Date orderdate; // 주문 일자
     private String name; // 이름
@@ -37,11 +37,11 @@ public class Orders {
         this.qna = qna;
     }
 
-    public int getOrdernum() {
+    public String getOrdernum() {
         return ordernum;
     }
 
-    public void setOrdernum(int ordernum) {
+    public void setOrdernum(String ordernum) {
         this.ordernum = ordernum;
     }
 

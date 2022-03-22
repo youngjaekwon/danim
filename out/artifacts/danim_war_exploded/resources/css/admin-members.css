@@ -1,0 +1,391 @@
+@charset "utf-8";
+
+body {
+  margin: 0;
+}
+
+.main {
+  width: 100%;
+  /* max-width: 1580px; */
+  height: 100%;
+  font-family: Arial, Tahoma, Bitstream Vera Sans, sans-serif;
+}
+
+.main-inner {
+  width: 1580px;
+  height: 100%;
+  margin: 0 auto;
+  padding-top: 20px;
+  padding-bottom: 60px;
+  position: relative;
+  display: flex;
+}
+
+.main-left {
+  width: 300px;
+}
+
+.main-left {
+  margin-left: 30px;
+  margin-top: 30px;
+}
+
+.main-nav > ul {
+  list-style: none;
+  padding: 0;
+}
+
+.main-nav li {
+  margin-bottom: 10px;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: #000;
+  font-size: 18px;
+}
+
+.main-nav a:hover {
+  color: rgba(134, 131, 131, 0.76);
+}
+
+.main-right {
+  width: 1280px;
+  margin-top: 20px;
+  position: relative;
+}
+
+.main-right {
+  width: 1280px;
+  margin-top: 20px;
+  position: relative;
+}
+
+.main-right > p {
+  display: block;
+  font-size: 40px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+.members_header_top {
+  text-align: right;
+  padding-right: 20px;
+}
+
+.members_header_top > div {
+  display: inline-block;
+}
+
+.members_search {
+  margin-left: 20px;
+}
+
+.members_search  > form {
+  display: inline-block;
+}
+
+.members_search input[name="keyword"] {
+  border: none;
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+
+.members_search input[name="keyword"]::placeholder {
+  text-align: center;
+}
+
+.members_search input[type="submit"] {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.members_filter {
+  font-size: 17px;
+  margin: 30px 0;
+}
+
+.members_filter label {
+  margin: 0 10px;
+}
+
+.members_filter select {
+  width: 150px;
+  text-align: center;
+  padding-right: 10px;
+  border: none;
+  border-bottom: 1px solid #000;
+  margin: 0 10px;
+  font-size: 15px;
+}
+
+.members_title {
+  border-bottom: 2px solid black;
+  padding-bottom: 5px;
+  font-size: 20px;
+  padding: 0 45px;
+}
+
+.members_title div {
+  display: inline-block;
+  text-align: center;
+}
+
+.members_list {
+  border-bottom: 1px solid black;
+}
+
+.emptyList {
+  height: 35px;
+  line-height: 35px;
+  padding-left: 10px;
+}
+
+.member {
+  border-bottom: 1px solid black;
+  padding: 10px 45px;
+  font-size: 18px;
+  height: 35px;
+  line-height: 35px;
+}
+
+.member a {
+  text-decoration: none;
+  color: #000;
+}
+
+.member:hover {
+  background-color: rgba(221, 218, 218, 0.589);
+}
+
+.member div {
+  display: inline-block;
+  text-align: center;
+}
+
+.members_num {
+  width: 80px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.members_email {
+  width: 250px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.members_normal {
+  width: 160px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.paging {
+  width: 400px;
+  height: 200px;
+  margin: 0 auto;
+  display: flex;
+  font-size: 20px;
+  text-align: center;
+  line-height: 100px;
+}
+.paging a {
+  text-decoration: none;
+  color: #000;
+  margin: 0 10px;
+}
+
+.paging a:hover {
+  text-decoration: underline;
+}
+
+.pages {
+  width: 100%;
+  height: 200px;
+}
+
+.member_modal {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(128, 128, 128, 0.603);
+  z-index: 999;
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.member_modal form {
+  display: inline-block;
+}
+
+.member_modal_inside {
+  width: 700px;
+  height: 320px;
+  padding: 25px;
+  background-color: white;
+  border: 1px solid black;
+}
+
+.member_modal_header {
+  height: 65px;
+  font-size: 30px;
+  line-height: 40px;
+}
+
+.member_modal_header div {
+  display: inline-block;
+}
+
+.member_modal_header_right {
+  float: right;
+  height: 30px;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.member_modal_header_right a {
+  color: black;
+}
+
+.member_modal_header_right button {
+  background-color: transparent;
+  font-size: 14px;
+  margin-right: 10px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.member_info_table button {
+  margin-left: 10px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.member_info_table a {
+  color: black;
+}
+
+.member_info_table_line1 {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  font-size: 17px;
+  border-top: 2px solid black;
+  border-bottom: 1px solid black;
+}
+
+.member_info_table_line1 > div {
+  display: inline-block;
+  width: 50%;
+}
+
+.member_info_table_line1_info > div {
+  height: 50%;
+  line-height: 60px;
+}
+
+.member_info_table_line1_info > div:first-child {
+  border-bottom: 0.5px solid black;
+}
+
+.member_info_table_line1_info > div > div:first-child {
+  width: 20%;
+  display: inline-block;
+  margin-right: 10px;
+  padding-left: 20px;
+}
+
+.member_info_table_line1_info > div > div:last-child {
+  width: 60%;
+  padding-left: 20px;
+  display: inline-block;
+}
+
+.member_info_table_line1_addr {
+  border-left: 0.5px solid black;
+}
+
+.member_info_table_line1_addr > div:first-child {
+  margin: 10px 0;
+  margin-left: 20px;
+}
+
+.member_info_table_line1_addr > div:last-child {
+  margin-left: 20px;
+}
+
+.member_info_table_line2 {
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  display: flex;
+  font-size: 17px;
+  border-bottom: 1px solid black;
+}
+
+.member_info_table_line2 > div {
+  width: 50%;
+}
+
+.member_info_table_line2 > div:last-child {
+  border-left: 0.5px solid black;
+}
+
+.member_info_table_line2 > div > div:first-child {
+  width: 20%;
+  display: inline-block;
+  margin-right: 10px;
+  padding-left: 20px;
+}
+
+.member_info_table_line2 > div > div:last-child {
+  width: 60%;
+  padding-left: 20px;
+  display: inline-block;
+}
+
+.member_info_table_line3 {
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  display: flex;
+  font-size: 17px;
+  border-bottom: 2px solid black;
+}
+
+.member_info_table_line3 > div {
+  width: 50%;
+}
+
+.member_info_table_line3 select {
+  border: none;
+  border-bottom: 1px solid black;
+}
+
+.member_info_table_line3 > div:last-child {
+  border-left: 0.5px solid black;
+}
+
+.member_info_table_line3 > div > div:first-child {
+  width: 20%;
+  display: inline-block;
+  margin-right: 10px;
+  padding-left: 20px;
+}
+
+.member_info_table_line3 > div > div:last-child {
+  width: 60%;
+  padding-left: 20px;
+  display: inline-block;
+}
+
+.member_info_table_line3 > div:last-child > div:first-child {
+  font-size: 15px;
+}

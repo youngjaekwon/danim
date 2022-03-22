@@ -116,7 +116,7 @@
           <span>-</span>
           <input type="text" name="shippingMobile3" class="checkOutMobile3" id="shippingMobile3" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
           <label for="msg">Message</label>
-          <textarea name="request" id="msg" cols="65" rows="8" placeholder="요청사항을 입력해 주세요."></textarea>
+          <textarea name="request" id="msg" cols="65" rows="8" maxlength="300" placeholder="요청사항을 입력해 주세요. (최대 300자)"></textarea>
         </div>
         <div class="payment">
           <p>Payment</p>

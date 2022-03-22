@@ -26,7 +26,7 @@ public class OrdersDao implements IOrdersDao{
     // 주문 생성
     @Override
     public int insert(Orders orders) {
-        String SQL = "INSERT INTO ORDERS VALUES (ORDERS_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO ORDERS VALUES (LPAD(ORDERS_SEQ.NEXTVAL, 7, 0), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         // 주문 생성 성공: 1반환, 실패: 0 반환
         return jdbcTemplate.update(SQL, new PreparedStatementSetter() {
             @Override
@@ -50,14 +50,14 @@ public class OrdersDao implements IOrdersDao{
 
     // 셀렉트
     @Override
-    public Orders select(int ordernum) {
+    public Orders select(String ordernum) {
         List<Orders> orders = null;
         String SQL = "SELECT * FROM ORDERS WHERE ORDERNUM = ?";
         orders = jdbcTemplate.query(SQL, new RowMapper<Orders>() {
             @Override
             public Orders mapRow(ResultSet resultSet, int i) throws SQLException {
                 Orders order = new Orders();
-                order.setOrdernum(resultSet.getInt("ORDERNUM"));
+                order.setOrdernum(resultSet.getString("ORDERNUM"));
                 order.setMemnum(resultSet.getString("MEMNUM"));
                 order.setOrderdate(resultSet.getTimestamp("ORDERDATE"));
                 order.setName(resultSet.getString("NAME"));
@@ -79,7 +79,7 @@ public class OrdersDao implements IOrdersDao{
         return orders.get(0);
     }
 
-    // attribute, data를 이용한 조회 (keyword가 String형 일때)
+    // attribute, data를 이용한 조회
     @Override
     public Orders search(String attribute, String keyword) {
         List<Orders> orders = null;
@@ -88,38 +88,7 @@ public class OrdersDao implements IOrdersDao{
             @Override
             public Orders mapRow(ResultSet resultSet, int i) throws SQLException {
                 Orders order = new Orders();
-                order.setOrdernum(resultSet.getInt("ORDERNUM"));
-                order.setMemnum(resultSet.getString("MEMNUM"));
-                order.setOrderdate(resultSet.getTimestamp("ORDERDATE"));
-                order.setName(resultSet.getString("NAME"));
-                order.setZipcode(resultSet.getString("ZIPCODE"));
-                order.setAddr(resultSet.getString("ADDR"));
-                order.setMobile(resultSet.getString("MOBILE"));
-                order.setState(resultSet.getString("STATE"));
-                order.setWaybillnum(resultSet.getString("WAYBILLNUM"));
-                order.setPrice(resultSet.getString("PRICE"));
-                order.setPayment(resultSet.getString("PAYMENT"));
-                order.setRequest(resultSet.getString("REQUEST"));
-                order.setItemlist(resultSet.getString("ITEMSLIST"));
-                order.setQna(resultSet.getString("QNA"));
-                return order;
-            }
-        }, keyword);
-
-        if (orders.isEmpty()) return null; // 조회된게 없는경우 null 반환
-        return orders.get(0);
-    }
-
-    // attribute, data를 이용한 조회 (keyword가 int 형일때)
-    @Override
-    public Orders search(String attribute, int keyword) {
-        List<Orders> orders = null;
-        String SQL = "SELECT * FROM ORDERS WHERE " + attribute + " = ?";
-        orders = jdbcTemplate.query(SQL, new RowMapper<Orders>() {
-            @Override
-            public Orders mapRow(ResultSet resultSet, int i) throws SQLException {
-                Orders order = new Orders();
-                order.setOrdernum(resultSet.getInt("ORDERNUM"));
+                order.setOrdernum(resultSet.getString("ORDERNUM"));
                 order.setMemnum(resultSet.getString("MEMNUM"));
                 order.setOrderdate(resultSet.getTimestamp("ORDERDATE"));
                 order.setName(resultSet.getString("NAME"));
@@ -143,25 +112,25 @@ public class OrdersDao implements IOrdersDao{
 
     // 업데이트
     @Override
-    public int update(int ordernum, String attribute, String revisedData) {
+    public int update(String ordernum, String attribute, String revisedData) {
         String SQL = "UPDATE ORDERS SET " + attribute + " = ? WHERE ORDERNUM = ?";
         return jdbcTemplate.update(SQL, new PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement preparedStatement) throws SQLException {
                 preparedStatement.setString(1, revisedData);
-                preparedStatement.setInt(2, ordernum);
+                preparedStatement.setString(2, ordernum);
             }
         });
     }
 
     // 주문 삭제
     @Override
-    public int delete(int ordernum) {
+    public int delete(String ordernum) {
         String SQL = "DELETE FROM ORDERS WHERE ORDERNUM = ?";
         return jdbcTemplate.update(SQL, new PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement preparedStatement) throws SQLException {
-                preparedStatement.setInt(1, ordernum);
+                preparedStatement.setString(1, ordernum);
             }
         });
     }
@@ -174,7 +143,7 @@ public class OrdersDao implements IOrdersDao{
             @Override
             public Orders mapRow(ResultSet resultSet, int i) throws SQLException {
                 Orders order = new Orders();
-                order.setOrdernum(resultSet.getInt("ORDERNUM"));
+                order.setOrdernum(resultSet.getString("ORDERNUM"));
                 order.setMemnum(resultSet.getString("MEMNUM"));
                 order.setOrderdate(resultSet.getTimestamp("ORDERDATE"));
                 order.setName(resultSet.getString("NAME"));
@@ -197,14 +166,15 @@ public class OrdersDao implements IOrdersDao{
     }
 
     @Override
-    public List<Orders> searchAllByFilters(String state, String qna, String sorting) {
+    public List<Orders> searchAllByFilters(String state, String qna, String sorting, String keyword) {
         List<Orders> orders = null;
-        String SQL = "SELECT * FROM ORDERS WHERE STATE LIKE ? AND QNA LIKE ? ORDER BY " + sorting;
+        String SQL = "SELECT * FROM ORDERS WHERE (ORDERNUM LIKE ? OR MEMNUM LIKE ? OR NAME LIKE ? OR ADDR LIKE ?) AND " +
+                "(STATE LIKE ? AND QNA LIKE ?) ORDER BY " + sorting;
         orders = jdbcTemplate.query(SQL, new RowMapper<Orders>() {
             @Override
             public Orders mapRow(ResultSet resultSet, int i) throws SQLException {
                 Orders order = new Orders();
-                order.setOrdernum(resultSet.getInt("ORDERNUM"));
+                order.setOrdernum(resultSet.getString("ORDERNUM"));
                 order.setMemnum(resultSet.getString("MEMNUM"));
                 order.setOrderdate(resultSet.getTimestamp("ORDERDATE"));
                 order.setName(resultSet.getString("NAME"));
@@ -220,7 +190,37 @@ public class OrdersDao implements IOrdersDao{
                 order.setQna(resultSet.getString("QNA"));
                 return order;
             }
-        }, state, qna);
+        }, keyword, keyword, keyword, keyword, state, qna);
+
+        if (orders.isEmpty()) return null; // 조회된게 없는경우 null 반환
+        return orders;
+    }
+
+    @Override
+    public List<Orders> selectAllByAtt(String attribute, String keyword) {
+        List<Orders> orders = null;
+        String SQL = "SELECT * FROM ORDERS WHERE " + attribute + " LIKE ? ORDER BY ORDERNUM DESC";
+        orders = jdbcTemplate.query(SQL, new RowMapper<Orders>() {
+            @Override
+            public Orders mapRow(ResultSet resultSet, int i) throws SQLException {
+                Orders order = new Orders();
+                order.setOrdernum(resultSet.getString("ORDERNUM"));
+                order.setMemnum(resultSet.getString("MEMNUM"));
+                order.setOrderdate(resultSet.getTimestamp("ORDERDATE"));
+                order.setName(resultSet.getString("NAME"));
+                order.setZipcode(resultSet.getString("ZIPCODE"));
+                order.setAddr(resultSet.getString("ADDR"));
+                order.setMobile(resultSet.getString("MOBILE"));
+                order.setState(resultSet.getString("STATE"));
+                order.setWaybillnum(resultSet.getString("WAYBILLNUM"));
+                order.setPrice(resultSet.getString("PRICE"));
+                order.setPayment(resultSet.getString("PAYMENT"));
+                order.setRequest(resultSet.getString("REQUEST"));
+                order.setItemlist(resultSet.getString("ITEMSLIST"));
+                order.setQna(resultSet.getString("QNA"));
+                return order;
+            }
+        }, "%" + keyword + "%");
 
         if (orders.isEmpty()) return null; // 조회된게 없는경우 null 반환
         return orders;

@@ -26,7 +26,7 @@ public class ItemsDao implements IItemsDao{
     // 제품 등록
     @Override
     public int insert(Items item) {
-        String SQL = "INSERT INTO ITEMS VALUES (ITEMS_SEQ.nextval, ?, ?, ?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO ITEMS VALUES (LPAD(ITEMS_SEQ.nextval, 7, 0), ?, ?, ?, ?, ?, ?, ?)";
         // 제품 등록 성공: 1반환, 실패: 0 반환
         return jdbcTemplate.update(SQL, new PreparedStatementSetter() {
             @Override

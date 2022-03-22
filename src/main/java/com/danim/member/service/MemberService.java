@@ -4,11 +4,14 @@ import com.danim.member.beans.Member;
 import com.danim.member.dao.MemberDao;
 import com.danim.member.dto.MemberDTO;
 import com.danim.member.parser.MemberParser;
+import com.danim.orders.beans.Orders;
+import com.danim.orders.beans.OrdersVO;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Service
 public class MemberService {
@@ -102,5 +105,16 @@ public class MemberService {
     // 장바구니 비우는 메소드
     public boolean clearBasket(String memnum) {
         return memberDao.update(memnum, "BASKET", null) > 0;
+    }
+
+    // 멤버 리스트 (관리자 조회용)
+    public List<Member> getList(String state, String sorting, String keyword){
+        // keyword 에 SQL 와일드카드 추가
+        if (keyword != null) keyword = "%" + keyword + "%";
+
+        // 주어진 필터들을 이용해 DB에서 리스트 검색
+        List<Member> membersList = memberDao.searchAllByFilters(state, sorting, keyword);
+
+        return membersList; // Orders List 반환
     }
 }

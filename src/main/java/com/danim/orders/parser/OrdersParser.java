@@ -21,12 +21,14 @@ public class OrdersParser {
     private final ItemsService itemsService;
     private final DecimalFormat formatter;
     private final SimpleDateFormat simpleDateFormat;
+    private final SimpleDateFormat simpleDateFormatIncludeTime;
 
     @Autowired
-    public OrdersParser(ItemsService itemsService, DecimalFormat formatter, SimpleDateFormat simpleDateFormat) {
+    public OrdersParser(ItemsService itemsService, DecimalFormat formatter, SimpleDateFormat simpleDateFormat, SimpleDateFormat simpleDateFormatIncludeTime) {
         this.itemsService = itemsService;
         this.formatter = formatter;
         this.simpleDateFormat = simpleDateFormat;
+        this.simpleDateFormatIncludeTime = simpleDateFormatIncludeTime;
     }
 
     // Orders DTO 를 Orders Entity 로 변환하는 메소드
@@ -64,7 +66,7 @@ public class OrdersParser {
 
         ////////////////////////// 주문 VO 객체에 등록될 정보 ////////////////////////////
         // 주문 번호
-        ordersVO.setOrderNum(order.getOrdernum() + "");
+        ordersVO.setOrderNum(order.getOrdernum());
 
         // 주문자 이름
         ordersVO.setName(order.getName());
@@ -82,6 +84,9 @@ public class OrdersParser {
 
         // 상품 리스트 저장
         ordersVO.setItemsList(itemsList);
+
+        // 썸네일 저장 (대표 상품의 대표 이미지)
+        ordersVO.setThumbnail(titleItem.getPic().split("\\$")[0]);
 
         // 대표 상품 외 상품 갯수 저장
         ordersVO.setOthers((itemsList.size() - 1));
@@ -130,7 +135,7 @@ public class OrdersParser {
         }
 
         // 주문 일자 (yyyy-HH-dd hh.mm.ss 형식)
-        ordersVO.setDate(order.getOrderdate().toString());
+        ordersVO.setDate(simpleDateFormatIncludeTime.format(order.getOrderdate()));
 
         // 우편 번호
         ordersVO.setZipcode(order.getZipcode());
@@ -142,10 +147,14 @@ public class OrdersParser {
         ordersVO.setMobile(order.getMobile());
 
         // 운송장 번호
-        ordersVO.setWaybillNum(order.getWaybillnum());
+        String wabillNum = order.getWaybillnum();
+        if (wabillNum == null) wabillNum = "-"; // null일 경우 - 로 변환
+        ordersVO.setWaybillNum(wabillNum);
 
         // 요청 사항
-        ordersVO.setRequest(order.getRequest());
+        String request = order.getRequest();
+        if (request == null) request = "-"; // null일 경우 - 로 변환
+        ordersVO.setRequest(request);
 
 
         return ordersVO;

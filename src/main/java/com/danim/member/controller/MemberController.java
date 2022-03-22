@@ -1,16 +1,22 @@
 package com.danim.member.controller;
+import com.danim.common.paging.PageMaker;
 import com.danim.member.beans.Member;
 import com.danim.member.dto.MemberDTO;
 import com.danim.member.parser.MemberParser;
 import com.danim.member.service.MemberService;
+import com.danim.orders.beans.OrdersVO;
+import com.danim.orders.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -18,36 +24,19 @@ public class MemberController {
 
     private final MemberService memberService;
     private final MemberParser memberParser;
+    private final OrdersService ordersService;
 
     @Autowired
-    public MemberController(MemberService memberService, MemberParser memberParser) {
+    public MemberController(MemberService memberService, MemberParser memberParser, OrdersService ordersService) {
         this.memberService = memberService;
         this.memberParser = memberParser;
+        this.ordersService = ordersService;
     }
 
     // 회원가입 페이지
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signup() {
         return "member/member-signup";
-    }
-
-    // 회원정보 수정 페이지
-    @RequestMapping(value = "/mypage", method = RequestMethod.GET)
-    public String mypage(HttpServletRequest httpServletRequest, HttpSession session) {
-        String user = (String) session.getAttribute("user");
-        // 로그인된 상태일 경우 회원정보 수정 페이지로 이동
-        if (user != null){
-            Member member = memberService.selectMember(user); // DB에서 로그인된 유저 정보 검색
-            MemberDTO dto = memberParser.parseMember(member); // Entity to DTO parsing
-            session.setAttribute("userInfo", dto); // 유저 정보 세션에 전달
-            return "member/member-mypage";
-        } else {
-            // 로그인이 되어있지 않을 경우
-            session.setAttribute("loginCheck", "false"); // 비 로그인 상태 추가
-            String currentPage = httpServletRequest.getHeader("Referer"); // 이전 페이지 확인
-            return (currentPage != null) ? ("redirect:" + currentPage) : "redirect:/";
-            // 이전 페이지가 있으면 이전페이지로 이동, 없으면 index 페이지로 이동
-        }
     }
 
     // 회원가입 form submit시 작동
@@ -196,6 +185,52 @@ public class MemberController {
         }
 
         return result? "redirect:/" : "redirect:" + httpServletRequest.getHeader("Referer"); // 성공: 메인 페이지로 이동/실패: 이전 페이지로 이동
+    }
+
+    /////////////////////////////// 마이 페이지 //////////////////////////////////////
+    // 회원정보 수정 페이지
+    @RequestMapping(value = "/mypage", method = RequestMethod.GET)
+    public String mypage(HttpServletRequest httpServletRequest, HttpSession session) {
+        String user = (String) session.getAttribute("user");
+        // 로그인된 상태일 경우 회원정보 수정 페이지로 이동
+        if (user != null){
+            Member member = memberService.selectMember(user); // DB에서 로그인된 유저 정보 검색
+            MemberDTO dto = memberParser.parseMember(member); // Entity to DTO parsing
+            session.setAttribute("userInfo", dto); // 유저 정보 세션에 전달
+            return "member/member-mypage";
+        } else {
+            // 로그인이 되어있지 않을 경우
+            session.setAttribute("loginCheck", "false"); // 비 로그인 상태 추가
+            String currentPage = httpServletRequest.getHeader("Referer"); // 이전 페이지 확인
+            return (currentPage != null) ? ("redirect:" + currentPage) : "redirect:/";
+            // 이전 페이지가 있으면 이전페이지로 이동, 없으면 index 페이지로 이동
+        }
+    }
+
+    // 주문 내역 페이지
+    @RequestMapping(value = "/orderList", method = RequestMethod.GET)
+    public ModelAndView orderList(HttpSession session, HttpServletRequest request){
+        ModelAndView mav = new ModelAndView("member/member-orderlist"); // view 추가
+
+        // paging 요소
+        String memnum = (String) session.getAttribute("user"); // 로그인된 회원번호
+        String requestPage = request.getParameter("page"); // 요청된 페이지
+
+        // 회원번호로 리스트 검색
+        List<OrdersVO> totalList = ordersService.getList(memnum);
+
+        // 리스트 검색이 안될경우
+        if (totalList == null) {
+            totalList = new ArrayList<>();
+        }
+
+        int numPerPage = 10; // 한 페이지당 출력할 아이템 수: 주문리스트의 경우 10개
+        int pagePerBlock = 6; // 하단 페이지 네비게이션 한 블럭 당 출력할 페이지 수: 주문 리스트의 경우 6개
+
+        // 검색된 리스트, 요청된 페이지를 이용하여 페이지 생성
+        PageMaker.makePage(mav, totalList, requestPage, numPerPage, pagePerBlock);
+
+        return mav;
     }
 }
 
