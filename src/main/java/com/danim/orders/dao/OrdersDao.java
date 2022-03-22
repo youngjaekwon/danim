@@ -197,9 +197,10 @@ public class OrdersDao implements IOrdersDao{
     }
 
     @Override
-    public List<Orders> searchAllByFilters(String state, String qna, String sorting) {
+    public List<Orders> searchAllByFilters(String state, String qna, String sorting, String keyword) {
         List<Orders> orders = null;
-        String SQL = "SELECT * FROM ORDERS WHERE STATE LIKE ? AND QNA LIKE ? ORDER BY " + sorting;
+        String SQL = "SELECT * FROM ORDERS WHERE (ORDERNUM LIKE ? OR NAME LIKE ? OR ADDR LIKE ?) AND " +
+                "(STATE LIKE ? AND QNA LIKE ?) ORDER BY " + sorting;
         orders = jdbcTemplate.query(SQL, new RowMapper<Orders>() {
             @Override
             public Orders mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -220,7 +221,7 @@ public class OrdersDao implements IOrdersDao{
                 order.setQna(resultSet.getString("QNA"));
                 return order;
             }
-        }, state, qna);
+        }, keyword, keyword, keyword, state, qna);
 
         if (orders.isEmpty()) return null; // 조회된게 없는경우 null 반환
         return orders;

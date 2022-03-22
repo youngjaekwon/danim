@@ -68,19 +68,23 @@
                 <option value="ORDERDATE">주문일 오름차순</option>
                 <option value="ORDERDATE DESC">주문일 내림차순</option>
               </select>
+              <input type="hidden" name="keyword" value="${keyword}"/>
               <input type="hidden" name="page"/>
             </form>
           </div>
           <div class="orders_search">
-            <form action="#" name="orders_search">
-              <input type="text" name="keyword" placeholder="검색어 입력">
+            <form action="/admin/orders" name="orders_search">
+              <input type="text" name="keyword" placeholder="주문번호 / 고객명 / 주소">
               <input type="submit" value="검색">
+            </form>
+            <form action="/admin/orders" name="reset">
+              <input type="submit" value="초기화">
             </form>
           </div>
         </div>
         <div class="orders_title">
           <div class="orders_header_num">주문번호</div>
-          <div class="orders_header_normal">성명</div>
+          <div class="orders_header_normal">고객명</div>
           <div class="orders_header_title">상품명</div>
           <div class="orders_header_normal">합계 금액</div>
           <div class="orders_header_normal">주문 날짜</div>
@@ -341,6 +345,7 @@
   $('[name=filter] [name=state]').val('${state}').prop("selected", true);
   $('[name=filter] [name=qna]').val('${qna}').prop("selected", true);
   $('[name=filter] [name=sort]').val('${sorting}').prop("selected", true);
+  $('[name=orders_search] [name=keyword]').val('${keyword}');
 </script>
 </body>
 

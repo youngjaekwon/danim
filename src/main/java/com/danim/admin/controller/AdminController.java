@@ -40,16 +40,18 @@ public class AdminController {
         String state = httpServletRequest.getParameter("state"); // 주문 상태
         String qna = httpServletRequest.getParameter("qna"); // 1:1 문의 상태
         String sorting = httpServletRequest.getParameter("sort"); // 정렬 방법
+        String keyword = httpServletRequest.getParameter("keyword"); // 검색 키워드
         String requestPage = httpServletRequest.getParameter("page"); // 요청된 페이지
 
         // Parameter 값 없는 경우 Defalt값 설정
         if (state == null) state = "%%";
         if (qna == null) qna = "%%";
         if (sorting == null) sorting = "ORDERNUM DESC";
+        if (keyword == null || keyword.equals("")) keyword = "%%";
         if (requestPage != null && requestPage.equals("")) requestPage = "1";
 
         // paging 요소로 리스트 검색
-        List<OrdersVO> totalList = ordersService.getList(state, qna, sorting);
+        List<OrdersVO> totalList = ordersService.getList(state, qna, sorting, keyword);
 
         // 리스트 검색이 안될경우
         if (totalList == null) {
@@ -69,6 +71,8 @@ public class AdminController {
         mav.addObject("state", state);
         mav.addObject("qna", qna);
         mav.addObject("sorting", sorting);
+        if (!keyword.equals("%%"))
+            mav.addObject("keyword", keyword);
 
         return mav;
     }

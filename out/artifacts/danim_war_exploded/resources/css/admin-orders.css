@@ -81,9 +81,14 @@ body {
   margin-left: 20px;
 }
 
+.orders_search > form {
+  display: inline-block;
+}
+
 .orders_search input[name="keyword"] {
   border: none;
   border-bottom: 1px solid black;
+  text-align: center;
 }
 
 .orders_search input[name="keyword"]::placeholder {
