@@ -15,9 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class MemberController {
@@ -231,6 +229,13 @@ public class MemberController {
         PageMaker.makePage(mav, totalList, requestPage, numPerPage, pagePerBlock);
 
         return mav;
+    }
+
+    @RequestMapping(value = "/naverLogin")
+    public String naverLogin(HttpServletRequest request){
+
+
+        return "index";
     }
 }
 

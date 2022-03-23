@@ -17,6 +17,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/resources/js/header.js" defer></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 
 </head>
 <body>
@@ -77,8 +78,8 @@
             </form>
             <div class="social">
                 <a href="#" class="google">google</a>
-                <a href="#" class="naver">naver</a>
-                <a href="#" class="kakao">kakao</a>
+                <a href="javascript:void(0)" id="naverIdLogin_loginButton" class="naver">naver</a>
+                <a href="javascript:naverLogout()" class="kakao">kakao</a>
             </div>
             <div class="modal-bottom">
                 <ul>
