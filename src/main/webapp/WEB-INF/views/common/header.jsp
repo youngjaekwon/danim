@@ -20,7 +20,6 @@
     <script src="/resources/js/header.js" defer></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"></script>
-    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
 </head>
 <body>
 <header>
@@ -252,5 +251,9 @@
 <%
     session.removeAttribute("loginCheck"); // 로그인 확인 attribute 제거
 %>
+<script src="https://apis.google.com/js/api:client.js"></script>
+<form name="googleLogin" action="/doGoogleLogin" method="post">
+    <input type="hidden" name="user"/>
+</form>
 </body>
 </html>

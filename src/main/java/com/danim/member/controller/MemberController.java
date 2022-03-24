@@ -42,11 +42,16 @@ public class MemberController {
     // 회원가입 페이지
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signup(HttpServletRequest request, Model model) {
-        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request); // RequestAttribute Map
+
+        // 소셜 로그인 유저정보 존재하면 model에 저장
         if (flashMap != null){
             HashMap<String, String> naverUser = (HashMap<String, String>) flashMap.get("naverUser");
             model.addAttribute("naverUser", naverUser);
+            HashMap<String, String> googleUser = (HashMap<String, String>) flashMap.get("googleUser");
+            model.addAttribute("googleUser", googleUser);
         }
+
         return "member/member-signup";
     }
 
@@ -244,12 +249,13 @@ public class MemberController {
         return mav;
     }
 
+    // 네이버 로그인 CallBack
     @RequestMapping(value = "/naverLogin")
     public String naverLogin(HttpServletRequest request){
         return "common/socialLogin";
-//        return "index";
     }
 
+    // 네이버 로그인
     @RequestMapping(value = "/doNaverLogin", method = RequestMethod.POST)
     public String doNaverLogin(@RequestParam String user, HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttributes)
             throws ParseException {
@@ -265,6 +271,26 @@ public class MemberController {
 
         // 검색 결과가 존재하는 경우 (로그인 성공한 경우)
         session.setAttribute("user", naverLoginMember.getMemnum()); // 회원 번호 세션에 등록
+        redirectAttributes.addFlashAttribute("loginCheck", "true"); // 로그인 성공 저장
+
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/doGoogleLogin", method = RequestMethod.POST)
+    public String doGoogleLogin(@RequestParam String user, HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttributes)
+            throws ParseException {
+        JSONObject jsonUser = (JSONObject) jsonPaeser.parse(user); // 클라이언트에서 넘어온 유저정보 파싱
+        String userEmail = jsonUser.get("zv").toString(); // 구글 로그인 시도한 유저 이메일
+        Member googleLoginMember = memberService.searchMember("EMAIL", userEmail); // 이메일을 통한 유저 검색
+
+        // 검색결과 null(최초 로그인)의 경우 signup 페이지로 redirect
+        if (googleLoginMember == null) {
+            redirectAttributes.addFlashAttribute("googleUser", jsonUser);
+            return "redirect:/signup";
+        }
+
+        // 검색 결과가 존재하는 경우 (로그인 성공한 경우)
+        session.setAttribute("user", googleLoginMember.getMemnum()); // 회원 번호 세션에 등록
         redirectAttributes.addFlashAttribute("loginCheck", "true"); // 로그인 성공 저장
 
         return "redirect:/";
