@@ -8,6 +8,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name ="google-signin-client_id" content="598157732367-l9c5qv6hkl06uf21ov45muv74v7jbdhh.apps.googleusercontent.com">
+
 
     <link rel="stylesheet" href="/resources/css/header.css">
     <!-- fontawesome v5 cdn -->
@@ -17,8 +19,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/resources/js/header.js" defer></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
-
+    <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
 </head>
 <body>
 <header>
@@ -77,7 +79,7 @@
                 <input type="submit" value="로그인" class="login-submit">
             </form>
             <div class="social">
-                <a href="#" class="google">google</a>
+                <a href="javascript:void(0)" id="GgCustomLogin" class="google">google</a>
                 <a href="javascript:void(0)" id="naverIdLogin_loginButton" class="naver">naver</a>
                 <a href="javascript:naverLogout()" class="kakao">kakao</a>
             </div>

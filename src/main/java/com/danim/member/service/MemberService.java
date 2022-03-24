@@ -62,6 +62,11 @@ public class MemberService {
         return memberDao.select(memnum);
     }
 
+    // search
+    public Member searchMember(String attribute, String keyword){
+        return memberDao.search(attribute, keyword);
+    }
+
     // 회원정보 수정
     public int modifyMember(Member member){
         int result = 0;
