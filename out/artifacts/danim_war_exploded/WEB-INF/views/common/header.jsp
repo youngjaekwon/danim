@@ -20,6 +20,7 @@
     <script src="/resources/js/header.js" defer></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 <body>
 <header>
@@ -80,7 +81,7 @@
             <div class="social">
                 <a href="javascript:void(0)" id="GgCustomLogin" class="google">google</a>
                 <a href="javascript:void(0)" id="naverIdLogin_loginButton" class="naver">naver</a>
-                <a href="javascript:naverLogout()" class="kakao">kakao</a>
+                <a href="javascript:kakaoLogin()" class="kakao">kakao</a>
             </div>
             <div class="modal-bottom">
                 <ul>
@@ -252,7 +253,7 @@
     session.removeAttribute("loginCheck"); // 로그인 확인 attribute 제거
 %>
 <script src="https://apis.google.com/js/api:client.js"></script>
-<form name="googleLogin" action="/doGoogleLogin" method="post">
+<form name="socialLogin" method="post">
     <input type="hidden" name="user"/>
 </form>
 </body>

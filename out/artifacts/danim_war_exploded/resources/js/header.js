@@ -289,6 +289,8 @@ var naverLogin = new naver.LoginWithNaverId(
 /* 설정정보를 초기화하고 연동을 준비 */
 naverLogin.init();
 
+
+// 구글 로그인
 var googleUser = {};
 var startApp = function() {
     gapi.load('auth2', function(){
@@ -306,11 +308,37 @@ var startApp = function() {
 function attachSignin(element) {
     auth2.attachClickHandler(element, {},
         function(googleUser) {
-            $('[name=googleLogin] [name=user]').val(JSON.stringify(googleUser.getBasicProfile()));
-            $('[name=googleLogin]').submit();
+            $('[name=socialLogin]').attr("action", "/doGoogleLogin");
+            $('[name=socialLogin] [name=user]').val(JSON.stringify(googleUser.getBasicProfile()));
+            $('[name=socialLogin]').submit();
         }, function(error) {
             alert(JSON.stringify(error, undefined, 2));
         });
 }
 
 startApp();
+
+// 카카오 로그인
+Kakao.init('83625fc936f467f28921208dd520c6cb'); //발급받은 키 중 javascript키를 사용해준다.
+console.log(Kakao.isInitialized()); // sdk초기화여부판단
+//카카오로그인
+function kakaoLogin() {
+    Kakao.Auth.login({
+        success: function (response) {
+            Kakao.API.request({
+                url: '/v2/user/me',
+                success: function (response) {
+                    $('[name=socialLogin]').attr("action", "/doKakaoLogin");
+                    $('[name=socialLogin] [name=user]').val(JSON.stringify(response.kakao_account));
+                    $('[name=socialLogin]').submit();
+                },
+                fail: function (error) {
+                    console.log(error)
+                },
+            })
+        },
+        fail: function (error) {
+            console.log(error)
+        },
+    })
+}

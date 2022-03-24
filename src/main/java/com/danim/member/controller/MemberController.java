@@ -50,6 +50,8 @@ public class MemberController {
             model.addAttribute("naverUser", naverUser);
             HashMap<String, String> googleUser = (HashMap<String, String>) flashMap.get("googleUser");
             model.addAttribute("googleUser", googleUser);
+            HashMap<String, String> kakaoUser = (HashMap<String, String>) flashMap.get("kakaoUser");
+            model.addAttribute("kakaoUser", kakaoUser);
         }
 
         return "member/member-signup";
@@ -272,7 +274,6 @@ public class MemberController {
         // 검색 결과가 존재하는 경우 (로그인 성공한 경우)
         session.setAttribute("user", naverLoginMember.getMemnum()); // 회원 번호 세션에 등록
         redirectAttributes.addFlashAttribute("loginCheck", "true"); // 로그인 성공 저장
-
         return "redirect:/";
     }
 
@@ -293,7 +294,30 @@ public class MemberController {
         session.setAttribute("user", googleLoginMember.getMemnum()); // 회원 번호 세션에 등록
         redirectAttributes.addFlashAttribute("loginCheck", "true"); // 로그인 성공 저장
 
-        return "redirect:/";
+        return "redirect:" + request.getHeader("Referer"); // 이전 페이지로 이동
+    }
+
+    // 카카오 로그인
+    @RequestMapping(value = "/doKakaoLogin", method = RequestMethod.POST)
+    public String doKakaoLogin(@RequestParam String user, HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttributes)
+            throws ParseException {
+        JSONObject jsonUser = (JSONObject) jsonPaeser.parse(user); // 클라이언트에서 넘어온 유저정보 파싱
+        String userEmail = jsonUser.get("email").toString(); // 카카오 로그인 시도한 유저 이메일
+        String userName = ((HashMap<String, String>) jsonUser.get("profile")).get("nickname"); // 카카오 로그인 시도한 유저 이름
+        jsonUser.put("name", userName); // 유저 이름 등록
+        Member googleLoginMember = memberService.searchMember("EMAIL", userEmail); // 이메일을 통한 유저 검색
+
+        // 검색결과 null(최초 로그인)의 경우 signup 페이지로 redirect
+        if (googleLoginMember == null) {
+            redirectAttributes.addFlashAttribute("kakaoUser", jsonUser);
+            return "redirect:/signup";
+        }
+
+        // 검색 결과가 존재하는 경우 (로그인 성공한 경우)
+        session.setAttribute("user", googleLoginMember.getMemnum()); // 회원 번호 세션에 등록
+        redirectAttributes.addFlashAttribute("loginCheck", "true"); // 로그인 성공 저장
+
+        return "redirect:" + request.getHeader("Referer"); // 이전 페이지로 이동
     }
 }
 

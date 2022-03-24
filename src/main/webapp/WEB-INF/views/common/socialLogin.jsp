@@ -25,6 +25,9 @@
             isPopup: false, /* 팝업을 통한 연동처리 여부 */
         }
     );
+
+    naverLogin.init();
+
     window.addEventListener('load', function () {
         naverLogin.getLoginStatus(function (status) {
             if (status) {
