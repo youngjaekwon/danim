@@ -101,6 +101,32 @@ response.setCharacterEncoding("UTF-8");%>
   alert('회원가입을 완료해 주세요!')
 </script>
 <%}%>
+<%
+  HashMap<String, String> googleUser = (HashMap<String, String>) request.getAttribute("googleUser");
+  if (googleUser != null){
+    String[] email = googleUser.get("zv").split("@");
+%>
+<script>
+  $('#email1').val('<%=email[0]%>');
+  $('#emailSelect').val('none').prop("selected", true);
+  $('#email2').val('<%=email[1]%>');
+  $('#name').val('<%=googleUser.get("sf")%>');
+  alert('회원가입을 완료해 주세요!')
+</script>
+<%}%>
+<%
+  HashMap<String, String> kakaoUser = (HashMap<String, String>) request.getAttribute("kakaoUser");
+  if (kakaoUser != null){
+    String[] email = kakaoUser.get("email").split("@");
+%>
+<script>
+  $('#email1').val('<%=email[0]%>');
+  $('#emailSelect').val('none').prop("selected", true);
+  $('#email2').val('<%=email[1]%>');
+  $('#name').val('<%=kakaoUser.get("name")%>');
+  alert('회원가입을 완료해 주세요!')
+</script>
+<%}%>
 </body>
 
 </html>
