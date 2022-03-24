@@ -1,3 +1,4 @@
+<%@ page import="java.util.HashMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--<c:set var="path" value="${pageContext.request.contextPath}"/>--%>
@@ -80,6 +81,26 @@ response.setCharacterEncoding("UTF-8");%>
     </form>
   </div>
 </section>
+<%
+  HashMap<String, String> naverUser = (HashMap<String, String>) request.getAttribute("naverUser");
+  if (naverUser != null){
+    System.out.println(naverUser);
+    System.out.println(naverUser.get("email"));
+    String[] email = naverUser.get("email").split("@");
+    String[] mobile = naverUser.get("mobile").split("-");
+%>
+<script>
+  $('#email1').val('<%=email[0]%>');
+  $('#emailSelect').val('none').prop("selected", true);
+  $('#email2').val('<%=email[1]%>');
+  $('#name').val('<%=naverUser.get("name")%>');
+  $('#nickname').val('<%=naverUser.get("nickname")%>');
+  $('#mobile1').val('<%=mobile[0]%>').prop("selected", true);
+  $('#mobile2').val('<%=mobile[1]%>');
+  $('#mobile3').val('<%=mobile[2]%>');
+  alert('회원가입을 완료해 주세요!')
+</script>
+<%}%>
 </body>
 
 </html>

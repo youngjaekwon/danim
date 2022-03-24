@@ -6,12 +6,18 @@ import com.danim.member.parser.MemberParser;
 import com.danim.member.service.MemberService;
 import com.danim.orders.beans.OrdersVO;
 import com.danim.orders.service.OrdersService;
+import org.jetbrains.annotations.NotNull;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,17 +29,24 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberParser memberParser;
     private final OrdersService ordersService;
+    private final JSONParser jsonPaeser;
 
     @Autowired
-    public MemberController(MemberService memberService, MemberParser memberParser, OrdersService ordersService) {
+    public MemberController(MemberService memberService, MemberParser memberParser, OrdersService ordersService, JSONParser jsonPaeser) {
         this.memberService = memberService;
         this.memberParser = memberParser;
         this.ordersService = ordersService;
+        this.jsonPaeser = jsonPaeser;
     }
 
     // 회원가입 페이지
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public String signup() {
+    public String signup(HttpServletRequest request, Model model) {
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        if (flashMap != null){
+            HashMap<String, String> naverUser = (HashMap<String, String>) flashMap.get("naverUser");
+            model.addAttribute("naverUser", naverUser);
+        }
         return "member/member-signup";
     }
 
@@ -74,7 +87,7 @@ public class MemberController {
         return "redirect:" + httpServletRequest.getHeader("Referer"); // 이전 페이지로 이동
     }
 
-    // 회원가입 form submit시 작동
+    // 회원정보 수정 form submit시 작동
     @RequestMapping(value = "/doModifyMemberInfo", method = RequestMethod.POST)
     public String doModifyMemberInfo(MemberDTO dto, HttpServletRequest httpServletRequest, HttpSession session, RedirectAttributes redirectAttributes) {
         // 로그인된 회원 번호
@@ -233,9 +246,28 @@ public class MemberController {
 
     @RequestMapping(value = "/naverLogin")
     public String naverLogin(HttpServletRequest request){
+        return "common/socialLogin";
+//        return "index";
+    }
 
+    @RequestMapping(value = "/doNaverLogin", method = RequestMethod.POST)
+    public String doNaverLogin(@RequestParam String user, HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttributes)
+            throws ParseException {
+        JSONObject jsonUser = (JSONObject) jsonPaeser.parse(user);
+        String userEmail = jsonUser.get("email").toString(); // 네이버 로그인 시도한 유저 이메일
+        Member naverLoginMember = memberService.searchMember("EMAIL", userEmail); // 이메일을 통한 유저 검색
 
-        return "index";
+        // 검색결과 null(최초 로그인)의 경우 signup 페이지로 redirect
+        if (naverLoginMember == null) {
+            redirectAttributes.addFlashAttribute("naverUser", jsonUser);
+            return "redirect:/signup";
+        }
+
+        // 검색 결과가 존재하는 경우 (로그인 성공한 경우)
+        session.setAttribute("user", naverLoginMember.getMemnum()); // 회원 번호 세션에 등록
+        redirectAttributes.addFlashAttribute("loginCheck", "true"); // 로그인 성공 저장
+
+        return "redirect:/";
     }
 }
 
