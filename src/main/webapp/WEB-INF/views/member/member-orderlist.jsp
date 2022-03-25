@@ -201,7 +201,7 @@
             </div>
             <div>
               <div>결제수단</div>
-              <div><%=order.getPayment()%></div>
+              <div><%=order.getPayment().equals("card")?"카드결제":""%></div>
             </div>
           </div>
         </div>

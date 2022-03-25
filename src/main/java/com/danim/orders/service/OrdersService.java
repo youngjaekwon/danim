@@ -49,4 +49,15 @@ public class OrdersService {
 
         return ordersVOList; // Orders List 반환
     }
+
+    // 등록된 가장 최근 주문번호 가저오는 메소드
+    public String getCurrOrderNum(String memnum){
+        // 회원번호를 이용해 DB에서 리스트 검색
+        List<Orders> ordersList = ordersDao.selectAllByAtt("MEMNUM", memnum);
+
+        // 반환할 주문번호
+        String currOrderNum = ordersList.get(0).getOrdernum();
+
+        return currOrderNum; // 주문번호 반환
+    }
 }

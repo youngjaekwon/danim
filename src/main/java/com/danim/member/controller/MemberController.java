@@ -251,6 +251,8 @@ public class MemberController {
         return mav;
     }
 
+
+    /////////////////////////////// 소셜 로그인 //////////////////////////////////////
     // 네이버 로그인 CallBack
     @RequestMapping(value = "/naverLogin")
     public String naverLogin(HttpServletRequest request){
@@ -277,6 +279,7 @@ public class MemberController {
         return "redirect:/";
     }
 
+    // 구글 로그인
     @RequestMapping(value = "/doGoogleLogin", method = RequestMethod.POST)
     public String doGoogleLogin(@RequestParam String user, HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttributes)
             throws ParseException {

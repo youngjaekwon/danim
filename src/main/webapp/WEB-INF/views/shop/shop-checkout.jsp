@@ -20,6 +20,7 @@
   <title>다님 : 여행을 다니다</title>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script src="/resources/js/shop-checkout.js" defer></script>
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
 
 <body>
@@ -43,7 +44,7 @@
           <div class="item-info">
             <a href="/shop/item?item=<%=itemnum%>" class="item-img" id="img<%=itemnum%>"></a>
             <script>$('#img<%=itemnum%>').css("background-image", "url('<%=item.getThumbnail()%>')")</script>
-            <a href="/shop/item?item=<%=itemnum%>"><%=item.getMfr()%> <%=item.getName()%></a>
+            <a href="/shop/item?item=<%=itemnum%>" class="itemNames"><%=item.getMfr()%> <%=item.getName()%></a>
           </div>
           <div class="item-quantity">
             <input type="text" name="quantity" id="quantity" value="<%=item.getQuantity()%>">
@@ -62,7 +63,7 @@
     </div>
     <div class="main-right">
       <span>Check out</span>
-      <form action="/order/doRegOrder" method="post">
+      <form action="/order/doRegOrder" name="checkOutForm" method="post">
         <div class="customer-info">
           <p>Customer</p>
           <label for="customerInfoName">Name</label>
@@ -136,7 +137,12 @@
             </div>
           </div>
           <input type="hidden" name="itemlist" value='${jsonStringItemList}'>
-          <input type="submit" id="checkout-submit" value="Checkout Now">
+          <!-결제정보 전달->
+          <input type="hidden" name="impuid">
+          <input type="hidden" name="merchantuid">
+          <input type="hidden" name="paidamount">
+          <input type="hidden" name="applynum">
+          <input type="button" onclick="inicisPayment()" id="checkout-submit" value="Checkout Now">
         </div>
       </form>
     </div>
