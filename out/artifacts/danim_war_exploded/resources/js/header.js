@@ -320,7 +320,6 @@ startApp();
 
 // 카카오 로그인
 Kakao.init('83625fc936f467f28921208dd520c6cb'); //발급받은 키 중 javascript키를 사용해준다.
-console.log(Kakao.isInitialized()); // sdk초기화여부판단
 //카카오로그인
 function kakaoLogin() {
     Kakao.Auth.login({

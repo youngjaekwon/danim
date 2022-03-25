@@ -5,6 +5,8 @@ import com.danim.orders.beans.Orders;
 import com.danim.orders.beans.OrdersDTO;
 import com.danim.orders.parser.OrdersParser;
 import com.danim.orders.service.OrdersService;
+import com.danim.payments.beans.Payments;
+import com.danim.payments.service.PaymentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,17 +25,19 @@ public class OrdersController {
     private final OrdersService ordersService;
     private final OrdersParser ordersParser;
     private final MemberService memberService;
+    private final PaymentsService paymentsService;
 
     @Autowired
-    public OrdersController(OrdersService ordersService, OrdersParser ordersParser, MemberService memberService) {
+    public OrdersController(OrdersService ordersService, OrdersParser ordersParser, MemberService memberService, PaymentsService paymentsService) {
         this.ordersService = ordersService;
         this.ordersParser = ordersParser;
         this.memberService = memberService;
+        this.paymentsService = paymentsService;
     }
 
     // 주문 등록
     @RequestMapping(value = "/doRegOrder", method = RequestMethod.POST)
-    public String doRegOrder(OrdersDTO ordersDTO, HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttributes){
+    public String doRegOrder(OrdersDTO ordersDTO, Payments payment, HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttributes){
         String memnum = (String)session.getAttribute("user"); // 로그인된 유저 번호
 
         /////////////// DB에 등록할 Oder Entity 생성 ///////////////////
@@ -47,10 +51,13 @@ public class OrdersController {
 
         // 주문 등록 성공
         if (ordersService.doRegOrder(order)) {
+            // 결제정보 등록
+            paymentsService.doRegPayment(payment, memnum);
+
             // 로그인된 유저 장바구니 비우기
             memberService.clearBasket(memnum);
             redirectAttributes.addFlashAttribute("checkOut", "passed"); // 주문 성공 attribute 추가
-            return "redirect:/shop/list"; ///// ***************** 마이페이지 주문내역으로 보내기!!!!!!
+            return "redirect:/orderList";
         } else {
             redirectAttributes.addFlashAttribute("checkOut", "failed"); // 주문 실패 attribute 추가
             String currentPage = request.getHeader("Referer"); // 이전 페이지

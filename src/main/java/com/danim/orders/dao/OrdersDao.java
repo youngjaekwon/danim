@@ -26,7 +26,7 @@ public class OrdersDao implements IOrdersDao{
     // 주문 생성
     @Override
     public int insert(Orders orders) {
-        String SQL = "INSERT INTO ORDERS VALUES (LPAD(ORDERS_SEQ.NEXTVAL, 7, 0), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO ORDERS VALUES (LPAD(ORDERS_SEQ.nextval, 7, 0), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         // 주문 생성 성공: 1반환, 실패: 0 반환
         return jdbcTemplate.update(SQL, new PreparedStatementSetter() {
             @Override
