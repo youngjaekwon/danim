@@ -29,8 +29,8 @@
     <div class="main-left">
       <div class="main-nav">
         <ul>
-          <li><a href="/mypage">회원정보 수정</a></li>
-          <li><a href="/orderList">주문내역</a></li>
+          <li><a href="/member/mypage">회원정보 수정</a></li>
+          <li><a href="/member/orderList">주문내역</a></li>
           <li><a href="#">1:1 문의</a></li>
         </ul>
       </div>

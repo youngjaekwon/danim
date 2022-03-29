@@ -38,7 +38,7 @@ public class MemberDao implements IMemberDao{
                 preparedStatement.setString(5, member.getZipcode());
                 preparedStatement.setString(6, member.getAddr());
                 preparedStatement.setString(7, member.getMobile());
-                preparedStatement.setInt(8, member.getIsAdmin());
+                preparedStatement.setString(8, member.getRole());
             }
         });
     }
@@ -62,7 +62,7 @@ public class MemberDao implements IMemberDao{
                 member.setMobile(resultSet.getString("MOBILE"));
                 member.setBasket(resultSet.getString("BASKET"));
                 member.setWishlist(resultSet.getString("WISHLIST"));
-                member.setIsAdmin(resultSet.getInt("ISADMIN"));
+                member.setRole(resultSet.getString("ROLE"));
                 return member;
             }
         }, memnum);
@@ -90,7 +90,7 @@ public class MemberDao implements IMemberDao{
                 member.setMobile(resultSet.getString("MOBILE"));
                 member.setBasket(resultSet.getString("BASKET"));
                 member.setWishlist(resultSet.getString("WISHLIST"));
-                member.setIsAdmin(resultSet.getInt("ISADMIN"));
+                member.setRole(resultSet.getString("ROLE"));
                 return member;
             }
         }, keyword);
@@ -143,7 +143,7 @@ public class MemberDao implements IMemberDao{
                 member.setMobile(resultSet.getString("MOBILE"));
                 member.setBasket(resultSet.getString("BASKET"));
                 member.setWishlist(resultSet.getString("WISHLIST"));
-                member.setIsAdmin(resultSet.getInt("ISADMIN"));
+                member.setRole(resultSet.getString("ROLE"));
                 return member;
             }
         });
@@ -172,7 +172,7 @@ public class MemberDao implements IMemberDao{
                 member.setMobile(resultSet.getString("MOBILE"));
                 member.setBasket(resultSet.getString("BASKET"));
                 member.setWishlist(resultSet.getString("WISHLIST"));
-                member.setIsAdmin(resultSet.getInt("ISADMIN"));
+                member.setRole(resultSet.getString("ROLE"));
                 return member;
             }
         }, keyword, keyword, keyword, keyword, keyword, keyword, state);
