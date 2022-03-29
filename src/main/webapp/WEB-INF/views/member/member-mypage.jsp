@@ -25,15 +25,15 @@
     <div class="main-left">
       <div class="main-nav">
         <ul>
-          <li><a href="/mypage">회원정보 수정</a></li>
-          <li><a href="/orderList">주문내역</a></li>
+          <li><a href="/member/mypage">회원정보 수정</a></li>
+          <li><a href="/member/orderList">주문내역</a></li>
           <li><a href="#">1:1 문의</a></li>
         </ul>
       </div>
     </div>
     <div class="main-right">
       <p>Edit Account</p>
-      <form action="/doModifyMemberInfo" method="post" name="editAccountForm" onsubmit="return isValidForm('editAccountForm')">
+      <form action="/member/doModifyMemberInfo" method="post" name="editAccountForm" onsubmit="return isValidForm('editAccountForm')">
         <div class="member-info">
           <label for="email">Email</label>
           <div>
@@ -80,7 +80,7 @@
       <div class="innerSignout" id="signoutModal" style="display: none">
         <div class="innerSignout">
           <p class="innerSignout">회원 탈퇴 하시겠습니까?</p>
-          <form action="/doSignout" name="signout" method="post" onsubmit="return isValidSignout('signout')">
+          <form action="/member/doSignout" name="signout" method="post" onsubmit="return isValidSignout('signout')">
             <label for="signout-password" class="innerSignout">Password</label>
             <input type="password" name="signout-password" id="signout-password" class="innerSignout" />
             <input type="submit" id="signout-submit" value="탈퇴" class="innerSignout">

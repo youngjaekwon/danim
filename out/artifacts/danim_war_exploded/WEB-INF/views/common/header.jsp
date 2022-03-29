@@ -65,7 +65,7 @@
                 <a href="/mypage" class="mypage-btn">마이페이지</a>
             </div>
             <div class="logout">
-                <a href="/doLogout" class="logout-btn">로그아웃</a>
+                <a href="/member/doLogout" class="logout-btn">로그아웃</a>
             </div>
         </div>
     </div>
@@ -198,12 +198,21 @@
     if ('${loginCheck}' == 'failed') alert("로그인 실패");
     else if ('${loginCheck}' == 'false'){
         alert("로그인 후 이용바랍니다.");
-        document.getElementsByClassName("login_btn")[0].click();
+        $('.login-modal').first().toggle();
     }
     // 로그인 성공시 (회원 가입 시도한 상태가 아닐때)
     else if ('${signup}' == '' && '${loginCheck}' != '') {
         alert("로그인 성공");
     }
+
+    // 로아웃 성공시
+    else if ('${logout}' == 'true') {
+        alert("로그아웃");
+    }
+
+    // 관리자 권한이 없는 경우
+    if ('${isAdmin}' == 'false') alert('권한이 없습니다.');
+
     // 회원가입 성공시
     if ('${signup}' == 'passed') {
         alert("성공적으로 가입했습니다.");

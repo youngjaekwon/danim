@@ -12,7 +12,7 @@ public class Member {
     private String mobile; // 전화번호
     private String basket; // 장바구니
     private String wishlist; // 위시리스트
-    private int isAdmin; // 관리자 여부 0: false, 1: true
+    private String role; // 권한
 
     public String getBasket() {
         return basket;
@@ -94,12 +94,12 @@ public class Member {
         this.mobile = mobile;
     }
 
-    public int getIsAdmin() {
-        return isAdmin;
+    public String getRole() {
+        return role;
     }
 
-    public void setIsAdmin(int isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
@@ -115,7 +115,7 @@ public class Member {
                 ", mobile='" + mobile + '\'' +
                 ", basket='" + basket + '\'' +
                 ", wishlist='" + wishlist + '\'' +
-                ", isAdmin=" + isAdmin +
+                ", role='" + role + '\'' +
                 '}';
     }
 }
