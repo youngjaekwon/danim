@@ -25,19 +25,18 @@ public class MemberService {
     }
 
     // 회원 가입 메소드
-    public boolean signup(MemberDTO dto, HttpSession session){
+    public Member signup(MemberDTO dto){
         Member member = memberParser.parseMember(dto); // MemberDTO를 Member 객체로 변환
 
-        // 관리자 여부: 0(일반회원) 고정
-        member.setIsAdmin(0);
+        // 관리자 여부: MEMBER(일반회원) 고정
+        member.setRole("ROLE_MEMBER");
 
         // insert 등록 성공여부 리턴
         if (memberDao.insert(member) > 0) {
             String memnum = memberDao.search("EMAIL", member.getEmail()).getMemnum(); // 등록된 회원번호 반환
-            session.setAttribute("user", memnum); // session의 user attribute에 memnum 추가 (로그인)
-            return true; // 성공시 true 리턴
+            return member; // 성공시 Member 객체 리턴
         }
-        else return false ; // 실패시 false 리턴
+        else return null ; // 실패시 null 리턴
     }
 
     // 이메일 중복 확인 메소드
@@ -46,16 +45,17 @@ public class MemberService {
         return selectedMember != null; // 조회된 회원이 있으면(이메일이 중복됨) true 반환, 없으면 false 반환
     }
 
-    // 로그인 확인 메소드
-    public boolean loginCheck(Member member, HttpSession session){
-        Member searchedMember = memberDao.search("EMAIL", member.getEmail()); // 로그인 시도 멤버 확인
-        if (searchedMember != null && searchedMember.getPwd() != null && searchedMember.getPwd().equals(member.getPwd())){ // 비밀번호 확인
-            session.setAttribute("user", searchedMember.getMemnum()); // 로그인 성공시 회원번호 세션등록
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // Spring Security 이용으로 사용하지 않음
+//    // 로그인 확인 메소드
+//    public boolean loginCheck(Member member, HttpSession session){
+//        Member searchedMember = memberDao.search("EMAIL", member.getEmail()); // 로그인 시도 멤버 확인
+//        if (searchedMember != null && searchedMember.getPwd() != null && searchedMember.getPwd().equals(member.getPwd())){ // 비밀번호 확인
+//            session.setAttribute("user", searchedMember.getMemnum()); // 로그인 성공시 회원번호 세션등록
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
     // select
     public Member selectMember(String memnum){

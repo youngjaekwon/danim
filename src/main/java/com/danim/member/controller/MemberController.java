@@ -11,7 +11,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.lang.Nullable;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,13 +38,16 @@ public class MemberController {
     private final MemberParser memberParser;
     private final OrdersService ordersService;
     private final JSONParser jsonPaeser;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public MemberController(MemberService memberService, MemberParser memberParser, OrdersService ordersService, JSONParser jsonPaeser) {
+    @Lazy
+    public MemberController(MemberService memberService, MemberParser memberParser, OrdersService ordersService, JSONParser jsonPaeser, PasswordEncoder passwordEncoder) {
         this.memberService = memberService;
         this.memberParser = memberParser;
         this.ordersService = ordersService;
         this.jsonPaeser = jsonPaeser;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // 회원가입 페이지
@@ -59,13 +70,26 @@ public class MemberController {
 
     // 회원가입 form submit시 작동
     @RequestMapping(value = "/doSignup", method = RequestMethod.POST)
-    public String doSignup(MemberDTO dto, HttpSession session, RedirectAttributes redirectAttributes) {
+    public String doSignup(MemberDTO dto, HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttributes) {
+
+        // 비밀번호 인코딩
+        dto.setPwd(passwordEncoder.encode(dto.getPwd()));
+
+        // 회원가입된 멤버
+        Member member = memberService.signup(dto);
+
+        // 회원가입된 멤버 번호
+        String memnum = member.getMemnum();
+
         // 회원가입 성공시
-        if (memberService.signup(dto, session)){
+        if (member != null){
+            session.setAttribute("user", memnum); // session의 user attribute에 memnum 추가 (로그인)
+            securityLoginWithoutLoginForm(request, member);
             redirectAttributes.addFlashAttribute("signup", "passed"); // session의 signup attribute에 passed 추가
             return "redirect:/"; // 메인 페이지로 이동
-        } else {
-            // 실패시
+        }
+        // 실패시
+        else {
             redirectAttributes.addFlashAttribute("signup", "failed"); // session의 signup attribute에 failed 추가
             return "redirect:/signup"; // 회원가입 페이지로 이동
         }
@@ -80,20 +104,20 @@ public class MemberController {
         return (memberService.isDuplicatedEmail(email)) ? "true" : "false"; // 이메일 중복여부 반환
     }
 
-    // 로그인
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(HttpServletRequest httpServletRequest, HttpSession session, RedirectAttributes redirectAttributes) {
-        Member member = new Member(); // 로그인 정보 전달 member 객체 생성
-        member.setEmail(httpServletRequest.getParameter("id")); // email
-        member.setPwd(httpServletRequest.getParameter("password")); // 비밀번호
-        if (memberService.loginCheck(member, session)) { // 로그인 성공여부 확인
-            redirectAttributes.addFlashAttribute("loginCheck", "true"); // 로그인 성공 저장
-        } else {
-            redirectAttributes.addFlashAttribute("loginCheck", "failed"); // 로그인 실패 저장
-        }
-        return "redirect:" + httpServletRequest.getHeader("Referer"); // 이전 페이지로 이동
-    }
-
+    // Spring Security 이용으로 사용하지 않음
+//    // 로그인
+//    @RequestMapping(value = "/login", method = RequestMethod.POST)
+//    public String login(HttpServletRequest httpServletRequest, HttpSession session, RedirectAttributes redirectAttributes) {
+//        Member member = new Member(); // 로그인 정보 전달 member 객체 생성
+//        member.setEmail(httpServletRequest.getParameter("id")); // email
+//        member.setPwd(httpServletRequest.getParameter("password")); // 비밀번호
+//        if (memberService.loginCheck(member, session)) { // 로그인 성공여부 확인
+//            redirectAttributes.addFlashAttribute("loginCheck", "true"); // 로그인 성공 저장
+//        } else {
+//            redirectAttributes.addFlashAttribute("loginCheck", "failed"); // 로그인 실패 저장
+//        }
+//        return "redirect:" + httpServletRequest.getHeader("Referer"); // 이전 페이지로 이동
+//    }
 
 
     // 비밀 번호 찾기
@@ -157,6 +181,7 @@ public class MemberController {
 
         // 검색 결과가 존재하는 경우 (로그인 성공한 경우)
         session.setAttribute("user", naverLoginMember.getMemnum()); // 회원 번호 세션에 등록
+        securityLoginWithoutLoginForm(request, naverLoginMember); // 세션에 권한 추가
         redirectAttributes.addFlashAttribute("loginCheck", "true"); // 로그인 성공 저장
         return "redirect:/";
     }
@@ -177,6 +202,7 @@ public class MemberController {
 
         // 검색 결과가 존재하는 경우 (로그인 성공한 경우)
         session.setAttribute("user", googleLoginMember.getMemnum()); // 회원 번호 세션에 등록
+        securityLoginWithoutLoginForm(request, googleLoginMember); // 세션에 권한 추가
         redirectAttributes.addFlashAttribute("loginCheck", "true"); // 로그인 성공 저장
 
         return "redirect:" + request.getHeader("Referer"); // 이전 페이지로 이동
@@ -190,19 +216,37 @@ public class MemberController {
         String userEmail = jsonUser.get("email").toString(); // 카카오 로그인 시도한 유저 이메일
         String userName = ((HashMap<String, String>) jsonUser.get("profile")).get("nickname"); // 카카오 로그인 시도한 유저 이름
         jsonUser.put("name", userName); // 유저 이름 등록
-        Member googleLoginMember = memberService.searchMember("EMAIL", userEmail); // 이메일을 통한 유저 검색
+        Member kakaoLoginMember = memberService.searchMember("EMAIL", userEmail); // 이메일을 통한 유저 검색
 
         // 검색결과 null(최초 로그인)의 경우 signup 페이지로 redirect
-        if (googleLoginMember == null) {
+        if (kakaoLoginMember == null) {
             redirectAttributes.addFlashAttribute("kakaoUser", jsonUser);
             return "redirect:/signup";
         }
 
         // 검색 결과가 존재하는 경우 (로그인 성공한 경우)
-        session.setAttribute("user", googleLoginMember.getMemnum()); // 회원 번호 세션에 등록
+        session.setAttribute("user", kakaoLoginMember.getMemnum()); // 회원 번호 세션에 등록
+        securityLoginWithoutLoginForm(request, kakaoLoginMember); // 세션에 권한 추가
         redirectAttributes.addFlashAttribute("loginCheck", "true"); // 로그인 성공 저장
 
         return "redirect:" + request.getHeader("Referer"); // 이전 페이지로 이동
+    }
+
+    // 소셜 로그인을 위한 세션 생성 메소드
+    private void securityLoginWithoutLoginForm(HttpServletRequest req, Object item) {
+        //로그인 세션에 들어갈 권한을 설정합니다.
+        List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+        list.add(new SimpleGrantedAuthority(((Member) item).getRole()));
+
+        SecurityContext sc = SecurityContextHolder.getContext();
+        //아이디, 패스워드, 권한을 설정합니다. 아이디는 Object단위로 넣어도 무방하며
+        //패스워드는 null로 하여도 값이 생성됩니다.
+        sc.setAuthentication(new UsernamePasswordAuthenticationToken(item, null, list));
+        HttpSession session = req.getSession(true);
+
+        //위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정해줍니다.
+        session.setAttribute(HttpSessionSecurityContextRepository.
+                SPRING_SECURITY_CONTEXT_KEY, sc);
     }
 }
 

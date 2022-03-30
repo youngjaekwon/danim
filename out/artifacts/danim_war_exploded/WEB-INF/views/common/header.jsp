@@ -62,7 +62,7 @@
         <!-- 유저버튼 누를시 -->
         <div class="user-modal" style="display: none">
             <div class="mypage">
-                <a href="/mypage" class="mypage-btn">마이페이지</a>
+                <a href="/member/mypage" class="mypage-btn">마이페이지</a>
             </div>
             <div class="logout">
                 <a href="/member/doLogout" class="logout-btn">로그아웃</a>
@@ -201,12 +201,12 @@
         $('.login-modal').first().toggle();
     }
     // 로그인 성공시 (회원 가입 시도한 상태가 아닐때)
-    else if ('${signup}' == '' && '${loginCheck}' != '') {
+    else if ('${signup}' == '' && '${param.get("loginCheck")}' != '') {
         alert("로그인 성공");
     }
 
     // 로아웃 성공시
-    else if ('${logout}' == 'true') {
+    else if ('${param.get("logout")}' == 'true') {
         alert("로그아웃");
     }
 
