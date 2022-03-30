@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginProcessingUrl("/login")
                     .usernameParameter("id") // 지정하고 싶은 username name 명칭이며, 기본은 username
                     .passwordParameter("password") // 지정하고 싶은 password name 명칭이며, 기본은 password
-                    .defaultSuccessUrl("/") // 로그인 성공 시 이동페이지
+//                    .defaultSuccessUrl("/?loginCheck=true") // 로그인 성공 시 이동페이지
                     .successHandler(authenticationSuccessHandler())
                     .failureHandler(authenticationFailureHandler())
                     .permitAll() // 모두 접근 허용
@@ -73,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
         CustomAuthenticationSuccessHandler successHandler = new CustomAuthenticationSuccessHandler();
-        successHandler.setDefaultTargetUrl("/");
+        successHandler.setDefaultTargetUrl("/?loginCheck=true");
         return successHandler;
     }
 

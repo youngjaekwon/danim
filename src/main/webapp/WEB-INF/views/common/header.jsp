@@ -201,12 +201,12 @@
         $('.login-modal').first().toggle();
     }
     // 로그인 성공시 (회원 가입 시도한 상태가 아닐때)
-    else if ('${signup}' == '' && '${loginCheck}' != '') {
+    else if ('${signup}' == '' && '${param.get("loginCheck")}' != '') {
         alert("로그인 성공");
     }
 
     // 로아웃 성공시
-    else if ('${logout}' == 'true') {
+    else if ('${param.get("logout")}' == 'true') {
         alert("로그아웃");
     }
 

@@ -25,7 +25,7 @@ public class MemberService {
     }
 
     // 회원 가입 메소드
-    public boolean signup(MemberDTO dto, HttpSession session){
+    public Member signup(MemberDTO dto){
         Member member = memberParser.parseMember(dto); // MemberDTO를 Member 객체로 변환
 
         // 관리자 여부: MEMBER(일반회원) 고정
@@ -34,10 +34,9 @@ public class MemberService {
         // insert 등록 성공여부 리턴
         if (memberDao.insert(member) > 0) {
             String memnum = memberDao.search("EMAIL", member.getEmail()).getMemnum(); // 등록된 회원번호 반환
-            session.setAttribute("user", memnum); // session의 user attribute에 memnum 추가 (로그인)
-            return true; // 성공시 true 리턴
+            return member; // 성공시 Member 객체 리턴
         }
-        else return false ; // 실패시 false 리턴
+        else return null ; // 실패시 null 리턴
     }
 
     // 이메일 중복 확인 메소드

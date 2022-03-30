@@ -8,6 +8,8 @@ import com.danim.member.service.MemberService;
 import com.danim.orders.beans.OrdersVO;
 import com.danim.orders.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,12 +33,15 @@ public class AuthMemberController {
     private final MemberService memberService;
     private final MemberParser memberParser;
     private final OrdersService ordersService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthMemberController(MemberService memberService, MemberParser memberParser, OrdersService ordersService) {
+    @Lazy
+    public AuthMemberController(MemberService memberService, MemberParser memberParser, OrdersService ordersService, PasswordEncoder passwordEncoder) {
         this.memberService = memberService;
         this.memberParser = memberParser;
         this.ordersService = ordersService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // 회원정보 수정 form submit시 작동
@@ -49,9 +54,12 @@ public class AuthMemberController {
         // DB수정 정상인지 확인하는 부분
         int result = 0;
         // 회원정보 갱신 (비밀번호 일치할 시)
-        if (dto.getPwd().equals(member.getPwd())){
+        if (passwordEncoder.matches(dto.getPwd(), member.getPwd())){
             // 새 비밀번호 입력시 갱신
-            if (!dto.getNewPassword().equals("")) member.setPwd(dto.getNewPassword());
+            String newPassword = dto.getNewPassword();
+            if (!newPassword.equals("")){
+                member.setPwd(passwordEncoder.encode(newPassword));
+            }
             member.setNickname(dto.getNickname());
             member.setZipcode(dto.getZipcode());
             member.setAddr(dto.getAddr()+ ", " + dto.getAddrDetail());

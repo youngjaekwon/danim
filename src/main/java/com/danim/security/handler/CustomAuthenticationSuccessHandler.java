@@ -41,12 +41,12 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         session.setAttribute("user", member.getMemnum());
 
         // redirect 될 페이지 결정
-        setDefaultTargetUrl("/");
+        setDefaultTargetUrl("/?loginCheck=true");
         SavedRequest savedRequest = requestCache.getRequest(request,response);
         if(savedRequest != null){
             // 인증 받기 전 url로 이동하기
             String targetUrl = savedRequest.getRedirectUrl();
-            redirectStrategy.sendRedirect(request,response,targetUrl);
+            redirectStrategy.sendRedirect(request,response,targetUrl + "?loginCheck=true");
         }else{
             // 기본 url로 가도록 함함
             redirectStrategy.sendRedirect(request,response,getDefaultTargetUrl());
