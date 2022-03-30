@@ -104,7 +104,7 @@ public class AuthMemberController {
         boolean result = false;
 
         // 입력된 비밀번호 확인
-        if (member.getPwd() != null && member.getPwd().equals(pwd)){
+        if (member.getPwd() != null && passwordEncoder.matches(pwd, member.getPwd())){
             // 회원탈퇴 성공시 세션 제거, 성공여부 추가
             if (memberService.doSignout(memnum)){
                 result = true;

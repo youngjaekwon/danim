@@ -33,7 +33,7 @@ public class MemberService {
 
         // insert 등록 성공여부 리턴
         if (memberDao.insert(member) > 0) {
-            String memnum = memberDao.search("EMAIL", member.getEmail()).getMemnum(); // 등록된 회원번호 반환
+            member = memberDao.search("EMAIL", member.getEmail()); // 등록된 회원번호 반환
             return member; // 성공시 Member 객체 리턴
         }
         else return null ; // 실패시 null 리턴
@@ -114,6 +114,9 @@ public class MemberService {
 
     // 멤버 리스트 (관리자 조회용)
     public List<Member> getList(String state, String sorting, String keyword){
+        // state에 SQL 와일드카드 추가
+        if (state != null && !state.equals("%%")) state = "%" + state + "%";
+
         // keyword 에 SQL 와일드카드 추가
         if (keyword != null) keyword = "%" + keyword + "%";
 
