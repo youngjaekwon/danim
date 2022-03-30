@@ -210,7 +210,7 @@
             <div>
               <div>회원상태</div>
               <div>
-                <%=member.getIsAdmin() == 0 ? "일반회원" : "관리자"%>
+                <%=member.getRole().equals("ROLE_MEMBER") ? "일반회원" : "관리자"%>
                 <button>변경</button>
               </div>
             </div>

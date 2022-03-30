@@ -62,7 +62,7 @@
         <!-- 유저버튼 누를시 -->
         <div class="user-modal" style="display: none">
             <div class="mypage">
-                <a href="/mypage" class="mypage-btn">마이페이지</a>
+                <a href="/member/mypage" class="mypage-btn">마이페이지</a>
             </div>
             <div class="logout">
                 <a href="/member/doLogout" class="logout-btn">로그아웃</a>

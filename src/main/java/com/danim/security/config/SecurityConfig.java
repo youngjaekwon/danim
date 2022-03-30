@@ -14,20 +14,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final CustomAuthenticationProvider authProvider;
-
     @Autowired
-    public SecurityConfig(CustomAuthenticationProvider authProvider) {
-        this.authProvider = authProvider;
-    }
+    private CustomAuthenticationProvider authProvider;
 
     @Bean(name = "passwordEncoder")
     public PasswordEncoder passwordEncoder(){
@@ -47,22 +43,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()//보호된 리소스 URI에 접근할 수 있는 권한을 설정
-                .antMatchers("/member/**").hasRole("ROLE_MEMBER")
-                .antMatchers("/shop/checkout").hasRole("ROLE_MEMBER")
-                .antMatchers("/admin/**").hasRole("ROLE_ADMIN")
-                .anyRequest().authenticated()
-                .and().logout()
-                .logoutUrl("/logout")
-                .logoutSuccessHandler(logoutSuccessHandler())
-                .and().csrf()//csrf 보안 설정을 비활성화
-                .disable()//해당 기능을 사용하기 위해서는 프론트단에서 csrf토큰값 보내줘야함
-                .addFilter(jwtAuthenticationFilter())//Form Login에 사용되는 custom AuthenticationFilter 구현체를 등록
-                .addFilter(jwtAuthorizationFilter())//Header 인증에 사용되는 BasicAuthenticationFilter 구현체를 등록
-                .exceptionHandling()
-                .accessDeniedPage("/accessDenied")
-                .authenticationEntryPoint(authenticationEntryPoint())
-        ;
+        http
+                    .csrf().disable() // csrf를 사용할지 여부
+                    .authorizeRequests() // HttpServletRequest에 따라접근을 제한
+                    .antMatchers("/member/**").hasRole("MEMBER")
+                    .antMatchers("/shop/checkout").hasRole("MEMBER")
+                    .antMatchers("/admin/**").hasRole("ADMIN")
+                .and()
+                    .formLogin() // form 기반 로그인 인증 관련하며 HttpSession 이용
+                    .loginPage("/accessDenied") // 지정하고 싶은 로그인 페이지 url
+                    .loginProcessingUrl("/login")
+                    .usernameParameter("id") // 지정하고 싶은 username name 명칭이며, 기본은 username
+                    .passwordParameter("password") // 지정하고 싶은 password name 명칭이며, 기본은 password
+                    .defaultSuccessUrl("/") // 로그인 성공 시 이동페이지
+                    .successHandler(authenticationSuccessHandler())
+                    .failureHandler(authenticationFailureHandler())
+                    .permitAll() // 모두 접근 허용
+                .and()
+                    .logout() // 로그아웃
+                    .logoutRequestMatcher(new AntPathRequestMatcher(("/member/doLogout"))) // 지정하고 싶은 로그아웃 url
+                    .logoutSuccessUrl("/?logout=true") // 성공 시 이동 페이지
+                    .logoutSuccessHandler(logoutSuccessHandler())
+                    .invalidateHttpSession(true); // 세션 초기화
+//                .and()
+//                    .exceptionHandling() // 에러 처리
+//                    .accessDeniedPage("/error"); // 에러 시 이동할 페이지
     }
 
     @Bean
@@ -84,32 +89,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         CustomLogoutSuccessHandler logoutSuccessHandler = new CustomLogoutSuccessHandler();
         logoutSuccessHandler.setDefaultTargetUrl("/?logout=true");
         return logoutSuccessHandler;
-    }
-
-    /*
-     * Form Login시 걸리는 Filter bean register
-     */
-    @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager());
-        jwtAuthenticationFilter.setFilterProcessesUrl("/login");
-        jwtAuthenticationFilter.setUsernameParameter("username");
-        jwtAuthenticationFilter.setPasswordParameter("password");
-
-        jwtAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
-        jwtAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
-
-        jwtAuthenticationFilter.afterPropertiesSet();
-
-        return jwtAuthenticationFilter;
-    }
-
-    /*
-     * Filter bean register
-     */
-    @Bean
-    public JwtAuthorizationFilter jwtAuthorizationFilter() throws Exception {
-        JwtAuthorizationFilter jwtAuthorizationFilter = new JwtAuthorizationFilter(authenticationManager());
-        return jwtAuthorizationFilter;
     }
 }

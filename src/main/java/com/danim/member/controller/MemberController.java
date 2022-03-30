@@ -11,7 +11,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.lang.Nullable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,13 +32,16 @@ public class MemberController {
     private final MemberParser memberParser;
     private final OrdersService ordersService;
     private final JSONParser jsonPaeser;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public MemberController(MemberService memberService, MemberParser memberParser, OrdersService ordersService, JSONParser jsonPaeser) {
+    @Lazy
+    public MemberController(MemberService memberService, MemberParser memberParser, OrdersService ordersService, JSONParser jsonPaeser, PasswordEncoder passwordEncoder) {
         this.memberService = memberService;
         this.memberParser = memberParser;
         this.ordersService = ordersService;
         this.jsonPaeser = jsonPaeser;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // 회원가입 페이지
@@ -60,6 +65,10 @@ public class MemberController {
     // 회원가입 form submit시 작동
     @RequestMapping(value = "/doSignup", method = RequestMethod.POST)
     public String doSignup(MemberDTO dto, HttpSession session, RedirectAttributes redirectAttributes) {
+
+        // 비밀번호 인코딩
+        dto.setPwd(passwordEncoder.encode(dto.getPwd()));
+
         // 회원가입 성공시
         if (memberService.signup(dto, session)){
             redirectAttributes.addFlashAttribute("signup", "passed"); // session의 signup attribute에 passed 추가
@@ -80,20 +89,20 @@ public class MemberController {
         return (memberService.isDuplicatedEmail(email)) ? "true" : "false"; // 이메일 중복여부 반환
     }
 
-    // 로그인
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(HttpServletRequest httpServletRequest, HttpSession session, RedirectAttributes redirectAttributes) {
-        Member member = new Member(); // 로그인 정보 전달 member 객체 생성
-        member.setEmail(httpServletRequest.getParameter("id")); // email
-        member.setPwd(httpServletRequest.getParameter("password")); // 비밀번호
-        if (memberService.loginCheck(member, session)) { // 로그인 성공여부 확인
-            redirectAttributes.addFlashAttribute("loginCheck", "true"); // 로그인 성공 저장
-        } else {
-            redirectAttributes.addFlashAttribute("loginCheck", "failed"); // 로그인 실패 저장
-        }
-        return "redirect:" + httpServletRequest.getHeader("Referer"); // 이전 페이지로 이동
-    }
-
+    // Spring Security 이용으로 사용하지 않음
+//    // 로그인
+//    @RequestMapping(value = "/login", method = RequestMethod.POST)
+//    public String login(HttpServletRequest httpServletRequest, HttpSession session, RedirectAttributes redirectAttributes) {
+//        Member member = new Member(); // 로그인 정보 전달 member 객체 생성
+//        member.setEmail(httpServletRequest.getParameter("id")); // email
+//        member.setPwd(httpServletRequest.getParameter("password")); // 비밀번호
+//        if (memberService.loginCheck(member, session)) { // 로그인 성공여부 확인
+//            redirectAttributes.addFlashAttribute("loginCheck", "true"); // 로그인 성공 저장
+//        } else {
+//            redirectAttributes.addFlashAttribute("loginCheck", "failed"); // 로그인 실패 저장
+//        }
+//        return "redirect:" + httpServletRequest.getHeader("Referer"); // 이전 페이지로 이동
+//    }
 
 
     // 비밀 번호 찾기

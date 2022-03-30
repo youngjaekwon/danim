@@ -117,6 +117,7 @@ public class AuthMemberController {
     @RequestMapping(value = "/mypage", method = RequestMethod.GET)
     public String mypage(HttpServletRequest httpServletRequest, HttpSession session) {
         String user = (String) session.getAttribute("user");
+
         // 로그인된 상태일 경우 회원정보 수정 페이지로 이동
         if (user != null){
             Member member = memberService.selectMember(user); // DB에서 로그인된 유저 정보 검색

@@ -24,7 +24,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = memberDao.select(username);
+        Member member = memberDao.search("EMAIL", username);
+        if (member == null) throw new UsernameNotFoundException(username);
         GrantedAuthority authority = new SimpleGrantedAuthority(member.getRole());
         UserDetails userDetails = (UserDetails)new User(member.getEmail(),
                 member.getPwd(), Arrays.asList(authority));
