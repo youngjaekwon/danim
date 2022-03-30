@@ -157,7 +157,7 @@ public class MemberDao implements IMemberDao{
     public List<Member> searchAllByFilters(String state, String sorting, String keyword) {
         List<Member> members = null;
         String SQL = "SELECT * FROM MEMBER WHERE (MEMNUM LIKE ? OR EMAIL LIKE ? OR NAME LIKE ? OR NICKNAME LIKE ? OR MOBILE LIKE ? OR ADDR LIKE ?) AND " +
-                "(ISADMIN LIKE ?) ORDER BY " + sorting;
+                "(ROLE LIKE ?) ORDER BY " + sorting;
         members = jdbcTemplate.query(SQL, new RowMapper<Member>() {
             @Override
             public Member mapRow(ResultSet resultSet, int i) throws SQLException {

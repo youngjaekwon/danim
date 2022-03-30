@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--<c:set var="path" value="${pageContext.request.contextPath}"/>--%>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,18 +52,27 @@
             if (thisURI != '/WEB-INF/views/index.jsp') $('.header-search').eq(0).prop("style", "");
         </script>
         <!-- 로그인 전 -->
-        <div class="before-login" id="beforeLogin">
-            <a href="javascript:openLoginModal()" class="login_btn">로그인</a>
-        </div>
+        <sec:authorize access="!isAuthenticated()">
+            <div class="before-login" id="beforeLogin">
+                <a href="javascript:openLoginModal()" class="login_btn">로그인</a>
+            </div>
+        </sec:authorize>
         <!-- 로그인 후 -->
-        <div class="after-login" id="afterLogin" style="display: none">
-            <a href="javascript:openUserModal()" class="header-user"><i class="fas fa-user"></i></a>
-            <a href="/shop/basket" class="header-basket"><i class="fas fa-shopping-cart"></i></a>
-        </div>
+        <sec:authorize access="isAuthenticated()">
+            <div class="after-login" id="afterLogin">
+                <a href="javascript:openUserModal()" class="header-user"><i class="fas fa-user"></i></a>
+                <a href="/shop/basket" class="header-basket"><i class="fas fa-shopping-cart"></i></a>
+            </div>
+        </sec:authorize>
         <!-- 유저버튼 누를시 -->
         <div class="user-modal" style="display: none">
             <div class="mypage">
-                <a href="/member/mypage" class="mypage-btn">마이페이지</a>
+                <sec:authorize access="hasRole('MEMBER')">
+                    <a href="/member/mypage" class="mypage-btn">마이페이지</a>
+                </sec:authorize>
+                <sec:authorize access="hasRole('ADMIN')">
+                    <a href="/admin/members" class="mypage-btn">관리자페이지</a>
+                </sec:authorize>
             </div>
             <div class="logout">
                 <a href="/member/doLogout" class="logout-btn">로그아웃</a>
@@ -195,18 +205,18 @@
 </header>
 <script>
     // 로그인 실패시
-    if ('${loginCheck}' == 'failed') alert("로그인 실패");
+    if ('${loginCheck}' == 'failed' || '${param.get("loginCheck")}' == 'failed') alert("로그인 실패");
     else if ('${loginCheck}' == 'false'){
         alert("로그인 후 이용바랍니다.");
         $('.login-modal').first().toggle();
     }
     // 로그인 성공시 (회원 가입 시도한 상태가 아닐때)
-    else if ('${signup}' == '' && '${param.get("loginCheck")}' != '') {
+    else if ('${signup}' == '' && '${param.get("loginCheck")}' == 'true') {
         alert("로그인 성공");
     }
 
-    // 로아웃 성공시
-    else if ('${param.get("logout")}' == 'true') {
+    // 로그아웃 성공시
+    if ('${param.get("logout")}' == 'true') {
         alert("로그아웃");
     }
 
@@ -219,15 +229,6 @@
     }
     // 회원가입 실패시
     else if ('${signup}' == 'failed') alert("회원가입에 실패했습니다.");
-
-    // 로그인시 회원정보, 장바구니 접근 버튼 활성화
-    if ('${user}' == ''){
-        $('#beforeLogin').css("display", "");
-        $('#afterLogin').css("display", "none");
-    } else {
-        $('#beforeLogin').css("display", "none");
-        $('#afterLogin').css("display", "");
-    }
 
     // 비밀 번호 변경 성공시
     if ('${doChangePwd}' == 'passed'){

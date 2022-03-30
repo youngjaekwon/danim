@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -64,16 +65,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .logoutRequestMatcher(new AntPathRequestMatcher(("/member/doLogout"))) // 지정하고 싶은 로그아웃 url
                     .logoutSuccessUrl("/?logout=true") // 성공 시 이동 페이지
                     .logoutSuccessHandler(logoutSuccessHandler())
-                    .invalidateHttpSession(true); // 세션 초기화
-//                .and()
-//                    .exceptionHandling() // 에러 처리
-//                    .accessDeniedPage("/error"); // 에러 시 이동할 페이지
+                    .invalidateHttpSession(true) // 세션 초기화
+                .and()
+                    .exceptionHandling()
+                    .accessDeniedPage("/accessDenied");
     }
 
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
         CustomAuthenticationSuccessHandler successHandler = new CustomAuthenticationSuccessHandler();
-        successHandler.setDefaultTargetUrl("/?loginCheck=true");
         return successHandler;
     }
 

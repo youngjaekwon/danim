@@ -46,8 +46,8 @@
               <label for="state">회원 상태 :</label>
               <select name="state" id="state">
                 <option value="%%" selected>전체</option>
-                <option value="0">일반회원</option>
-                <option value="1">관리자</option>
+                <option value="MEMBER">일반회원</option>
+                <option value="ADMIN">관리자</option>
               </select>
               <label for="sort">정렬 방법 :</label>
               <select name="sort" id="sort">
@@ -83,7 +83,7 @@
           List<Member> itemList = (List<Member>) request.getAttribute("itemList");
           if (itemList.isEmpty()){
         %>
-        <div class="emptyList">주문리스트가 비었습니다.</div>
+        <div class="emptyList">회원리스트가 비었습니다.</div>
         <%
         } else {
           for(int i = 0; i < itemList.size(); i++){
@@ -97,7 +97,7 @@
           <div class="members_normal"><%=member.getNickname()%></div>
           <div class="members_normal"><%=member.getAddr()%></div>
           <div class="members_normal"><%=member.getMobile()%></div>
-          <div class="members_normal"><%=member.getIsAdmin() == 0 ? "일반회원" : "관리자"%></div>
+          <div class="members_normal"><%=member.getRole().equals("ROLE_MEMBER") ? "일반회원" : "관리자"%></div>
         </div>
       <%
           }
