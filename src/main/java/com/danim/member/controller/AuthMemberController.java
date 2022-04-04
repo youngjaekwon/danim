@@ -36,7 +36,6 @@ public class AuthMemberController {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    @Lazy
     public AuthMemberController(MemberService memberService, MemberParser memberParser, OrdersService ordersService, PasswordEncoder passwordEncoder) {
         this.memberService = memberService;
         this.memberParser = memberParser;

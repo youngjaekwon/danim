@@ -71,7 +71,7 @@
                     <a href="/member/mypage" class="mypage-btn">마이페이지</a>
                 </sec:authorize>
                 <sec:authorize access="hasRole('ADMIN')">
-                    <a href="/admin/members" class="mypage-btn">관리자페이지</a>
+                    <a href="/admin/orders" class="mypage-btn">관리자페이지</a>
                 </sec:authorize>
             </div>
             <div class="logout">

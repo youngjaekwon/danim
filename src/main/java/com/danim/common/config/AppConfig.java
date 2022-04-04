@@ -1,22 +1,22 @@
 package com.danim.common.config;
 
+import com.danim.member.beans.Member;
+import com.danim.member.dao.MemberDao;
+import com.danim.security.provider.CustomAuthenticationProvider;
+import com.danim.security.service.CustomUserDetailsService;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.json.simple.parser.JSONParser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 import javax.sql.DataSource;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 @Configuration
 @ComponentScan(basePackages = {"com.danim"})
@@ -45,6 +45,9 @@ public class AppConfig {
         return new JdbcTemplate(dataSourceCP());
     }
 
+    @Bean(name = "memberDao")
+    public MemberDao memberDao(){return new MemberDao(jdbcTemplate());}
+
     @Bean(name = "jsonPaeser")
     public JSONParser jsonParser(){
         return new JSONParser();
@@ -64,4 +67,15 @@ public class AppConfig {
     public SimpleDateFormat simpleDateFormatIncludeTime(){
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     }
+
+    @Bean(name = "passwordEncoder")
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean(name = "userDetailsService")
+    public CustomUserDetailsService userDetailsService(){return new CustomUserDetailsService(memberDao());}
+
+    @Bean(name = "authProvider")
+    public CustomAuthenticationProvider authProvider(){return new CustomAuthenticationProvider(passwordEncoder(), userDetailsService());}
 }
