@@ -31,7 +31,7 @@
       <div class="main-nav">
         <ul>
           <li><a href="/admin/orders">주문 관리</a></li>
-          <li><a href="#">상품 관리</a></li>
+          <li><a href="/admin/items">상품 관리</a></li>
           <li><a href="/admin/members">회원 관리</a></li>
           <li><a href="#">1:1 문의</a></li>
         </ul>

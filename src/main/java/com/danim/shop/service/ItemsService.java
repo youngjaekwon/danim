@@ -2,6 +2,8 @@ package com.danim.shop.service;
 
 import com.danim.member.beans.Member;
 import com.danim.member.dao.MemberDao;
+import com.danim.orders.beans.Orders;
+import com.danim.orders.beans.OrdersVO;
 import com.danim.shop.beans.Items;
 import com.danim.shop.beans.ItemsDTO;
 import com.danim.shop.dao.ItemsDao;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 @Service
@@ -36,14 +39,14 @@ public class ItemsService {
         return itemsDao.select(itemnum);
     }
 
-    // 제품 리스트
+    // 제품 리스트 (shop)
     public List<ItemsDTO> getList(String category){
         if (category == null) category = ""; // category가 null 일경우 빈 문자열로 변환
 
         // category를 통해 아이템 검색
         List<Items> itemsList = itemsDao.searchAllByAtt("CATEGORY", category);
 
-        // 반환할 아이템DTO 리스트
+        // 반환할 아이템 DTO 리스트
         List<ItemsDTO> itemsDTOList = new ArrayList<>();
 
         for (Items item : itemsList){
@@ -51,6 +54,26 @@ public class ItemsService {
         }
 
         if (itemsDTOList.isEmpty()) return null; // 비어있을경우 null 반환
+        return itemsDTOList; // ItemsDTO list 반환
+    }
+
+    // 제품 리스트 (관리자)
+    public List<ItemsDTO> getList(String category, String stock, String sorting, String keyword){
+        // keyword 에 SQL 와일드카드 추가
+        if (keyword != null) keyword = "%" + keyword + "%";
+
+        // 주어진 필터들을 이용해 DB에서 리스트 검색
+        List<Items> itemsList = itemsDao.searchAllByFilters(category, stock, sorting, keyword);
+
+        // 반환할 아이템DTO 리스트
+        List<ItemsDTO> itemsDTOList = new ArrayList<>();
+
+        if (itemsList != null){
+            for (Items item : itemsList){
+                itemsDTOList.add(itemsParser.parseItems(item)); // items to itemsDTO
+            }
+        }
+
         return itemsDTOList; // ItemsDTO list 반환
     }
 
