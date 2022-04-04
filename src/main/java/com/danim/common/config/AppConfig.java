@@ -19,7 +19,6 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 @Configuration
-@ComponentScan(basePackages = {"com.danim"})
 public class AppConfig {
     // DBCP
     @Bean(name = "dataSourceCP")
@@ -45,10 +44,7 @@ public class AppConfig {
         return new JdbcTemplate(dataSourceCP());
     }
 
-    @Bean(name = "memberDao")
-    public MemberDao memberDao(){return new MemberDao(jdbcTemplate());}
-
-    @Bean(name = "jsonPaeser")
+    @Bean(name = "jsonParser")
     public JSONParser jsonParser(){
         return new JSONParser();
     }
@@ -67,15 +63,4 @@ public class AppConfig {
     public SimpleDateFormat simpleDateFormatIncludeTime(){
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     }
-
-    @Bean(name = "passwordEncoder")
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean(name = "userDetailsService")
-    public CustomUserDetailsService userDetailsService(){return new CustomUserDetailsService(memberDao());}
-
-    @Bean(name = "authProvider")
-    public CustomAuthenticationProvider authProvider(){return new CustomAuthenticationProvider(passwordEncoder(), userDetailsService());}
 }

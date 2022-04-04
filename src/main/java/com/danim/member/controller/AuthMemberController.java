@@ -8,7 +8,6 @@ import com.danim.member.service.MemberService;
 import com.danim.orders.beans.OrdersVO;
 import com.danim.orders.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

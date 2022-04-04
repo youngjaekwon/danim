@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -23,17 +22,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final CustomAuthenticationProvider authProvider;
-
+    /*
+    * 1. CustomAuthenticationProvider 생성시 PasswordEncoder 필요로 함
+    * 2. PasswordEncoder는 SecurityConfig에 Bean 등록되어 있음
+    * 3. SecurityConfig 생성 단계에서 CustomAuthenticationProvider Autowired로 주입하면 순환참조 발생
+    * 4. 따라서 field 에 Autowired
+    * */
     @Autowired
-    public SecurityConfig(CustomAuthenticationProvider authProvider) {
-        this.authProvider = authProvider;
-    }
-
-    public SecurityConfig(boolean disableDefaults, CustomAuthenticationProvider authProvider) {
-        super(disableDefaults);
-        this.authProvider = authProvider;
-    }
+    private CustomAuthenticationProvider authProvider;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -73,6 +69,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .exceptionHandling()
                     .accessDeniedPage("/accessDenied");
+    }
+
+    @Bean(name = "passwordEncoder")
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
