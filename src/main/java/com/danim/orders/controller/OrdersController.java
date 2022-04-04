@@ -57,7 +57,7 @@ public class OrdersController {
             // 로그인된 유저 장바구니 비우기
             memberService.clearBasket(memnum);
             redirectAttributes.addFlashAttribute("checkOut", "passed"); // 주문 성공 attribute 추가
-            return "redirect:/orderList";
+            return "redirect:/member/orderList";
         } else {
             redirectAttributes.addFlashAttribute("checkOut", "failed"); // 주문 실패 attribute 추가
             String currentPage = request.getHeader("Referer"); // 이전 페이지

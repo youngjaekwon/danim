@@ -23,12 +23,16 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private CustomAuthenticationProvider authProvider;
+    private final CustomAuthenticationProvider authProvider;
 
-    @Bean(name = "passwordEncoder")
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+    @Autowired
+    public SecurityConfig(CustomAuthenticationProvider authProvider) {
+        this.authProvider = authProvider;
+    }
+
+    public SecurityConfig(boolean disableDefaults, CustomAuthenticationProvider authProvider) {
+        super(disableDefaults);
+        this.authProvider = authProvider;
     }
 
     @Override

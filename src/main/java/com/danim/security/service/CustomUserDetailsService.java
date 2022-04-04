@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-    private MemberDao memberDao;
+    private final MemberDao memberDao;
 
     @Autowired
     public CustomUserDetailsService(MemberDao memberDao) {
