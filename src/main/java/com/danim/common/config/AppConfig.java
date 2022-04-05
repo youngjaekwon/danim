@@ -13,13 +13,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.sql.DataSource;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 @Configuration
-@ComponentScan(basePackages = {"com.danim"})
 public class AppConfig {
     // DBCP
     @Bean(name = "dataSourceCP")
@@ -45,10 +45,7 @@ public class AppConfig {
         return new JdbcTemplate(dataSourceCP());
     }
 
-    @Bean(name = "memberDao")
-    public MemberDao memberDao(){return new MemberDao(jdbcTemplate());}
-
-    @Bean(name = "jsonPaeser")
+    @Bean(name = "jsonParser")
     public JSONParser jsonParser(){
         return new JSONParser();
     }
@@ -68,14 +65,15 @@ public class AppConfig {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     }
 
-    @Bean(name = "passwordEncoder")
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+    @Bean(name = "multipartResolver")
+    public CommonsMultipartResolver multipartResolver() {
+        final int MAX_UPLOAD_SIZE = 10 * 1024 * 1024;
+        final int MAX_MEMORY_SIZE = 10240;
+
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+//        multipartResolver.setMaxUploadSize(MAX_UPLOAD_SIZE);   // 기본값 -1 (제한 없음), 1024 * 1024 * 10 = 10MB
+//        multipartResolver.setMaxInMemorySize(MAX_MEMORY_SIZE); // 기본값 10240B, 디스크에 임시 파일을 생성하기 전에 메모리 보관 최대 바이트 크기
+        multipartResolver.setDefaultEncoding("UTF-8");
+        return multipartResolver;
     }
-
-    @Bean(name = "userDetailsService")
-    public CustomUserDetailsService userDetailsService(){return new CustomUserDetailsService(memberDao());}
-
-    @Bean(name = "authProvider")
-    public CustomAuthenticationProvider authProvider(){return new CustomAuthenticationProvider(passwordEncoder(), userDetailsService());}
 }

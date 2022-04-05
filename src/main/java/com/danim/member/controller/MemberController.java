@@ -37,15 +37,15 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberParser memberParser;
     private final OrdersService ordersService;
-    private final JSONParser jsonPaeser;
+    private final JSONParser jsonParser;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public MemberController(MemberService memberService, MemberParser memberParser, OrdersService ordersService, JSONParser jsonPaeser, PasswordEncoder passwordEncoder) {
+    public MemberController(MemberService memberService, MemberParser memberParser, OrdersService ordersService, JSONParser jsonParser, PasswordEncoder passwordEncoder) {
         this.memberService = memberService;
         this.memberParser = memberParser;
         this.ordersService = ordersService;
-        this.jsonPaeser = jsonPaeser;
+        this.jsonParser = jsonParser;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -168,7 +168,7 @@ public class MemberController {
     @RequestMapping(value = "/doNaverLogin", method = RequestMethod.POST)
     public String doNaverLogin(@RequestParam String user, HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttributes)
             throws ParseException {
-        JSONObject jsonUser = (JSONObject) jsonPaeser.parse(user);
+        JSONObject jsonUser = (JSONObject) jsonParser.parse(user);
         String userEmail = jsonUser.get("email").toString(); // 네이버 로그인 시도한 유저 이메일
         Member naverLoginMember = memberService.searchMember("EMAIL", userEmail); // 이메일을 통한 유저 검색
 
@@ -189,7 +189,7 @@ public class MemberController {
     @RequestMapping(value = "/doGoogleLogin", method = RequestMethod.POST)
     public String doGoogleLogin(@RequestParam String user, HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttributes)
             throws ParseException {
-        JSONObject jsonUser = (JSONObject) jsonPaeser.parse(user); // 클라이언트에서 넘어온 유저정보 파싱
+        JSONObject jsonUser = (JSONObject) jsonParser.parse(user); // 클라이언트에서 넘어온 유저정보 파싱
         String userEmail = jsonUser.get("zv").toString(); // 구글 로그인 시도한 유저 이메일
         Member googleLoginMember = memberService.searchMember("EMAIL", userEmail); // 이메일을 통한 유저 검색
 
@@ -211,7 +211,7 @@ public class MemberController {
     @RequestMapping(value = "/doKakaoLogin", method = RequestMethod.POST)
     public String doKakaoLogin(@RequestParam String user, HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttributes)
             throws ParseException {
-        JSONObject jsonUser = (JSONObject) jsonPaeser.parse(user); // 클라이언트에서 넘어온 유저정보 파싱
+        JSONObject jsonUser = (JSONObject) jsonParser.parse(user); // 클라이언트에서 넘어온 유저정보 파싱
         String userEmail = jsonUser.get("email").toString(); // 카카오 로그인 시도한 유저 이메일
         String userName = ((HashMap<String, String>) jsonUser.get("profile")).get("nickname"); // 카카오 로그인 시도한 유저 이름
         jsonUser.put("name", userName); // 유저 이름 등록

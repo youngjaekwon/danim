@@ -70,9 +70,9 @@
             $('#mobile1').val('${userInfo.mobile1}').prop("selected", true);
           </script>
           <span>-</span>
-          <input type="text" name="mobile2" id="mobile2" value="${userInfo.mobile2}">
+          <input type="text" name="mobile2" id="mobile2" value="${userInfo.mobile2}" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
           <span>-</span>
-          <input type="text" name="mobile3" id="mobile3" value="${userInfo.mobile3}">
+          <input type="text" name="mobile3" id="mobile3" value="${userInfo.mobile3}" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
         </div>
         <input type="submit" id="submit" value="Confirm">
         <a href="javascript:openSignoutModal()" class="signout">회원 탈퇴</a>

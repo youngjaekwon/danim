@@ -1,0 +1,148 @@
+@charset "utf-8";
+
+body {
+  margin: 0;
+}
+
+.main {
+  width: 100%;
+  /* max-width: 1580px; */
+  height: 100%;
+  font-family: Arial, Tahoma, Bitstream Vera Sans, sans-serif;
+}
+
+.main-inner {
+  width: 1580px;
+  height: 100%;
+  margin: 0 auto;
+  padding-top: 20px;
+  padding-bottom: 60px;
+  position: relative;
+  display: flex;
+}
+
+.main-left {
+  width: 300px;
+}
+
+.main-left {
+  margin-left: 30px;
+  margin-top: 30px;
+}
+
+.main-nav > ul {
+  list-style: none;
+  padding: 0;
+}
+
+.main-nav li {
+  margin-bottom: 10px;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: #000;
+  font-size: 18px;
+}
+
+.main-nav a:hover {
+  color: rgba(134, 131, 131, 0.76);
+}
+
+.main-right {
+  width: 1280px;
+  margin-top: 20px;
+  position: relative;
+}
+
+.main-right {
+  width: 1280px;
+  margin-top: 20px;
+  position: relative;
+}
+
+.main-right > p {
+  display: block;
+  font-size: 40px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+.main-right input {
+  font-size: 20px;
+}
+
+.board-header {
+  width: 1040px;
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.board-header label {
+  display: inline-block;
+  width: 80px;
+  margin-right: 20px;
+}
+
+.board-header > div {
+  margin-bottom: 25px;
+}
+
+.itemInput {
+  width: 300px;
+  border: 0;
+  border-bottom: 1px solid black;
+}
+
+#info {
+  width: 600px;
+  border: 0;
+  border-bottom: 1px solid black;
+}
+
+.board-body {
+  width: 975px;
+  height: 100%;
+  margin: 50px 0;
+}
+
+.board-body > div {
+  margin: 30px 0;
+  font-size: 20px;
+}
+
+.board-body > div:first-child {
+  font-size: 30px;
+}
+
+#upload {
+  font-size: 20px;
+  border: 1px solid black;
+  border-radius: 2px;
+  padding: 4px;
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.imgbox {
+  display: inline-block;
+  margin-right: 15px;
+  margin-bottom: 10px;
+}
+
+.board-footer {
+  width: 1030px;
+  font-size: 20px;
+  margin-top: 100px;
+  padding: 0 5px;
+}
+
+.board-footer a {
+  text-decoration: none;
+  color: #000;
+  margin-right: 40px;
+}
+
+.board-footer a:hover {
+  color: rgba(134, 131, 131, 0.76);
+}
