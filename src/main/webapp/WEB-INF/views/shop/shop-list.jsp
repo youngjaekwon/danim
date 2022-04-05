@@ -1,4 +1,4 @@
-<%@ page import="com.danim.shop.beans.ItemsDTO" %>
+<%@ page import="com.danim.items.beans.ItemsDTO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>

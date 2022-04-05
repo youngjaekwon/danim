@@ -1,9 +1,5 @@
 package com.danim.orders.beans;
 
-import com.danim.shop.beans.ItemsDTO;
-
-import java.util.List;
-
 public class OrdersDTO {
     private String shippingName; // 배송 받는 사람 이름
     private String shippingZipcode; // 배송지 우편번호

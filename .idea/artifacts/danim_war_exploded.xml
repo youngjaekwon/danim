@@ -66,6 +66,9 @@
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:5.2.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-taglibs:5.2.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:5.2.2.RELEASE" />
+          <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.2.1" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:1.4" />
+          <element id="library" level="project" name="Maven: servlets.com:cos:05Nov2002" />
         </element>
       </element>
     </root>

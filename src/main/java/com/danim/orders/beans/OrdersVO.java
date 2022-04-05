@@ -1,6 +1,6 @@
 package com.danim.orders.beans;
 
-import com.danim.shop.beans.ItemsDTO;
+import com.danim.items.beans.ItemsDTO;
 
 import java.util.List;
 

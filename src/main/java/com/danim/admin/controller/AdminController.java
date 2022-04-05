@@ -3,17 +3,15 @@ package com.danim.admin.controller;
 import com.danim.common.paging.PageMaker;
 import com.danim.member.beans.Member;
 import com.danim.member.service.MemberService;
-import com.danim.orders.beans.Orders;
 import com.danim.orders.beans.OrdersVO;
 import com.danim.orders.service.OrdersService;
-import com.danim.shop.beans.ItemsDTO;
-import com.danim.shop.service.ItemsService;
+import com.danim.items.beans.ItemsDTO;
+import com.danim.shop.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -24,13 +22,13 @@ import java.util.List;
 public class AdminController {
 
     private final OrdersService ordersService;
-    private final ItemsService itemsService;
+    private final ShopService shopService;
     private final MemberService memberService;
 
     @Autowired
-    public AdminController(OrdersService ordersService, ItemsService itemsService, MemberService memberService) {
+    public AdminController(OrdersService ordersService, ShopService shopService, MemberService memberService) {
         this.ordersService = ordersService;
-        this.itemsService = itemsService;
+        this.shopService = shopService;
         this.memberService = memberService;
     }
 
@@ -95,7 +93,7 @@ public class AdminController {
         if (requestPage != null && requestPage.equals("")) requestPage = "1";
 
         // paging 요소로 리스트 검색
-        List<ItemsDTO> totalList = itemsService.getList(category, stock, sorting, keyword);
+        List<ItemsDTO> totalList = shopService.getList(category, stock, sorting, keyword);
 
         // 리스트 검색이 안될경우
         if (totalList == null) {
@@ -116,6 +114,11 @@ public class AdminController {
             mav.addObject("keyword", keyword);
 
         return mav;
+    }
+
+    @RequestMapping(value = "/items_reg", method = RequestMethod.GET)
+    public String item_reg(){
+        return "/admin/admin-items-reg";
     }
 
 

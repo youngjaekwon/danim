@@ -5,16 +5,14 @@ import com.danim.member.beans.Member;
 import com.danim.member.dto.MemberDTO;
 import com.danim.member.parser.MemberParser;
 import com.danim.member.service.MemberService;
-import com.danim.shop.beans.Items;
-import com.danim.shop.beans.ItemsDTO;
-import com.danim.shop.parser.ItemsParser;
-import com.danim.shop.service.ItemsService;
+import com.danim.items.beans.Items;
+import com.danim.items.beans.ItemsDTO;
+import com.danim.items.parser.ItemsParser;
+import com.danim.shop.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -33,15 +31,15 @@ import java.util.List;
 @RequestMapping("/shop")
 public class ShopController {
 
-    private final ItemsService itemsService;
+    private final ShopService shopService;
     private final MemberService memberService;
     private final MemberParser memberParser;
     private final ItemsParser itemsParser;
     private final DecimalFormat formatter;
 
     @Autowired
-    public ShopController(ItemsService itemsService, MemberService memberService, MemberParser memberParser, ItemsParser itemsParser, DecimalFormat formatter) {
-        this.itemsService = itemsService;
+    public ShopController(ShopService shopService, MemberService memberService, MemberParser memberParser, ItemsParser itemsParser, DecimalFormat formatter) {
+        this.shopService = shopService;
         this.memberService = memberService;
         this.memberParser = memberParser;
         this.itemsParser = itemsParser;
@@ -56,7 +54,7 @@ public class ShopController {
         String requestPage = httpServletRequest.getParameter("page"); // 요청된 페이지
 
         // 카테고리로 리스트 검색
-        List<ItemsDTO> totalList = itemsService.getList(category);
+        List<ItemsDTO> totalList = shopService.getList(category);
 
         // 리스트 검색이 안될경우
         if (totalList == null) {
@@ -78,7 +76,7 @@ public class ShopController {
     @RequestMapping(value = "/item", method = RequestMethod.GET)
     public ModelAndView item(HttpServletRequest httpServletRequest) {
         String itemnum = httpServletRequest.getParameter("item"); // 제품 번호
-        Items item = itemsService.select(itemnum); // item select
+        Items item = shopService.select(itemnum); // item select
         ItemsDTO itemsDTO = itemsParser.parseItems(item);
         ModelAndView mav = new ModelAndView("shop/shop-item"); // view
         mav.addObject("itemVO", itemsDTO); // itemVO 추가
@@ -113,7 +111,7 @@ public class ShopController {
         String singleItemCheckOut = request.getParameter("items");
         if (singleItemCheckOut != null) jsonStringItemList = singleItemCheckOut; // 구매 제품 리스트 변경
 
-        List<ItemsDTO> itemList = itemsService.getItemListFromJSONString(jsonStringItemList); // 구매 제품 리스트 JSONString to ArrayList
+        List<ItemsDTO> itemList = shopService.getItemListFromJSONString(jsonStringItemList); // 구매 제품 리스트 JSONString to ArrayList
         if (!itemList.isEmpty()) {
             mav.addObject("itemList", itemList); // Model에 리스트 추가
             mav.addObject("jsonStringItemList", jsonStringItemList); // Model에 Json String 형태의 리스트 추가
@@ -152,7 +150,7 @@ public class ShopController {
             Member member = memberService.selectMember(memnum); // 로그인된 멤버
             String jsonStringBasketList = member.getBasket(); // 저장된 장바구니 리스트
             if (!jsonStringBasketListFromCookie.isEmpty()) { // 쿠키에 장바구니가 저장된 경우
-                if (itemsService.addBasketList(member, jsonStringBasketListFromCookie)) { // 멤버 장바구니 업데이트
+                if (shopService.addBasketList(member, jsonStringBasketListFromCookie)) { // 멤버 장바구니 업데이트
                     jsonStringBasketList = member.getBasket(); // 저장된 장바구니 리스트 다시 가져옴
                     try {
                         Cookie cookie = new Cookie("basketList", null); // 삭제할 쿠키에 대한 값을 null로 지정
@@ -164,7 +162,7 @@ public class ShopController {
                     }
                 }
             }
-            List<ItemsDTO> itemList = itemsService.getItemListFromJSONString(jsonStringBasketList); // JSONString to ArrayList
+            List<ItemsDTO> itemList = shopService.getItemListFromJSONString(jsonStringBasketList); // JSONString to ArrayList
             // 리스트 생성이 안될경우
             if (itemList == null) {
                 itemList = new ArrayList<>();
@@ -181,7 +179,7 @@ public class ShopController {
             mav.addObject("formattedTotalCost", formatter.format(totalCost)); // #,###,### 포멧으로 변경된 총 금액 전달
             return mav;
         } else {
-            List<ItemsDTO> itemList = itemsService.getItemListFromJSONString(jsonStringBasketListFromCookie); // JSONString to ArrayList
+            List<ItemsDTO> itemList = shopService.getItemListFromJSONString(jsonStringBasketListFromCookie); // JSONString to ArrayList
             // 리스트 생성이 안될경우 (리스트가 비어있을경우)
             if (itemList == null) {
                 itemList = new ArrayList<>();
@@ -210,7 +208,7 @@ public class ShopController {
 
         /////////////////////////////////////// 로그인된 경우 ///////////////////////////////////////
         if (memnum != null){
-            return itemsService.addBasketList(memnum, addItem) ? "passed" : "failed"; // 추가 요청된 아이템 장바구니에 추가 후 결과 리턴
+            return shopService.addBasketList(memnum, addItem) ? "passed" : "failed"; // 추가 요청된 아이템 장바구니에 추가 후 결과 리턴
         } else {
             /////////////////////////////////////// 비로그인의 경우 ///////////////////////////////////////
             try {
@@ -222,7 +220,7 @@ public class ShopController {
                 }
                 ///////////////////////////////////
                 // 비로그인 장바구니에 추가
-                basketListNotLogin = itemsService.addBasketListNotLogin(basketListNotLogin, addItem);
+                basketListNotLogin = shopService.addBasketListNotLogin(basketListNotLogin, addItem);
                 httpServletResponse.addCookie(new Cookie("basketList", URLEncoder.encode(basketListNotLogin, "UTF-8"))); // 쿠키에 추가
             } catch (Exception e){
                 e.printStackTrace();
@@ -241,7 +239,7 @@ public class ShopController {
 
         /////////////////////////////////////// 로그인된 경우 ///////////////////////////////////////
         if (memnum != null){
-            return itemsService.deleteItemfromBasket(memnum, itemnum) ? "passed" : "failed"; // 추가 요청된 아이템 장바구니에 추가 후 결과 리턴
+            return shopService.deleteItemfromBasket(memnum, itemnum) ? "passed" : "failed"; // 추가 요청된 아이템 장바구니에 추가 후 결과 리턴
         } else {
             /////////////////////////////////////// 비로그인의 경우 ///////////////////////////////////////
             try {
@@ -253,7 +251,7 @@ public class ShopController {
                 }
                 ///////////////////////////////////
                 // 비로그인 장바구니에서 삭제
-                basketListNotLogin = itemsService.deleteItemfromBasketNotLogin(basketListNotLogin, itemnum);
+                basketListNotLogin = shopService.deleteItemfromBasketNotLogin(basketListNotLogin, itemnum);
 
                 httpServletResponse.addCookie(new Cookie("basketList", URLEncoder.encode(basketListNotLogin, "UTF-8"))); // 쿠키에 추가
             } catch (Exception e){

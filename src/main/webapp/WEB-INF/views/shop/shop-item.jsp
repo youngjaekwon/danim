@@ -1,4 +1,4 @@
-<%@ page import="com.danim.shop.beans.ItemsDTO" %>
+<%@ page import="com.danim.items.beans.ItemsDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--<c:set var="path" value="${pageContext.request.contextPath}"/>--%>
@@ -71,11 +71,10 @@
                     <%
                         // 사진 출력
                         for (String pic : pics){
-                            if (pic.contains("jpg")||pic.contains("jpeg")||pic.contains("png")){ // jpg, jpeg, png 의 확장자를 가지는 경우
+                            if (!pic.startsWith("https")) pic = "/resources/upload/" + pic;
                     %>
                     <img src="<%=pic%>" />
                     <%
-                            }
                         }
                     %>
                 </div>
@@ -109,5 +108,4 @@
     </form>
 </section>
 </body>
-
 </html>

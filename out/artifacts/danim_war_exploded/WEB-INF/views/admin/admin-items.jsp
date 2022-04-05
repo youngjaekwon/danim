@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.danim.shop.beans.ItemsDTO" %>
+<%@ page import="com.danim.items.beans.ItemsDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--<c:set var="path" value="${pageContext.request.contextPath}"/>--%>
@@ -117,6 +117,9 @@
           }
         %>
       </div>
+      <div class="board-footer">
+        <a href="/admin/items_reg">상품등록</a>
+      </div>
       <div class="paging">
         <%
           int pageStart = (int) request.getAttribute("pageStart"); // 페이지 목록중 시작
@@ -218,6 +221,7 @@
             </div>
             <div id="correction">
               <button>수정</button>
+              <button>상품 삭제</button>
             </div>
           </div>
         </div>

@@ -3,8 +3,8 @@ package com.danim.orders.parser;
 import com.danim.orders.beans.Orders;
 import com.danim.orders.beans.OrdersDTO;
 import com.danim.orders.beans.OrdersVO;
-import com.danim.shop.beans.ItemsDTO;
-import com.danim.shop.service.ItemsService;
+import com.danim.items.beans.ItemsDTO;
+import com.danim.shop.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +18,14 @@ import java.util.Map;
 @Service
 public class OrdersParser {
 
-    private final ItemsService itemsService;
+    private final ShopService shopService;
     private final DecimalFormat formatter;
     private final SimpleDateFormat simpleDateFormat;
     private final SimpleDateFormat simpleDateFormatIncludeTime;
 
     @Autowired
-    public OrdersParser(ItemsService itemsService, DecimalFormat formatter, SimpleDateFormat simpleDateFormat, SimpleDateFormat simpleDateFormatIncludeTime) {
-        this.itemsService = itemsService;
+    public OrdersParser(ShopService shopService, DecimalFormat formatter, SimpleDateFormat simpleDateFormat, SimpleDateFormat simpleDateFormatIncludeTime) {
+        this.shopService = shopService;
         this.formatter = formatter;
         this.simpleDateFormat = simpleDateFormat;
         this.simpleDateFormatIncludeTime = simpleDateFormatIncludeTime;
@@ -75,7 +75,7 @@ public class OrdersParser {
         // order entity에 저장된 상품 리스트 (JSONString 타입)
         String orderEntityItemList = order.getItemlist();
         // JSONString to List<ItemsDTO>
-        List<ItemsDTO> itemsList = itemsService.getItemListFromJSONString(orderEntityItemList);
+        List<ItemsDTO> itemsList = shopService.getItemListFromJSONString(orderEntityItemList);
         // 상품 리스트중 대표상품
         ItemsDTO titleItem = itemsList.get(0);
         // 대표 상품명 저장
