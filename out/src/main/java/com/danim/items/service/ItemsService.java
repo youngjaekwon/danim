@@ -128,6 +128,15 @@ public class ItemsService {
         if (dbItem.getPrice() != itemsDTO.getPrice()){
             if (!(itemsDao.update(itemnum, "PRICE", itemsDTO.getPrice() + "") > 0)) return false;
         }
+        if (dbItem.getStock() != itemsDTO.getStock()){
+            if (!(itemsDao.update(itemnum, "STOCK", itemsDTO.getStock() + "") > 0)) return false;
+        }
         return itemsDao.update(itemnum, "PIC", itemsDTO.getPic()) > 0;
+    }
+
+    public boolean delItem(String itemnum){
+        if(!filesService.delFile("ITEMNUM", itemnum)) return false;
+
+        return itemsDao.delete(itemnum) > 0;
     }
 }

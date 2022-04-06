@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -56,5 +57,18 @@ public class ItemsController {
             attributes.addFlashAttribute("updateItem", "failed");
             return "redirect:/admin/items_update?itemnum="+itemsDTO.getItemnum();
         }
+    }
+
+    @RequestMapping(value = "/doDel", method = RequestMethod.POST)
+    public String doDel(@RequestParam String itemnum, RedirectAttributes attributes) {
+        boolean result = itemsService.delItem(itemnum);
+
+        if (result){
+            attributes.addFlashAttribute("delItem", "passed");
+        } else {
+            attributes.addFlashAttribute("delItem", "failed");
+        }
+
+        return "redirect:/admin/items";
     }
 }

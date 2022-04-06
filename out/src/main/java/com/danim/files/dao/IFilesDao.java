@@ -9,4 +9,5 @@ public interface IFilesDao {
     FilesEntity select(String fnum);
     List<FilesEntity> selectFiles(String from, String num);
     int delete(String fnum);
+    int delete(String from, String num);
 }

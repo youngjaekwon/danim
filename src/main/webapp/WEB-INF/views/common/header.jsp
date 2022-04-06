@@ -270,6 +270,12 @@
     } else if ('${updateItem}' == 'failed') {
         alert("상품수정에 실패했습니다.");
     }
+
+    if ('${delItem}' == 'passed'){
+        alert("상품삭제에 성공했습니다.");
+    } else if ('${delItem}' == 'failed') {
+        alert("상품삭제에 실패했습니다.");
+    }
 </script>
 <%
     session.removeAttribute("loginCheck"); // 로그인 확인 attribute 제거
