@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class MultipartFileUploadProcessor {
+
     public static final String FilePath = "/Users/yjkwon/Desktop/java-project/danim/src/main/webapp/resources/upload";
+
     public static Map<String, Object> parsFiles(MultipartHttpServletRequest multipartRequest) throws IOException {
         if (multipartRequest == null || multipartRequest.getFileMap().isEmpty()) return null;
 
@@ -65,5 +67,16 @@ public class MultipartFileUploadProcessor {
         returnMap.put("storedFileNames", storedFileNames);
 
         return returnMap;
+    }
+
+    public static boolean delFiles(List<FilesEntity> files) {
+        if (files == null || files.isEmpty()) return true;
+
+        for (FilesEntity file : files) {
+            File targetFile = new File(FilePath + File.separator + file.getStoredFileName());
+            if (!targetFile.delete()) return false;
+        }
+
+        return true;
     }
 }

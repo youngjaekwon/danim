@@ -2,6 +2,7 @@ package com.danim.files.service;
 
 import com.danim.files.beans.FilesEntity;
 import com.danim.files.dao.FilesDao;
+import com.danim.files.util.MultipartFileUploadProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,15 @@ public class FilesService {
 
     public boolean delFile(String fnum){
         return filesDao.delete(fnum) > 0;
+    }
+
+    public boolean delFile(String from, String num){
+        List<FilesEntity> files = getList(from, num);
+
+        if (!MultipartFileUploadProcessor.delFiles(files)) return false;
+        filesDao.delete(from, num);
+
+        return  true;
     }
 
     public boolean updateFile(String from, String num, String localFiles){

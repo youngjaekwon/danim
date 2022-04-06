@@ -221,7 +221,9 @@
             </div>
             <div id="correction">
               <button type="button" onclick="location.href='/admin/items_update?itemnum=<%=itemnum%>'">수정</button>
-              <button>상품 삭제</button>
+              <button type="button" data-index='<%=itemnum%>' id="button<%=itemnum%>" onclick="delToggle(this.dataset.index)">상품 삭제</button>
+              <button type="button" data-index='<%=itemnum%>' id="doDel<%=itemnum%>" onclick="doDelItem(this.dataset.index)" hidden>삭제</button>
+              <button type="button" data-index='<%=itemnum%>' id="delCan<%=itemnum%>" onclick="delToggle(this.dataset.index)" hidden>취소</button>
             </div>
           </div>
         </div>
@@ -231,6 +233,9 @@
   <%
     }
   %>
+  <form action="/items/doDel" name="doDel" method="POST" hidden>
+    <input type="hidden" name="itemnum">
+  </form>
 </section>
 <script>
   // filter 기본 체크

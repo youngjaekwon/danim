@@ -78,4 +78,15 @@ public class FilesDao implements IFilesDao{
             }
         });
     }
+
+    @Override
+    public int delete(String from, String num) {
+        String SQL = "DELETE FROM FILES WHERE " + from + " = ?";
+        return jdbcTemplate.update(SQL, new PreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement preparedStatement) throws SQLException {
+                preparedStatement.setString(1, num);
+            }
+        });
+    }
 }
