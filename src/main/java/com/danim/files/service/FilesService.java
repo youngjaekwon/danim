@@ -6,6 +6,7 @@ import com.danim.files.util.MultipartFileUploadProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -76,5 +77,11 @@ public class FilesService {
 
     public List<FilesEntity> getList(String from, String num){
         return filesDao.selectFiles(from, num);
+    }
+
+    public FilesEntity getFile(String fnum){
+        FilesEntity file = filesDao.select(fnum);
+
+        return file;
     }
 }

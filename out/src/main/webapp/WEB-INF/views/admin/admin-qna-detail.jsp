@@ -31,9 +31,10 @@
     <div class="main-left">
       <div class="main-nav">
         <ul>
-          <li><a href="/member/mypage">회원정보 수정</a></li>
-          <li><a href="/member/orderList">주문내역</a></li>
-          <li><a href="/member/qnaList">1:1 문의</a></li>
+          <li><a href="/admin/orders">주문 관리</a></li>
+          <li><a href="/admin/items">상품 관리</a></li>
+          <li><a href="/admin/members">회원 관리</a></li>
+          <li><a href="/admin/qnas">문의 관리</a></li>
         </ul>
       </div>
     </div>
@@ -84,14 +85,6 @@
           <input type="hidden" name="fnum">
         </form>
       </div>
-      <div class="board-footer">
-        <a href="javascript:delToggle()" id="delQ">문의 삭제</a>
-        <a href="javascript:delToggle()" style="display: none" id="delCan">취소</a>
-        <form action="/qna/doDel" name="doDelForm" method="post">
-          <input type="hidden" name="qnanum" value="${qna.qnanum}"/>
-          <a href="javascript:$('[name=doDelForm]').submit()" style="display: none" id="doDel">삭제</a>
-        </form>
-      </div>
       <form name="regComment">
         <div class="comments-header">
           <label for="textBox">댓글작성</label>
@@ -106,14 +99,13 @@
             <button type="button" onclick="doRegComment()">작성</button>
           </div>
         </div>
-        <input type="hidden" name="memnum" value="${qna.memnum}"/>
+        <input type="hidden" name="memnum" value="${member.memnum}"/>
         <input type="hidden" name="role" value="${role}"/>
         <input type="hidden" name="qnanum" value="${qna.qnanum}"/>
       </form>
       <div class="comments">
         <%
           List<CommentsVO> comments = (List<CommentsVO>) request.getAttribute("comments");
-          String memnum = (String) session.getAttribute("user");
           // 사진 출력
           if (comments != null) {
             for (CommentsVO comment : comments) {
@@ -122,11 +114,9 @@
         <div class="comment" id="<%=cnum%>">
           <div class="comment_name"><%=comment.getName()%></div>
           <div class="comment_txt"><%=comment.getTxt()%></div>
-          <%if (memnum.equals(comment.getMemnum())) {%>
           <div class="comment_delete">
             <button data-index="<%=cnum%>" onclick="doDelComment(this.dataset.index)">삭제</button>
           </div>
-          <%}%>
           <div class="comment_date"><%=comment.getDate()%></div>
         </div>
         <%

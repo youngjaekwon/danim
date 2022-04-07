@@ -78,3 +78,8 @@ function delToggle(){
   $('#doDel').toggle();
   $('#delCan').toggle();
 }
+
+function downloadFile(fnum){
+  $('[name = downloadForm] [name = fnum]').val(fnum);
+  $('[name = downloadForm]').submit();
+}

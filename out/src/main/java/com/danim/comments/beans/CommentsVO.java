@@ -2,6 +2,7 @@ package com.danim.comments.beans;
 
 public class CommentsVO {
     String cnum; // 댓글 번호
+    String memnum; // 댓글 작성자 회원번호
     String name; // 댓글 작성자 이름
     String nickName; // 댓글 작성자 닉네임
     String txt; // 댓글 내용
@@ -11,11 +12,20 @@ public class CommentsVO {
     public String toString() {
         return "CommentsVO{" +
                 "cnum='" + cnum + '\'' +
+                ", memnum='" + memnum + '\'' +
                 ", name='" + name + '\'' +
                 ", nickName='" + nickName + '\'' +
                 ", txt='" + txt + '\'' +
                 ", date='" + date + '\'' +
                 '}';
+    }
+
+    public String getMemnum() {
+        return memnum;
+    }
+
+    public void setMemnum(String memnum) {
+        this.memnum = memnum;
     }
 
     public String getCnum() {

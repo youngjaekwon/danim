@@ -5,6 +5,7 @@ import com.danim.comments.beans.CommentsEntity;
 import com.danim.comments.beans.CommentsVO;
 import com.danim.comments.dao.CommentsDao;
 import com.danim.comments.util.CommentsParser;
+import com.danim.qna.service.QnaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

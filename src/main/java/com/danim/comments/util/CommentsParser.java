@@ -55,6 +55,8 @@ public class CommentsParser {
 
         // 작성자 검색
         Member member = memberService.selectMember(commentsEntity.getMemnum());
+        // 댓글 작성자 회원번호
+        commentsVO.setMemnum(member.getMemnum());
         // 댓글 작성자 이름
         commentsVO.setName(member.getName());
         // 댓글 작성자 닉네임
@@ -66,50 +68,33 @@ public class CommentsParser {
         Date cDate = commentsEntity.getCdate();
         // 현재 시간
         Date now = new Timestamp(System.currentTimeMillis());
-        // 경과 시간
-        long difference = now.getTime() - cDate.getTime();
+        // 경과 시간 (초단위 차이)
+        long difference = (now.getTime() - cDate.getTime()) / 1000;
 
         String date = "";
         // 5분 미만
-        if (difference < 1000 * 60 * 5) {
+        if (difference < 60 * 5) {
             date = "방금";
         }
         // 1시간 미만
-        else if (difference < 1000 * 60 * 60) {
-            int differenceInt = now.getMinutes() - cDate.getMinutes();
-            date = differenceInt + "분 전";
+        else if (difference < 60 * 60) {
+            date = (difference / 60) + "분 전";
         }
         // 1일 미만
-        else if (difference < 1000 * 60 * 60 * 24){
-            int differenceInt = now.getHours() - cDate.getHours();
-            date = differenceInt + "시간 전";
+        else if (difference < 60 * 60 * 24){
+            date = (difference / (60 * 60)) + "시간 전";
         }
         // 1달 미만
-        else if (difference < 1000L * 60 * 60 * 24 * 28){
-            int differenceInt = now.getDay() - cDate.getDay();
-            if (differenceInt == 0){
-                differenceInt = now.getHours() - cDate.getHours();
-                date = differenceInt + "시간 전";
-            }
-            date = differenceInt + "일 전";
+        else if (difference < 60 * 60 * 24 * 28){
+            date = (difference / (60 * 60 * 24)) + "일 전";
         }
         // 1년 미만
-        else if (difference < 1000L * 60 * 60 * 24 * 28 * 12) {
-            int differenceInt = now.getMonth() - cDate.getMonth();
-            if (differenceInt == 0){
-                differenceInt = now.getDay() - cDate.getDay();
-                date = differenceInt + "일 전";
-            }
-            date = differenceInt + "달 전";
+        else if (difference < 60 * 60 * 24 * 28 * 12) {
+            date = (difference / (60 * 60 * 24 * 28)) + "달 전";
         }
         // 1년 이상
         else {
-            int differenceInt = now.getYear() - cDate.getYear();
-            if (differenceInt == 0){
-                differenceInt = now.getMonth() - cDate.getMonth();
-                date = differenceInt + "달 전";
-            }
-            date = differenceInt + "년 전";
+            date = (difference / (60 * 60 * 24 * 28 * 12)) + "년 전";
         }
 
         // VO에 경과시간 저장

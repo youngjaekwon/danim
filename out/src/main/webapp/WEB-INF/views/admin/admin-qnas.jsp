@@ -100,10 +100,10 @@
                 String qnanum = qna.getQnanum();
         %>
         <div class="qna">
-          <div class="qna_num"><a href=""><%=qnanum%></a></div>
-          <div class="qna_member"><a href=""><%=qna.getUserName()%></a></div>
+          <div class="qna_num"><a href="/admin/qna?qnanum=<%=qnanum%>"><%=qnanum%></a></div>
+          <div class="qna_member"><a href="/admin/qna?qnanum=<%=qnanum%>"><%=qna.getUserName()%></a></div>
           <div class="qna_title">
-            <a href=""><%=qna.getTitle() + " [" + qna.getCommentsNum() + "]"%></a>
+            <a href="/admin/qna?qnanum=<%=qnanum%>"><%=qna.getTitle() + " [" + qna.getCommentsNum() + "]"%></a>
           </div>
           <div class="qna_category"><%=qna.getCategory()%></div>
           <div class="qna_state"><%=qna.getState()%></div>

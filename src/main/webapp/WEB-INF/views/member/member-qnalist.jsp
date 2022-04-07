@@ -56,7 +56,7 @@
         %>
         <div class="item">
           <div class="item-num">
-            <a href="/member/qna?qnanum=<%=qna.getQnanum()%>"><%=qnanum%></a>
+            <a href="/member/qna?qnanum=<%=qna.getQnanum()%>"><%=qna.getOrdernum()%></a>
           </div>
           <div class="item-info">
             <a href="/member/qna?qnanum=<%=qna.getQnanum()%>"><%=qna.getTitle() + " [" + qna.getCommentsNum() + "]"%></a>
@@ -81,7 +81,7 @@
           if (pageEnd != 0){
         %>
         <div class="page-prv">
-          <a href="/orderList?page=${prevPage}" class="page-prv-btn">
+          <a href="/member/qnaList?page=${prevPage}" class="page-prv-btn">
             <i class="fas fa-angle-double-left"></i>
           </a>
         </div>
@@ -89,13 +89,13 @@
           <%
               for (int i = pageStart; i <= pageEnd; i++){
           %>
-          <a href="/orderList?page=<%=i%>"><%=i%></a>
+          <a href="/member/qnaList?page=<%=i%>"><%=i%></a>
           <%
               }
           %>
         </div>
         <div class="page-next">
-          <a href="/orderList?page=${nextPage}" class="page-next-btn">
+          <a href="/member/qnaList?page=${nextPage}" class="page-next-btn">
             <i class="fas fa-angle-double-right"></i>
           </a>
         </div>

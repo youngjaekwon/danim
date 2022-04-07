@@ -41,7 +41,26 @@ public class FilesDao implements IFilesDao{
 
     @Override
     public FilesEntity select(String fnum) {
-        return null;
+        List<FilesEntity> files = null;
+        String SQL = "SELECT * FROM FILES WHERE FNUM = ?";
+        files = jdbcTemplate.query(SQL, new RowMapper<FilesEntity>() {
+            @Override
+            public FilesEntity mapRow(ResultSet resultSet, int i) throws SQLException {
+                FilesEntity file = new FilesEntity();
+                file.setFnum(resultSet.getString("FNUM"));
+                file.setItemnum(resultSet.getString("ITEMNUM"));
+                file.setBoardnum(resultSet.getString("BOARDNUM"));
+                file.setQnanum(resultSet.getString("QNANUM"));
+                file.setOriginalFilename(resultSet.getString("ORIGINALFILENAME"));
+                file.setStoredFileName(resultSet.getString("STOREDFILENAME"));
+                file.setFtype(resultSet.getString("FTYPE"));
+                file.setFsize(resultSet.getString("FSIZE"));
+                return file;
+            }
+        }, fnum);
+
+        if (files.isEmpty()) return null; // 조회된게 없는경우 null 반환
+        return files.get(0);
     }
 
     @Override
