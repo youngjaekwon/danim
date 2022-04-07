@@ -1,6 +1,8 @@
 package com.danim.qna.util;
 
 import com.danim.files.service.FilesService;
+import com.danim.member.beans.Member;
+import com.danim.member.service.MemberService;
 import com.danim.qna.beans.QnaDTO;
 import com.danim.qna.beans.QnaEntity;
 import com.danim.qna.beans.QnaVO;
@@ -17,11 +19,13 @@ public class QnaParser {
 
     private final SimpleDateFormat simpleDateFormat;
     private final FilesService filesService;
+    private final MemberService memberService;
 
     @Autowired
-    public QnaParser(SimpleDateFormat simpleDateFormat, FilesService filesService) {
+    public QnaParser(SimpleDateFormat simpleDateFormat, FilesService filesService, MemberService memberService) {
         this.simpleDateFormat = simpleDateFormat;
         this.filesService = filesService;
+        this.memberService = memberService;
     }
 
     public QnaEntity parse(QnaDTO qnaDTO){
@@ -62,7 +66,18 @@ public class QnaParser {
         // 주문 번호
         qnaVO.setOrdernum(qnaEntity.getOrdernum());
         // 문의한 회원 번호
-        qnaVO.setMemnum(qnaEntity.getMemnum());
+        String memnum = qnaEntity.getMemnum();
+        qnaVO.setMemnum(memnum);
+
+        // 회원 번호로 회원 검색
+        Member member = memberService.selectMember(memnum);
+
+        // 유저 아이디
+        qnaVO.setUserId(member.getEmail());
+
+        // 유저 닉네임
+        qnaVO.setUserName(member.getName());
+
         // 문의 종류
         String category = qnaEntity.getCategory();
         Map<String, String> categoryMap = new HashMap<>(){

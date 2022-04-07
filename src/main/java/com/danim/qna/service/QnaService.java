@@ -3,6 +3,8 @@ package com.danim.qna.service;
 import com.danim.files.beans.FilesEntity;
 import com.danim.files.service.FilesService;
 import com.danim.files.util.MultipartFileUploadProcessor;
+import com.danim.orders.beans.Orders;
+import com.danim.orders.beans.OrdersVO;
 import com.danim.qna.beans.QnaDTO;
 import com.danim.qna.beans.QnaEntity;
 import com.danim.qna.beans.QnaVO;
@@ -62,21 +64,23 @@ public class QnaService {
         return true;
     }
 
-//    // 주문 리스트 (관리자)
-//    public List<OrdersVO> getList(String state, String qna, String sorting, String keyword){
-//        // keyword 에 SQL 와일드카드 추가
-//        if (keyword != null) keyword = "%" + keyword + "%";
-//
-//        // 주어진 필터들을 이용해 DB에서 리스트 검색
-//        List<Orders> ordersList = ordersDao.searchAllByFilters(state, qna, sorting, keyword);
-//
-//        // 반환할 Orders VO List 생성 및 기존 Entity List 변환하여 저장
-//        List<OrdersVO> ordersVOList = ordersParser.ordersListEntitytoVO(ordersList);
-//
-//        return ordersVOList; // Orders List 반환
-//    }
+    // 문의 리스트 (관리자)
+    public List<QnaVO> getList(String category, String state, String sorting, String keyword){
+        // 주어진 필터들을 이용해 DB에서 리스트 검색
+        List<QnaEntity> qnaEntityList = qnaDao.searchAllByFilters(category, state, sorting, keyword);
 
-    // 주문 리스트 (회원)
+        // 반환할 Qna VO List 생성 및 기존 Entity List 변환하여 저장
+        List<QnaVO> qnaVOList = new ArrayList<>();
+        if (qnaEntityList != null) {
+            qnaEntityList.forEach((qnaEntity -> {
+                qnaVOList.add(qnaParser.parse(qnaEntity));
+            }));
+        }
+
+        return qnaVOList; // Qna List 반환
+    }
+
+    // 문의 리스트 (회원)
     public List<QnaVO> getList(String memnum){
         // 회원번호를 이용해 DB에서 리스트 검색
         List<QnaEntity> qnaEntityList = qnaDao.searchAllByAtt("MEMNUM", memnum);

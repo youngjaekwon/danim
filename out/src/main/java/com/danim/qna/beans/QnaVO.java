@@ -9,6 +9,8 @@ public class QnaVO {
     private String qnanum; // 1 : 1 문의 번호
     private String ordernum; // 문의 대상 주문 번호
     private String memnum; // 문의한 유저 번호
+    private String userId; // 문의한 유저 아이디
+    private String userName; // 문의한 유저 닉네임
     private String category; // 문의종류
     private String title; // 문의 제목
     private String txt; // 문의 내용
@@ -17,6 +19,22 @@ public class QnaVO {
     private List<Comments> comments; // 문의에 추가된 댓글들
     private int commentsNum; // 문의에 추가된 댓글 갯수
     private String state; // 문의 상태
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getQnanum() {
         return qnanum;
@@ -112,6 +130,8 @@ public class QnaVO {
                 "qnanum='" + qnanum + '\'' +
                 ", ordernum='" + ordernum + '\'' +
                 ", memnum='" + memnum + '\'' +
+                ", userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
                 ", category='" + category + '\'' +
                 ", title='" + title + '\'' +
                 ", txt='" + txt + '\'' +

@@ -1,5 +1,6 @@
 package com.danim.qna.dao;
 
+import com.danim.orders.beans.Orders;
 import com.danim.qna.beans.QnaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -143,6 +144,33 @@ public class QnaDao implements IQnaDao{
                 return qna;
             }
         }, "%" + keyword + "%");
+
+        if (qnas.isEmpty()) return null; // 조회된게 없는경우 null 반환
+        return qnas;
+    }
+
+    @Override
+    public List<QnaEntity> searchAllByFilters(String category, String state, String sorting, String keyword) {
+        List<QnaEntity> qnas = null;
+        String SQL = "SELECT * FROM QNA WHERE (ORDERNUM = ? OR MEMNUM = ? OR TITLE LIKE ? OR TXT LIKE ?) AND " +
+                "(CATEGORY LIKE ? AND STATE LIKE ?) ORDER BY " + sorting;
+        qnas = jdbcTemplate.query(SQL, new RowMapper<QnaEntity>() {
+            @Override
+            public QnaEntity mapRow(ResultSet resultSet, int i) throws SQLException {
+                QnaEntity qna = new QnaEntity();
+                qna.setQnanum(resultSet.getString("QNANUM"));
+                qna.setOrdernum(resultSet.getString("ORDERNUM"));
+                qna.setMemnum(resultSet.getString("MEMNUM"));
+                qna.setCategory(resultSet.getString("CATEGORY"));
+                qna.setTitle(resultSet.getString("TITLE"));
+                qna.setTxt(resultSet.getString("TXT"));
+                qna.setQdate(resultSet.getTimestamp("QDATE"));
+                qna.setPic(resultSet.getString("PIC"));
+                qna.setComments(resultSet.getString("COMMENTS"));
+                qna.setState(resultSet.getString("STATE"));
+                return qna;
+            }
+        }, keyword, keyword, "%" + keyword + "%", "%" + keyword + "%", category, state);
 
         if (qnas.isEmpty()) return null; // 조회된게 없는경우 null 반환
         return qnas;

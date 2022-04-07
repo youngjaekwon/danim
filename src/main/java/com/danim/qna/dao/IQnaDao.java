@@ -10,6 +10,7 @@ public interface IQnaDao {
     List<QnaEntity> search(String keyword);
     QnaEntity searchByAtt(String attribute, String keyword);
     List<QnaEntity> searchAllByAtt(String attribute, String keyword);
+    List<QnaEntity> searchAllByFilters(String category, String state, String sorting, String keyword);
     int update(String qnanum, String attribute, String revisedData);
     int delete(String qnanum);
     List<QnaEntity> selectAll();
