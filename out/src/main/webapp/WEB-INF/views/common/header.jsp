@@ -276,6 +276,18 @@
     } else if ('${delItem}' == 'failed') {
         alert("상품삭제에 실패했습니다.");
     }
+
+    if('${regQna}' == 'passed'){
+        alert("문의등록에 성공했습니다.");
+    } else if ('${regQna}' == 'failed') {
+        alert("문의등록에 실패했습니다.");
+    }
+
+    if('${delQna}' == 'passed'){
+        alert("문의삭제에 성공했습니다.");
+    } else if ('${delQna}' == 'failed') {
+        alert("문의삭제에 실패했습니다.");
+    }
 </script>
 <%
     session.removeAttribute("loginCheck"); // 로그인 확인 attribute 제거

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -26,7 +27,6 @@ public class QnaController {
 
     @RequestMapping(value = "/doReg", method = RequestMethod.POST)
     public String doReg(QnaDTO qnaDTO, MultipartHttpServletRequest multipartRequest, RedirectAttributes attributes) throws IOException {
-        System.out.println(qnaDTO);
         boolean result = qnaService.regQna(qnaDTO, multipartRequest);
 
         if (result){
@@ -35,6 +35,19 @@ public class QnaController {
         } else {
             attributes.addFlashAttribute("regQna", "failed");
             return "redirect:/member/qna_reg?ordernum="+qnaDTO.getOrdernum();
+        }
+    }
+
+    @RequestMapping(value = "/doDel", method = RequestMethod.POST)
+    public String doDel(@RequestParam String qnanum, RedirectAttributes attributes) throws IOException {
+        boolean result = qnaService.delQna(qnanum);
+
+        if (result){
+            attributes.addFlashAttribute("delQna", "passed");
+            return "redirect:/member/qnaList";
+        } else {
+            attributes.addFlashAttribute("delQna", "failed");
+            return "redirect:/member/qna?qnanum="+qnanum;
         }
     }
 }

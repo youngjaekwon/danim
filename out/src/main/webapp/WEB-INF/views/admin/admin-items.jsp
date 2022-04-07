@@ -30,7 +30,7 @@
           <li><a href="/admin/orders">주문 관리</a></li>
           <li><a href="/admin/items">상품 관리</a></li>
           <li><a href="/admin/members">회원 관리</a></li>
-          <li><a href="/admin/qnas">1:1 문의</a></li>
+          <li><a href="/admin/qnas">문의 관리</a></li>
         </ul>
       </div>
     </div>

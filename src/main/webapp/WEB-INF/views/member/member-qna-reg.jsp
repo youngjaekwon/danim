@@ -39,7 +39,7 @@
         <div class="board-header">
           <div>
             <label for="ordernum">주문번호</label>
-            <input type="text" name="ordernum" class="itemInput" id="ordernum" value="${ordernum}" readonly />
+            <input type="text" name="ordernum" class="itemInput" id="ordernum" value="${param.ordernum}" readonly />
           </div>
           <div>
             <label for="category">문의종류</label>
