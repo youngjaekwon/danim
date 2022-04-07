@@ -206,11 +206,13 @@ body {
 .comment_date{
   width: 70px;
   text-align: center;
+  float: right;
 }
 
 .comment_delete {
   width: 50px;
   text-align: center;
+  float: right;
 }
 
 button {

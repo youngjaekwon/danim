@@ -72,7 +72,22 @@
           <div class="order_payment"><%=order.getPayment()%></div>
           <div class="order_state"><a href="#"><%=order.getState()%></a></div>
           <div class="order_qna">
+            <%
+              String qnaState = order.getQna();
+              if (qnaState.equals("00")){
+            %>
             <a href="/member/qna_reg?ordernum=<%=orderNum%>">문의하기</a>
+            <%
+              } else if (qnaState.equals("미답변")){
+            %>
+            <a href="/member/qna?ordernum=<%=orderNum%>">미답변</a>
+            <%
+              } else if (qnaState.equals("답변완료")){
+            %>
+            <a href="/member/qna?ordernum=<%=orderNum%>">답변완료</a>
+            <%
+              }
+            %>
           </div>
         </div>
         <%

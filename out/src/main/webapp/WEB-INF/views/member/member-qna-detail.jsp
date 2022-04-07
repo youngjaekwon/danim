@@ -2,6 +2,7 @@
 <%@ page import="com.danim.items.beans.ItemsDTO" %>
 <%@ page import="com.danim.files.beans.FilesEntity" %>
 <%@ page import="com.danim.comments.beans.CommentsVO" %>
+<%@ page import="com.danim.qna.beans.QnaVO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
@@ -68,10 +69,10 @@
           %>
           <div id="<%=pic.getStoredFileName()%>" class="localPic">
             <div>
-              <img src="<%=picPath%>" style="width: 150px;">
+              <a href="javascript:downloadFile('<%=pic.getFnum()%>')"><img src="<%=picPath%>" style="width: 150px;"/></a>
             </div>
             <div>
-              <%=pic.getOriginalFilename()%>
+              <a href="javascript:downloadFile('<%=pic.getFnum()%>')" style="text-decoration: none; color: black"><%=pic.getOriginalFilename()%></a>
             </div>
           </div>
           <%
@@ -79,6 +80,9 @@
             }
           %>
         </div>
+        <form action="/files/download" method="post" name="downloadForm">
+          <input type="hidden" name="fnum">
+        </form>
       </div>
       <div class="board-footer">
         <a href="javascript:delToggle()" id="delQ">문의 삭제</a>
@@ -109,6 +113,7 @@
       <div class="comments">
         <%
           List<CommentsVO> comments = (List<CommentsVO>) request.getAttribute("comments");
+          String memnum = (String) session.getAttribute("user");
           // 사진 출력
           if (comments != null) {
             for (CommentsVO comment : comments) {
@@ -117,10 +122,12 @@
         <div class="comment" id="<%=cnum%>">
           <div class="comment_name"><%=comment.getName()%></div>
           <div class="comment_txt"><%=comment.getTxt()%></div>
-          <div class="comment_date"><%=comment.getDate()%></div>
+          <%if (memnum.equals(comment.getMemnum())) {%>
           <div class="comment_delete">
             <button data-index="<%=cnum%>" onclick="doDelComment(this.dataset.index)">삭제</button>
           </div>
+          <%}%>
+          <div class="comment_date"><%=comment.getDate()%></div>
         </div>
         <%
             }

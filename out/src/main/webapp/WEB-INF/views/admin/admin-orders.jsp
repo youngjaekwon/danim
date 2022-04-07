@@ -118,7 +118,7 @@
             <%if (order.getQna().equals("00")) { %>
             <span><%="-"%></span>
             <%} else {%>
-            <a href="#">
+            <a href="/admin/qna?ordernum=<%=orderNum%>">
               <%=order.getQna()%>
             </a>
             <%}%>

@@ -43,6 +43,11 @@ public class QnaService {
         return qnaParser.parse(qnaEntity);
     }
 
+    public QnaVO searchQna(String att, String keyword){
+        QnaEntity qnaEntity = qnaDao.searchByAtt(att, keyword);
+        return qnaParser.parse(qnaEntity);
+    }
+
     // 1 : 1 문의 등록
     public boolean regQna(QnaDTO qnaDTO, MultipartHttpServletRequest multipartRequest) throws IOException {
         // DB에 저장할 Entity 생성
@@ -113,5 +118,13 @@ public class QnaService {
         }
 
         return qnaVOList; // Qna List 반환
+    }
+
+    public void updateState(String qnanum){
+        qnaDao.update(qnanum, "STATE", "01");
+
+        QnaEntity qnaEntity = qnaDao.select(qnanum);
+
+        ordersService.update(qnaEntity.getOrdernum(), "QNA", "02");
     }
 }
