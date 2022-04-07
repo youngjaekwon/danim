@@ -1,6 +1,7 @@
 package com.danim.qna.beans;
 
-import com.danim.comments.beans.Comments;
+import com.danim.comments.beans.CommentsEntity;
+import com.danim.comments.beans.CommentsVO;
 import com.danim.files.beans.FilesEntity;
 
 import java.util.List;
@@ -10,13 +11,13 @@ public class QnaVO {
     private String ordernum; // 문의 대상 주문 번호
     private String memnum; // 문의한 유저 번호
     private String userId; // 문의한 유저 아이디
-    private String userName; // 문의한 유저 닉네임
+    private String userName; // 문의한 유저 이름
     private String category; // 문의종류
     private String title; // 문의 제목
     private String txt; // 문의 내용
     private String qdate; // 문의 일자 (yyyy-HH-dd 형식)
     private List<FilesEntity> pics; // 문의에 첨부된 사진들
-    private List<Comments> comments; // 문의에 추가된 댓글들
+    private List<CommentsVO> comments; // 문의에 추가된 댓글들
     private int commentsNum; // 문의에 추가된 댓글 갯수
     private String state; // 문의 상태
 
@@ -100,11 +101,11 @@ public class QnaVO {
         this.pics = pics;
     }
 
-    public List<Comments> getComments() {
+    public List<CommentsVO> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comments> comments) {
+    public void setComments(List<CommentsVO> comments) {
         this.comments = comments;
     }
 

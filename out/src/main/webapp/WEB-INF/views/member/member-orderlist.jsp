@@ -133,7 +133,18 @@
       <div class="order_modal_header">
         <div>주문 정보</div>
         <div class="order_modal_header_right">
-          <button type="button" onclick="location.href='/member/qna_reg?ordernum=<%=orderNum%>'">1:1문의</button>
+          <%
+            // 1 : 1 문의 여부 00: 없음, 01: 미답변, 02: 답변완료
+            if (order.getState().equals("00")){
+          %>
+          <button type="button" onclick="location.href='/member/qna_reg?ordernum=<%=orderNum%>'">문의하기</button>
+          <%
+            } else {
+          %>
+          <button type="button" onclick="location.href='/member/qna?ordernum=<%=orderNum%>'">문의하기</button>
+          <%
+            }
+          %>
           <a href="javascript:toggleOrderModal('<%=orderNum%>')"><i class="far fa-times-circle"></i></a>
         </div>
       </div>

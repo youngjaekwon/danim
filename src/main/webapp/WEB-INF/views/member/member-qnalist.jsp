@@ -56,10 +56,10 @@
         %>
         <div class="item">
           <div class="item-num">
-            <a href="#"><%=qnanum%></a>
+            <a href="/member/qna?qnanum=<%=qna.getQnanum()%>"><%=qnanum%></a>
           </div>
           <div class="item-info">
-            <a href="#"><%=qna.getTitle() + " [" + qna.getCommentsNum() + "]"%></a>
+            <a href="/member/qna?qnanum=<%=qna.getQnanum()%>"><%=qna.getTitle() + " [" + qna.getCommentsNum() + "]"%></a>
           </div>
           <div class="item-category">
             <%=qna.getCategory()%>

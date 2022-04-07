@@ -7,9 +7,11 @@ import com.danim.member.parser.MemberParser;
 import com.danim.member.service.MemberService;
 import com.danim.orders.beans.OrdersVO;
 import com.danim.orders.service.OrdersService;
+import com.danim.qna.beans.QnaEntity;
 import com.danim.qna.beans.QnaVO;
 import com.danim.qna.service.QnaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -198,6 +200,36 @@ public class AuthMemberController {
     }
 
     /////////////////////////////// 1:1 문의 페이지 //////////////////////////////////////
+    @RequestMapping(value = "/qna", method = RequestMethod.GET)
+    public String qna(@RequestParam String qnanum, Model model, HttpSession session, RedirectAttributes attributes){
+        if (qnanum == null || qnanum.isEmpty()){
+            attributes.addFlashAttribute("invalidAccess", "true");
+            return "redirect:/";
+        }
+
+        // 요청된 QNA 검색
+        QnaVO qna = qnaService.getQna(qnanum);
+
+        // 로그인된 유저
+        String memnum = (String) session.getAttribute("user");
+
+        // 로그인된 유저 객체
+        Member member = memberService.selectMember(memnum);
+
+        // 로그인된 유저와 일치하지 않으면 비정상 접속
+        if (!qna.getMemnum().equals(memnum)){
+            attributes.addFlashAttribute("invalidAccess", "true");
+            return "redirect:/";
+        }
+
+        model.addAttribute("qna", qna);
+        model.addAttribute("pics", qna.getPics());
+        model.addAttribute("comments", qna.getComments());
+        model.addAttribute("role", member.getRole());
+
+        return "member/member-qna-detail";
+    }
+
 
     @RequestMapping(value = "/qna_reg", method = RequestMethod.GET)
     public String qna_reg(@RequestParam String ordernum, Model model, RedirectAttributes attributes){
@@ -205,7 +237,6 @@ public class AuthMemberController {
             attributes.addFlashAttribute("invalidAccess", "true");
             return "redirect:/";
         }
-        model.addAttribute("ordernum", ordernum);
         return "member/member-qna-reg";
     }
 

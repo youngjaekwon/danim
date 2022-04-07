@@ -1,5 +1,7 @@
 package com.danim.qna.util;
 
+import com.danim.comments.beans.CommentsVO;
+import com.danim.comments.service.CommentsService;
 import com.danim.files.service.FilesService;
 import com.danim.member.beans.Member;
 import com.danim.member.service.MemberService;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -20,12 +23,14 @@ public class QnaParser {
     private final SimpleDateFormat simpleDateFormat;
     private final FilesService filesService;
     private final MemberService memberService;
+    private final CommentsService commentsService;
 
     @Autowired
-    public QnaParser(SimpleDateFormat simpleDateFormat, FilesService filesService, MemberService memberService) {
+    public QnaParser(SimpleDateFormat simpleDateFormat, FilesService filesService, MemberService memberService, CommentsService commentsService) {
         this.simpleDateFormat = simpleDateFormat;
         this.filesService = filesService;
         this.memberService = memberService;
+        this.commentsService = commentsService;
     }
 
     public QnaEntity parse(QnaDTO qnaDTO){
@@ -99,9 +104,10 @@ public class QnaParser {
         String qnanum = qnaEntity.getQnanum();
         qnaVO.setPics(filesService.getList("QNANUM", qnanum));
         // 문의에 추가된 댓글들
-
+        List<CommentsVO> commentsVOList = commentsService.getList("QNANUM", qnanum);
+        qnaVO.setComments(commentsVOList);
         // 문의에 추가된 댓글 갯수
-        qnaVO.setCommentsNum(0);
+        qnaVO.setCommentsNum(commentsVOList != null ? commentsVOList.size() : 0);
         // 문의 상태
         String state = qnaEntity.getState();
         Map<String, String> stateMap = new HashMap<>(){

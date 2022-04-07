@@ -51,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/shop/checkout").hasRole("MEMBER")
                     .antMatchers("/admin/**").hasRole("ADMIN")
                     .antMatchers("/items/**").hasRole("ADMIN")
+                    .antMatchers("/comments/**").hasAnyRole("ADMIN", "MEMBER")
                 .and()
                     .formLogin() // form 기반 로그인 인증 관련하며 HttpSession 이용
                     .loginPage("/accessDenied") // 지정하고 싶은 로그인 페이지 url
