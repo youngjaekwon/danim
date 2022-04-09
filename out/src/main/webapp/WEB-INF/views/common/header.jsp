@@ -34,12 +34,8 @@
         </div>
         <div class="nav">
             <ul>
-                <li><a href="#">여행지</a></li>
-                <li><a href="#">숙박</a></li>
-                <li><a href="#">교통</a></li>
-                <li><a href="#">즐길거리</a></li>
-                <li><a href="#">shop</a></li>
-                <li><a href="#">고객센터</a></li>
+                <li><a href="/shop/list">SHOP</a></li>
+                <li><a href="#">자유게시판</a></li>
             </ul>
         </div>
         <!-- index 이외에서 검색 -->

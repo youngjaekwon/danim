@@ -156,7 +156,7 @@
           <%
             } else {
           %>
-          <button type="button" onclick="location.href='/member/qna?ordernum=<%=orderNum%>'">문의하기</button>
+          <button type="button" onclick="location.href='/member/qna?qnanum=<%=order.getQnanum()%>'">문의보기</button>
           <%
             }
           %>
