@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -31,17 +32,39 @@ public class ShopService {
     }
 
     // 제품 리스트 (shop)
-    public List<ItemsDTO> getList(String category){
-        if (category == null) category = ""; // category가 null 일경우 빈 문자열로 변환
+    public List<ItemsDTO> getList(String[] categories, String sorting, String keyword){
+        String category;
+        // category 변형
+        if (categories == null || categories.length == 0) category = "('Film Camera', 'Film')";
+        else {
+            category = "";
+            boolean isAll = false;
+            for (int i = 0; i < categories.length; i++) {
+                if (categories[i].equals("%%")) {
+                    category = "('Film Camera', 'Film')";
+                    isAll = true;
+                    break;
+                }
+                if (categories.length == 1) category += "('" + categories[i] + "'";
+                else if (i == 0) category += "('" + categories[i] + "',";
+                else if (i != categories.length - 1) category += "'" + categories[i] + "',";
+                else category += "'" + categories[i] + "'";
+            }
+            if (!isAll) category += ")";
+        }
+        // keyword 에 SQL 와일드카드 추가
+        if (keyword != null) keyword = "%" + keyword + "%";
 
         // category를 통해 아이템 검색
-        List<Items> itemsList = itemsDao.searchAllByAtt("CATEGORY", category);
+        List<Items> itemsList = itemsDao.searchAllByFilters(category, sorting, keyword);
 
         // 반환할 아이템 DTO 리스트
         List<ItemsDTO> itemsDTOList = new ArrayList<>();
 
-        for (Items item : itemsList){
-            itemsDTOList.add(itemsParser.parseItems(item)); // items to itemsDTO
+        if (itemsList != null){
+            for (Items item : itemsList){
+                itemsDTOList.add(itemsParser.parseItems(item)); // items to itemsDTO
+            }
         }
 
         if (itemsDTOList.isEmpty()) return null; // 비어있을경우 null 반환

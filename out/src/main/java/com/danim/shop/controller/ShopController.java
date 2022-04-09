@@ -26,6 +26,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -53,11 +54,20 @@ public class ShopController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list(HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
         ModelAndView mav = new ModelAndView("/shop/shop-list"); // view 추가
-        String category = httpServletRequest.getParameter("category"); // 요청된 카테고리
+
+        // paging 요소
+        String[] category = httpServletRequest.getParameterValues("category"); // 요청된 카테고리
+        String sorting = httpServletRequest.getParameter("sort"); // 정렬 방법
+        String keyword = httpServletRequest.getParameter("keyword"); // 검색 키워드
         String requestPage = httpServletRequest.getParameter("page"); // 요청된 페이지
 
+        // Parameter 값 없는 경우 Defalt값 설정
+        if (sorting == null) sorting = "ITEMNUM";
+        if (keyword == null || keyword.equals("")) keyword = "%%";
+        if (requestPage != null && requestPage.equals("")) requestPage = "1";
+
         // 카테고리로 리스트 검색
-        List<ItemsDTO> totalList = shopService.getList(category);
+        List<ItemsDTO> totalList = shopService.getList(category, sorting, keyword);
 
         // 리스트 검색이 안될경우
         if (totalList == null) {
@@ -71,6 +81,16 @@ public class ShopController {
 
         // 검색된 리스트, 요청된 페이지를 이용하여 페이지 생성
         PageMaker.makePage(mav, totalList, requestPage, numPerPage, pagePerBlock);
+
+        List<String> categoryList = new ArrayList<>();
+        if (category != null){
+            categoryList = Arrays.asList(category);
+        }
+        // 체크할 filter 값 전달
+        mav.addObject("category", categoryList.toString());
+        mav.addObject("sorting", sorting);
+        if (!keyword.equals("%%"))
+            mav.addObject("keyword", keyword);
 
         return mav;
     }

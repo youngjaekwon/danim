@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="danim:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/danim_war</output-path>
+    <root id="archive" name="danim_war.war">
+      <element id="artifact" artifact-name="danim:war exploded" />
+    </root>
+  </artifact>
+</component>

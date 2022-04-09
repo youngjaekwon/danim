@@ -38,10 +38,10 @@ function doRegComment(){
           '<div class="comment" id="' + commentVO.cnum + '">\n' +
           '          <div class="comment_name">' + commentVO.name + '</div>\n' +
           '          <div class="comment_txt">' + commentVO.txt + '</div>\n' +
-          '          <div class="comment_date">' + commentVO.date + '</div>\n' +
           '          <div class="comment_delete">\n' +
           '            <button data-index="'+ commentVO.cnum +'" onclick="doDelComment(this.dataset.index)">삭제</button>\n' +
           '          </div>\n' +
+          '          <div class="comment_date">' + commentVO.date + '</div>\n' +
           '        </div>'
       );
       textBox.val('');

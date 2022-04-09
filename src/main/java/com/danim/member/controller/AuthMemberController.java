@@ -159,6 +159,22 @@ public class AuthMemberController {
         // 회원번호로 리스트 검색
         List<OrdersVO> totalList = ordersService.getList(memnum);
 
+        if (totalList != null){
+            totalList.forEach(ordersVO -> {
+                // Order 번호로 QNA 검색
+                QnaVO qnaVO = qnaService.searchQna("ORDERNUM", ordersVO.getOrderNum());
+
+                // qna가 있으면
+                if (qnaVO != null){
+                    String qnanum = qnaVO.getQnanum();
+
+                    // qna 저장
+                    ordersVO.setQnanum(qnanum);
+                }
+            });
+        }
+
+
         // 리스트 검색이 안될경우
         if (totalList == null) {
             totalList = new ArrayList<>();

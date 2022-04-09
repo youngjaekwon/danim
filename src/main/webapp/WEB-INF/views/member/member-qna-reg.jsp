@@ -77,7 +77,7 @@
         </div>
         <div class="board-footer">
           <a href="javascript:isValidForm()">등록하기</a>
-          <a href="/admin/items">등록취소</a>
+          <a href="/member/orderList">등록취소</a>
         </div>
       </form>
     </div>

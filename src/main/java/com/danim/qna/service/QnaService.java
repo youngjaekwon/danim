@@ -45,6 +45,7 @@ public class QnaService {
 
     public QnaVO searchQna(String att, String keyword){
         QnaEntity qnaEntity = qnaDao.searchByAtt(att, keyword);
+        if (qnaEntity == null) return null;
         return qnaParser.parse(qnaEntity);
     }
 

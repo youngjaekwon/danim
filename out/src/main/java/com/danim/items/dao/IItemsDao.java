@@ -10,6 +10,7 @@ public interface IItemsDao {
     List<Items> search(String keyword);
     Items searchByAtt(String attribute, String keyword);
     List<Items> searchAllByAtt(String attribute, String keyword);
+    List<Items> searchAllByFilters(String category, String sorting, String keyword);
     List<Items> searchAllByFilters(String category, String stock, String sorting, String keyword);
     int update(String itemnum, String attribute, String revisedData);
     int delete(String itemnum);
