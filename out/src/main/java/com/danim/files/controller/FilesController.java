@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
-@RequestMapping(value = "files")
+@RequestMapping(value = "/files")
 @Controller
 public class FilesController {
     private final FilesService filesService;
@@ -22,7 +22,7 @@ public class FilesController {
         this.filesService = filesService;
     }
 
-    @RequestMapping(value = "download", method = RequestMethod.POST)
+    @RequestMapping(value = "/vdownload", method = RequestMethod.POST)
     public void download(@RequestParam String fnum, HttpServletResponse response) throws IOException {
 
         // 파일 번호를 통한 파일 검색

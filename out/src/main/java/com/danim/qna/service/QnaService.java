@@ -70,7 +70,7 @@ public class QnaService {
             qna.setPic(pics);
         }
 
-        // item 등록 및 등록된 item 번호 가져옴
+        // 문의 등록 및 등록된 문의 번호 가져옴
         String qnanum = qnaDao.insert(qna);
         if (qnanum == null || qnanum.isEmpty()) return false;
 
@@ -83,10 +83,14 @@ public class QnaService {
         return true;
     }
 
-    public boolean delQna(String qnanum){
-        if(!filesService.delFile("QNANUM", qnanum)) return false;
-        if(!commentsService.delComments("QNANUM", qnanum)) return false;
-        return qnaDao.delete(qnanum) > 0;
+    public String delQna(String qnanum){
+        QnaEntity qna = qnaDao.select(qnanum);
+        if (qna == null) return null;
+        String ordernum = qna.getOrdernum();
+        filesService.delFile("QNANUM", qnanum);
+        commentsService.delComments("QNANUM", qnanum);
+        qnaDao.delete(qnanum);
+        return ordernum;
     }
 
     // 문의 리스트 (관리자)

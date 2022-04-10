@@ -1,5 +1,6 @@
 package com.danim.qna.controller;
 
+import com.danim.orders.service.OrdersService;
 import com.danim.qna.beans.QnaDTO;
 import com.danim.qna.beans.QnaEntity;
 import com.danim.qna.dao.QnaDao;
@@ -19,10 +20,12 @@ import java.io.IOException;
 public class QnaController {
 
     private final QnaService qnaService;
+    private final OrdersService ordersService;
 
     @Autowired
-    public QnaController(QnaService qnaService) {
+    public QnaController(QnaService qnaService, OrdersService ordersService) {
         this.qnaService = qnaService;
+        this.ordersService = ordersService;
     }
 
     @RequestMapping(value = "/doReg", method = RequestMethod.POST)
@@ -40,9 +43,12 @@ public class QnaController {
 
     @RequestMapping(value = "/doDel", method = RequestMethod.POST)
     public String doDel(@RequestParam String qnanum, RedirectAttributes attributes) throws IOException {
-        boolean result = qnaService.delQna(qnanum);
+        // qnanum을 전달해 DB에서 QNA 삭제 후 QNA에 해당하는 ordernum을 가져옴
+        String ordernum = qnaService.delQna(qnanum);
 
-        if (result){
+        if (ordernum != null){
+            // 해당 주문의 문의 상태를 "00"(없음)으로 변경
+            ordersService.update(ordernum, "QNA", "00");
             attributes.addFlashAttribute("delQna", "passed");
             return "redirect:/member/qnaList";
         } else {

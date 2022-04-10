@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                     .csrf().disable() // csrf를 사용할지 여부
                     .authorizeRequests() // HttpServletRequest에 따라접근을 제한
-                    .antMatchers("/member/**").hasRole("MEMBER")
+                    .antMatchers("/").hasRole("MEMBER")
                     .antMatchers("/shop/checkout").hasRole("MEMBER")
                     .antMatchers("/admin/**").hasRole("ADMIN")
                     .antMatchers("/items/**").hasRole("ADMIN")

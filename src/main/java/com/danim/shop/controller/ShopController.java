@@ -113,38 +113,31 @@ public class ShopController {
         String memnum = (String)session.getAttribute("user"); // 로그인된 회원번호
         Member member = null; // 로그인된 유저 객체 담을 변수
 
-        // 로그인이 되어있는 경우
-        if (memnum != null) {
-            member = memberService.selectMember(memnum); // 로그인된 유저정보
-            MemberDTO memberDTO = memberParser.parseMember(member); // member to memberDTO
-            mav.addObject("userInfo", memberDTO); // Model에 추가
-        } else {
-            // 로그인이 되어있지 않을 경우
-            session.setAttribute("loginCheck", "false"); // 비 로그인 상태 추가
-            String currentPage = request.getHeader("Referer"); // 이전 페이지 확인
-            mav.setViewName (currentPage != null ? ("redirect:" + currentPage) : "redirect:/");
-            // 이전 페이지가 있으면 이전페이지로 이동, 없으면 index 페이지로 이동
-            return mav;
-        }
+        member = memberService.selectMember(memnum); // 로그인된 유저정보
+        MemberDTO memberDTO = memberParser.parseMember(member); // member to memberDTO
+        mav.addObject("userInfo", memberDTO); // Model에 추가
 
         //  로그인된 유저의 장바구니 리스트 가져옴 JSONString
         String jsonStringItemList = member.getBasket();
 
         // 단일 아이템 체크아웃의 경우
-        String singleItemCheckOut = request.getParameter("items");
+        String singleItemCheckOut = request.getParameter("item");
         if (singleItemCheckOut != null) jsonStringItemList = singleItemCheckOut; // 구매 제품 리스트 변경
 
         List<ItemsDTO> itemList = shopService.getItemListFromJSONString(jsonStringItemList); // 구매 제품 리스트 JSONString to ArrayList
-        if (!itemList.isEmpty()) {
+        if (itemList != null && !itemList.isEmpty()) {
             mav.addObject("itemList", itemList); // Model에 리스트 추가
             mav.addObject("jsonStringItemList", jsonStringItemList); // Model에 Json String 형태의 리스트 추가
             int totalCost = 0; // 구매 제품 리스트 총금액
             // 총 금액 산출
-            for (ItemsDTO item : itemList){
+            for (ItemsDTO item : itemList) {
                 totalCost += item.getPrice();
             }
             mav.addObject("totalCost", totalCost); // 총 금액 전달
             mav.addObject("formattedTotalCost", formatter.format(totalCost)); // #,###,### 포멧으로 변경된 총 금액 전달
+        } else {
+            mav.addObject("emptyBasket", "true");
+            mav.setViewName("redirect:/shop/basket");
         }
         return mav;
     }
@@ -201,7 +194,9 @@ public class ShopController {
             mav.addObject("totalCost", totalCost); // 총 금액 전달
             mav.addObject("formattedTotalCost", formatter.format(totalCost)); // #,###,### 포멧으로 변경된 총 금액 전달
             return mav;
-        } else {
+        }
+        // 로그인이 안된경우
+        else {
             List<ItemsDTO> itemList = shopService.getItemListFromJSONString(jsonStringBasketListFromCookie); // JSONString to ArrayList
             // 리스트 생성이 안될경우 (리스트가 비어있을경우)
             if (itemList == null) {
@@ -235,7 +230,7 @@ public class ShopController {
         } else {
             /////////////////////////////////////// 비로그인의 경우 ///////////////////////////////////////
             try {
-                String basketListNotLogin = ""; // 리턴할 장바구니 리스트 생성
+                String basketListNotLogin = ""; // JSONString 장바구니 리스트
                 // 쿠키에서 장바구니 리스트 불러옴 ////////
                 Cookie[] cookies = httpServletRequest.getCookies();
                 for (Cookie cookie:cookies){
