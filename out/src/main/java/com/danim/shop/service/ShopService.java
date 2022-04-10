@@ -97,6 +97,7 @@ public class ShopService {
         try {
             if (JSONStringItemList != null && !JSONStringItemList.isEmpty())
                 jsonItemList = (JSONArray) jsonParser.parse(JSONStringItemList); // 전달받은 JSONString으로 된 item list JSONArray로 변환
+            else return null;
         } catch (Exception e) {
             e.printStackTrace();
         }
