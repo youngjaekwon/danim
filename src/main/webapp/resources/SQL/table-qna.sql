@@ -28,5 +28,7 @@ create table QNA (
 );
 select * from QNA;
 
+DELETE FROM QNA WHERE QNANUM IN ('0000001', '0000002', '0000003', '0000004');
+
 ROLLBACK ;
 commit ;

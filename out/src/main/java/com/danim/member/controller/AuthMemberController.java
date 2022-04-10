@@ -131,20 +131,10 @@ public class AuthMemberController {
     @RequestMapping(value = "/mypage", method = RequestMethod.GET)
     public String mypage(HttpServletRequest httpServletRequest, HttpSession session) {
         String user = (String) session.getAttribute("user");
-
-        // 로그인된 상태일 경우 회원정보 수정 페이지로 이동
-        if (user != null){
-            Member member = memberService.selectMember(user); // DB에서 로그인된 유저 정보 검색
-            MemberDTO dto = memberParser.parseMember(member); // Entity to DTO parsing
-            session.setAttribute("userInfo", dto); // 유저 정보 세션에 전달
-            return "member/member-mypage";
-        } else {
-            // 로그인이 되어있지 않을 경우
-            session.setAttribute("loginCheck", "false"); // 비 로그인 상태 추가
-            String currentPage = httpServletRequest.getHeader("Referer"); // 이전 페이지 확인
-            return (currentPage != null) ? ("redirect:" + currentPage) : "redirect:/";
-            // 이전 페이지가 있으면 이전페이지로 이동, 없으면 index 페이지로 이동
-        }
+        Member member = memberService.selectMember(user); // DB에서 로그인된 유저 정보 검색
+        MemberDTO dto = memberParser.parseMember(member); // Entity to DTO parsing
+        session.setAttribute("userInfo", dto); // 유저 정보 세션에 전달
+        return "member/member-mypage";
     }
 
     // 주문 내역 페이지
@@ -217,14 +207,14 @@ public class AuthMemberController {
 
     /////////////////////////////// 1:1 문의 페이지 //////////////////////////////////////
     @RequestMapping(value = "/qna", method = RequestMethod.GET)
-    public String qna(@RequestParam String qnanum, Model model, HttpSession session, RedirectAttributes attributes){
-        if (qnanum == null || qnanum.isEmpty()){
-            attributes.addFlashAttribute("invalidAccess", "true");
-            return "redirect:/";
-        }
-
+    public String qna(String qnanum, String ordernum, Model model, HttpSession session, RedirectAttributes attributes){
         // 요청된 QNA 검색
-        QnaVO qna = qnaService.getQna(qnanum);
+        QnaVO qna = null;
+        if (qnanum != null){
+            qna = qnaService.getQna(qnanum);
+        } else if (ordernum != null){
+            qna = qnaService.searchQna("QNANUM", qnanum);
+        }
 
         // 로그인된 유저
         String memnum = (String) session.getAttribute("user");
