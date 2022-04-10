@@ -30,11 +30,10 @@ public class CommentsService {
         // 등록 후 등록된 댓글 번호 반환
         String cnum = commentsDao.insert(commentsEntity);
 
-
-        CommentsEntity selectedComment = commentsDao.select(cnum);
+        commentsEntity.setCnum(cnum);
 
         // 반환할 VO 생성
-        CommentsVO commentsVO = commentsParser.parse(selectedComment);
+        CommentsVO commentsVO = commentsParser.parse(commentsEntity);
 
         return commentsVO;
     }

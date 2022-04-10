@@ -252,7 +252,7 @@ public class AdminController {
         if (qnanum != null){
             qna = qnaService.getQna(qnanum);
         } else if (ordernum != null){
-            qna = qnaService.searchQna("QNANUM", qnanum);
+            qna = qnaService.searchQna("ORDERNUM", ordernum);
         }
         // 로그인된 유저
         String memnum = (String) session.getAttribute("user");

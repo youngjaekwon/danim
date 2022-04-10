@@ -230,7 +230,7 @@ public class ShopController {
         } else {
             /////////////////////////////////////// 비로그인의 경우 ///////////////////////////////////////
             try {
-                String basketListNotLogin = ""; // 리턴할 장바구니 리스트 생성
+                String basketListNotLogin = ""; // JSONString 장바구니 리스트
                 // 쿠키에서 장바구니 리스트 불러옴 ////////
                 Cookie[] cookies = httpServletRequest.getCookies();
                 for (Cookie cookie:cookies){
