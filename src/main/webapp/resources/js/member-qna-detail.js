@@ -60,7 +60,7 @@ function doDelComment(index){
     $.ajax({
       url: "/comments/doDel",
       type: "GET",
-      data: {"cnum" : index},
+      data: {cnum : index},
       dataType: "json",
       success: function(data){
         console.log(data);

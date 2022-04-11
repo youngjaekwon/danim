@@ -97,7 +97,7 @@ public class MemberController {
     // 회원가입시 이메일 중복확인
     @RequestMapping(value = "/isDuplicatedEmail", method = RequestMethod.POST)
     @ResponseBody
-    public String isDuplicatedEmail(@RequestParam String email){
+    public String isDuplicatedEmail(@RequestParam(name = "email") String email){
         return (memberService.isDuplicatedEmail(email)) ? "true" : "false"; // 이메일 중복여부 반환
     }
 

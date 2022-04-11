@@ -35,7 +35,7 @@ function isDuplicatedEmail() {
     $.ajax({
         url: "isDuplicatedEmail",
         type: "POST",
-        data: {"email" : email1.val() + "@" + email2.val()}, // email 값을 map 형태로 전달
+        data: {email : email1.val() + "@" + email2.val()}, // email 값을 map 형태로 전달
         success: function(data){
             if (data == 'true'){ // 중복되었을 경우
                 emailCheckBox.text("이메일이 중복되었습니다."); // div 내용 변경
