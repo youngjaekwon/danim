@@ -22,7 +22,7 @@ public class FilesController {
         this.filesService = filesService;
     }
 
-    @RequestMapping(value = "/vdownload", method = RequestMethod.POST)
+    @RequestMapping(value = "/download", method = RequestMethod.POST)
     public void download(@RequestParam String fnum, HttpServletResponse response) throws IOException {
 
         // 파일 번호를 통한 파일 검색
