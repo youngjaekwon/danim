@@ -150,7 +150,7 @@
         <div class="order_modal_header_right">
           <%
             // 1 : 1 문의 여부 00: 없음, 01: 미답변, 02: 답변완료
-            if (order.getState().equals("00")){
+            if (order.getQna().equals("00")){
           %>
           <button type="button" onclick="location.href='/member/qna_reg?ordernum=<%=orderNum%>'">문의하기</button>
           <%
