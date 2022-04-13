@@ -93,7 +93,7 @@
                 <ul>
                     <li><a href="javascript:openPasswordModal()">비밀번호 찾기</a></li>
                     <li><a href="javascript:openIdModal()">아이디 찾기</a></li>
-                    <li><a href="signup">회원가입</a></li>
+                    <li><a href="/signup">회원가입</a></li>
                 </ul>
             </div>
             <a href="javascript:closeLoginModal()" class="login-close"><i class="far fa-times-circle"></i></a>

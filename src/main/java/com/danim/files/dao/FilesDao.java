@@ -66,7 +66,7 @@ public class FilesDao implements IFilesDao{
     @Override
     public List<FilesEntity> selectFiles(String from, String num) {
         List<FilesEntity> files = null;
-        String SQL = "SELECT * FROM FILES WHERE " + from + " = ?";
+        String SQL = "SELECT * FROM FILES WHERE " + from + " = ? ORDER BY FNUM";
         files = jdbcTemplate.query(SQL, new RowMapper<FilesEntity>() {
             @Override
             public FilesEntity mapRow(ResultSet resultSet, int i) throws SQLException {

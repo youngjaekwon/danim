@@ -64,7 +64,7 @@ public class CommentsDao implements ICommentsDao{
     @Override
     public List<CommentsEntity> selectComments(String from, String num) {
         List<CommentsEntity> comments = null;
-        String SQL = "SELECT * FROM COMMENTS WHERE " + from + " = ?";
+        String SQL = "SELECT * FROM COMMENTS WHERE " + from + " = ? ORDER BY CNUM";
         comments = jdbcTemplate.query(SQL, new RowMapper<CommentsEntity>() {
             @Override
             public CommentsEntity mapRow(ResultSet resultSet, int i) throws SQLException {

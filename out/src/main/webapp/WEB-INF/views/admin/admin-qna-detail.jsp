@@ -68,7 +68,7 @@
               for (FilesEntity pic : pics) {
                 String picPath = "/resources/upload/" + pic.getStoredFileName();
           %>
-          <div id="<%=pic.getStoredFileName()%>" class="localPic">
+          <div id="<%=pic.getStoredFileName()%>" class="imgbox">
             <div>
               <a href="javascript:downloadFile('<%=pic.getFnum()%>')"><img src="<%=picPath%>" style="width: 150px;"/></a>
             </div>
