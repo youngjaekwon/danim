@@ -186,12 +186,24 @@ public class MemberController {
     public String doGoogleLogin(@RequestParam String user, HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttributes)
             throws ParseException {
         JSONObject jsonUser = (JSONObject) jsonParser.parse(user); // 클라이언트에서 넘어온 유저정보 파싱
-        String userEmail = jsonUser.get("zv").toString(); // 구글 로그인 시도한 유저 이메일
+        System.out.println(jsonUser);
+        System.out.println(user);
+        Iterator keySet = jsonUser.keySet().iterator();
+        /*
+        * JSONObject의 value 중 @가 들어간 value를 userEmail에 저장
+        * */
+        String userEmail = "";
+        while (keySet.hasNext()){
+            String key = (String) keySet.next();
+            String value = (String) jsonUser.get(key);
+            if (value.contains("@")) userEmail = value;
+        }
         Member googleLoginMember = memberService.searchMember("EMAIL", userEmail); // 이메일을 통한 유저 검색
 
         // 검색결과 null(최초 로그인)의 경우 signup 페이지로 redirect
         if (googleLoginMember == null) {
             redirectAttributes.addFlashAttribute("googleUser", jsonUser);
+            redirectAttributes.addFlashAttribute("gUserEmail", userEmail);
             return "redirect:/signup";
         }
 
