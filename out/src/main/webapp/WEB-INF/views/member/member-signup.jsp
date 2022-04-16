@@ -102,7 +102,7 @@ response.setCharacterEncoding("UTF-8");%>
 <%
   HashMap<String, String> googleUser = (HashMap<String, String>) request.getAttribute("googleUser");
   if (googleUser != null){
-    String[] email = googleUser.get("zv").split("@");
+    String[] email = ((String) request.getAttribute("gUserEmail")).split("@");
 %>
 <script>
   $('#email1').val('<%=email[0]%>');
